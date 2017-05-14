@@ -1,21 +1,16 @@
 <?php
 	$root_path = "./";
   include_once('./common.php');
-  //Generate sitewide database statistics
-  include_once('./generate_stats.php');
+  include_once('./stats.php');
 	include_once('./header.php');
 ?>
 <div class="container">
-
-      		
 	  <div id="content">
-<div class="jumbotron" style="margin-bottom:0px;height:100%">
-	  <div class="container" >
-      <span id="title_fix"></span>
-
-	    <p align="justify" ><span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> Database is an online resource for disease variants and their impacts on domain-peptide protein interaction networks. <a href='faqs/'>Read more...</a></p>
-
-	  </div>
+      <div class="jumbotron" style="margin-bottom:0px;height:100%">
+        <div class="container">
+          <span id="title_fix"></span>
+          <p align="justify" ><span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> Database is an online resource for disease variants and their impacts on domain-peptide protein interaction networks. <a href='faqs/'>Read more...</a></p>
+      	</div>
 	<div class="container">
 	<div class="row">
 		<div class="col-md-3">
