@@ -4,7 +4,7 @@
 ?>
 <html>
 	<head>
-		<title>Cancer Variant Database: Admin</title>
+		<title>DV-IMPACT :: Admin</title>
 		<link rel="shortcut icon" href="/assets/images/canvd.ico">
 		<link href="/assets/css/bootstrap.css" rel="stylesheet">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -19,7 +19,11 @@
 	<body style="background:#fafafa;">
 	<div class="jumbotron" style="margin-bottom:0px;height:100%">
 	  <div class="container" style="margin-bottom:15px;">
-	    <h1><a href="<?php echo $root_path;?>"><span style="color:#ea2f10">Can-VD</span>: The <span style="color:#ea2f10">Can</span>cer <span style="color:#ea2f10">V</span>ariant <span style="color:#ea2f10">D</span>atabase</a></h1>
+	    <h1>
+        <a href="/admin">
+        <span style="color:#ea2f10">DV-IMPACT</span>: The <span style="color:#ea2f10">D</span>isease <span style="color:#ea2f10">V</span>ariant <span style="color:#ea2f10">Im</span>pact on Domain-based <span style="color:#ea2f10">P</span>rotein Inter<span style="color:#ea2f10">act</span>ions
+        </a>
+      </h1>
 
     <?php
         $failure = false;
@@ -50,7 +54,7 @@
           echo $error;
     ?>
 
-      <h2 class="form-signin" style="padding-left:60px;">Can-VD Admin- Please Sign In</h2>
+      <h2 class="form-signin" style="padding-left:10px;">DV-IMPACT Admin- Please Sign In</h2>
       <form class="form-signin" role="form" action="../admin/" method="post">
         <input type="input" name="username" style="margin-left:120px;margin-top:40px;margin-bottom:20px;width:300px;" class="input-group" placeholder="Username" required autofocus>
         <input type="password" name="password" style="margin-left:120px;margin-top:20px;margin-bottom:20px;width:300px;" class="input-group input-group-lg" placeholder="Password" required>
@@ -73,7 +77,7 @@
       }
     ?>
                           
-    <h2 style="margin-top:20px;"> Can-VD Administration Panel </h2>
+    <h2 style="margin-top:20px;"> DV-IMPACT Administration Panel </h2>
       <div class="row" style="margin-top:50px" id="announce-view">
       <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
