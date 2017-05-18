@@ -72,7 +72,7 @@
     <?php
       if (isset($_GET['submit'])) {
     ?>
-      <div class="alert alert-info pull-right" id="quickalert" role="alert" style="width:300px;text-align:center;">Table <?php echo $_GET['submit']; ?> was altered successfully.</div>
+      <div class="alert alert-info pull-right" id="quickalert" role="alert" style="width:300px;text-align:center;">Table "<?php echo $_GET['submit']; ?>" was altered successfully.</div>
     <?php
       }
     ?>
@@ -151,20 +151,20 @@
                       $stmt->execute($query_params);
                       while ($row = $stmt->fetch()) {
                         if(substr( $row[0], 0, 1 ) === 'T') {
-                        $query2 = "DESCRIBE " . $row[0] . ";";
-                        $query_params2 = array();
-                        $stmt2 = $dbh->prepare($query2);
-                        $stmt2->execute($query_params2);
-                        $fieldlist = "";
-                        $j = 0;
-                        while ($row2 = $stmt2->fetch()) {
-                          if ($j > 0) {
-                            $fieldlist = $fieldlist . ", " . $row2[0];
-                          } else {
-                            $fieldlist = $fieldlist . $row2[0];
+                          $query2 = "DESCRIBE " . $row[0] . ";";
+                          $query_params2 = array();
+                          $stmt2 = $dbh->prepare($query2);
+                          $stmt2->execute($query_params2);
+                          $fieldlist = "";
+                          $j = 0;
+                          while ($row2 = $stmt2->fetch()) {
+                            if ($j > 0) {
+                              $fieldlist = $fieldlist . ", " . $row2[0];
+                            } else {
+                              $fieldlist = $fieldlist . $row2[0];
+                            }
+                            $j += 1;
                           }
-                          $j += 1;
-                        }
                       ?>
                       <a class="list-group-item admin-table-item" data-fields="<?php echo $fieldlist;?>">
                         <?php echo $row[0]; ?>
