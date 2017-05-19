@@ -132,61 +132,29 @@
                   </p>
                   <div class="clearfix"></div>
                 </div>
-                
                 <?php
                   }
                 ?>
                 </div>
               </div>
               <div class="row" style="margin-top:50px;display:none;" id="data-view">
-                <div class="col-md-3">
-                  <div class="list-group" id="admin-list">
-                    <div class="list-group-item" style="background:#f5f5f5;color:black;font-size:1.1em;">
-                      CANVD Tables:
-                    </div>
-                    <?php
-                      $query = 'SHOW TABLES;';
-                      $query_params = array();
-                      $stmt = $dbh->prepare($query);
-                      $stmt->execute($query_params);
-                      while ($row = $stmt->fetch()) {
-                        if(substr( $row[0], 0, 1 ) === 'T') {
-                          $query2 = "DESCRIBE " . $row[0] . ";";
-                          $query_params2 = array();
-                          $stmt2 = $dbh->prepare($query2);
-                          $stmt2->execute($query_params2);
-                          $fieldlist = "";
-                          $j = 0;
-                          while ($row2 = $stmt2->fetch()) {
-                            if ($j > 0) {
-                              $fieldlist = $fieldlist . ", " . $row2[0];
-                            } else {
-                              $fieldlist = $fieldlist . $row2[0];
-                            }
-                            $j += 1;
-                          }
-                      ?>
-                      <a class="list-group-item admin-table-item" data-fields="<?php echo $fieldlist;?>">
-                        <?php echo $row[0]; ?>
-                      </a>
-                      <?php
-                          }
-                        }
-                      ?>
-                    </div>
-                  </div>
-
-                  <div class="col-md-8">
+                  <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
-                      <div class="panel-heading" id="table-name-header">Select a table from the Left panel to be updated or <a href="update_table.php">Click here to update the tissues table.</a></div>
+                      <div class="panel-heading" id="table-name-header">
+                        Please upload a PSI MI-TAB file or <a href="update_table.php">Click here to update the tissues table.</a></div>
                         <div class="panel-body">
-                            <div id="panel-content" style="display:none">
-                              <p id="table-name"></p>
+                            <div id="panel-content">
+                              <div id='fields'>
+                              <b>The following fields (columns) are required for this table:
+                                <p style='font-size:0.7em'>
+                                  Unique identifier for interactor A, Unique identifier for interactor B, Alternative identifier for interactor A, Alternative identifier for interactor B, Aliases for A, Aliases for B, Interaction detection methods, First author, Identifier of the publication, NCBI Taxonomy identifier for interactor A, NCBI Taxonomy identifier for interactor B, Interaction types, Source databases, Interaction identifier(s), Confidence score, Complex expansion, Biological role A, Biological role B, Experimental role A, Experimental role B, Interactor type A, Interactor type B, Xref for interactor A, Xref for interactor B, Xref for the interaction, Annotations for interactor A, Annotations for interactor B, Annotations for the interaction, NCBI Taxonomy identifier for the host organism, Parameters of the interaction, Creation date, Update date, Checksum for interactor A, Checksum for interactor B, Checksum for interaction, negative,  Feature(s) for interactor A:  Feature(s) for interactor B, Stoichiometry for interactor A, Stoichiometry for interactor B, Participant identification method for interactor A, Participant identification method for interactor B
+                                </p>
+                              </div>
                               <p>
-                              <p>Note: To upload data to Can-VD, files must be tab separated text files with the appropriate column structure needed for each table.</p>
+                              <p>Note: To upload data to DV-IMPACT, the PSI-MI-TAB file must be tab separated text file with the appropriate column structure needed for the table.</p>
 
-                              <form action="upload_text.php" method="post" enctype="multipart/form-data">
-                                <label for="file">Select a Text File to upload:</label>
+                              <form action="upload_psi.php" method="post" enctype="multipart/form-data">
+                                <label for="file">Select a PSI-MI-TAB File to upload:</label>
                                 <input type="file" name="file" id="file"><br>
                                 <div data-toggle="buttons" style="margin-top:5px;">
                                   <label>
@@ -198,8 +166,7 @@
                                     Replace the ENTIRE table with this data
                                   </label>
                                 </div>
-                                <input type="hidden" id="hidden-table" name="table-name" value="">
-                                  <button class="btn btn-md btn-primary" style="margin-top:15px;margin-left:200px;" type="submit">Submit</button>
+                                <button class="btn btn-md btn-primary" style="margin-top:15px;" type="submit">Submit</button>
                               </form>
                             </div>
                           </div>
