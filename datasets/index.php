@@ -1,28 +1,16 @@
-<?php
-	$root_path = "../";
-  include_once('./common.php');
-
-?>
-
+<?php include_once('../common.php'); ?>
 <html>
-    
-<?php
-	$root_path = "../";
-  include_once('../header.php');
-?>	
+<?php include_once('../header.php'); ?>
 	<div class="container">
-
-      		
 	  <div id="content">
-<div class="jumbotron" style="margin-bottom:0px;height:100%">
-	  <div class="container" >
-      <span id="title_fix"></span>   
-    <p><h2 style="margin-bottom:30px;"> Available Datasets in <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span></h2></p>
-		<br>
-			    <p align="justify">This page lists all the datasets that are currently available in <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> with short description of each dataset, the description of the processing and formatting steps, the compliance with <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> standard data model and the publish article corresponds to the dataset.
-                </p>
-		<br>
-	<p><b>1- Phosphokinase-binding Domain Dataset </p>
+      <div class="jumbotron" style="margin-bottom:0px;height:100%">
+        <div class="container">
+          <span id="title_fix"></span>   
+          <p><h2 style="margin-bottom:30px;"> Available Datasets in <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span></h2></p>
+		      <br>
+			    <p align="justify">This page lists all the datasets that are currently available in <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> with short description of each dataset, the description of the processing and formatting steps, the compliance with <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> standard data model and the publish article corresponds to the dataset.</p>
+		      <br>
+          <p><b>1- Phosphokinase-binding Domain Dataset </p>
       <p>This data set describe assessment of cancer mutations impact on PPI mediated through the phosphokinase-binding domains.   </p>  
       <p align="justify">- Brief description of the data processing steps: The published data in the supplementary martials and the website associated with the study contains most of the data items required by <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> standard data model. We used these data directly or after few processing to deposite the data into <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span>. However, we requested the full sequences of the proteins used in the analysis from the authors as they used one protein per gene. Furthermore, some information such as the protein names and Ensembl IDs were obtained from online resources. </p>
       <p>- Compliance of published data with <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> standard data model:   <span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star-o"></i></span></p>  
@@ -36,9 +24,6 @@
       <p>- Compliance of processed data with <span style="color:#ea2f10"><span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span></span> standard data model:   <span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span><span style="color:#ea2f10"><i class="fa fa-star"></i></span></p>  </p>  
     <p>Reference: <a href="http://www.nature.com/nmeth/journal/vaop/ncurrent/full/nmeth.3396.html">AlQuraishi M. <i>et al</i>, Nature Genetics, 2014. doi:10.1038/ng.3138</a></p>
 <br>
-<?php
-      include $root_path. 'footer.php';
-    ?>
-
-	  </body>
+<?php include '../footer.php'; ?>
+	</body>
 </html>

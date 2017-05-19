@@ -1,28 +1,14 @@
-<?php
-	$root_path = "../";
-  include_once('./common.php');
-
-?>
- 
+<?php include_once('../common.php'); ?>
 <html>
-    
-<?php
-	$root_path = "../";
-  include_once('../header.php');
-?>	
+<?php include_once('../header.php'); ?>
 	<div class="container">
-
-      		
-	  <div id="content">
-<div class="jumbotron" style="margin-bottom:0px;height:100%">
-	  <div class="container" >
-      <span id="title_fix"></span>  
-    <p><h2 style="margin-bottom:30px;"> Deposit Your Datasets in <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span></h2></p>
-		<br>
-			    <p align="justify"><span style="color:#262626">The main purpose of DV-IMPACT is to serve as a central resource for large-scale disease variant impact assessment studies and to make these data available online in a uniform format that guarantees data integration and interoperability between different datasets. This page lists the requirements for datasets deposition to <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span>. The dataset should comply with the <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> standard data  model (Table 1) and has the structure (or can be processed to be in the structure) that fits <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> (Figure 1).</p>
-		<br>
-
-
+	    <div id="content">
+               <div class="jumbotron" style="margin-bottom:0px;height:100%">
+                    <div class="container">
+                         <span id="title_fix"></span>  
+                         <p><h2 style="margin-bottom:30px;"> Deposit Your Datasets in <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span></h2></p>
+                         <br>
+			    <p align="justify"><span style="color:#262626">The main purpose of DV-IMPACT is to serve as a central resource for large-scale disease variant impact assessment studies and to make these data available online in a uniform format that guarantees data integration and interoperability between different datasets. This page lists the requirements for datasets deposition to <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span>. The dataset should comply with the <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> standard data  model (Table 1) and has the structure (or can be processed to be in the structure) that fits <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span> (Figure 1).</p><br>
 
 <table border="1px" style="font-size: 20px;">
 <tr style="color:#ea2f10;font-size: 25px;">
@@ -215,8 +201,6 @@
 <br>
 <p>If you want to deposit your data into <span style="color:#262626"><strong>DV<span style="color: #ea2f10;">-IMPACT</span></strong></span>, please <a href="http://canvd.baderlab.org/contact/">write to us.</a> </p>
 <br>
-<?php
-      include $root_path. 'footer.php';
-    ?>
-	  </body>
+<?php include $root_path. 'footer.php'; ?>
+	</body>
 </html>
