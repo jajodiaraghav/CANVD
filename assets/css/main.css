@@ -31,3 +31,40 @@ body {
 	font-size: 1em;
 	margin: 0px;
 }
+#content .jumbotron {
+	margin-bottom:0px;
+	height:100%;
+}
+.about {
+	text-align: justify;
+}
+.about span {
+	color: #262626;
+}
+.jumbotron .list-group .list-group-item:first-child {
+	background:#f04124;
+	color:white;
+	font-size:1.1em;
+}
+.jumbotron .panel-heading {
+	background:#f04124;
+	color:white;
+	font-size:0.8em;
+	font-weight:300;
+}
+.jumbotron .panel-heading a {
+	color: white;
+}
+.jumbotron .panel-body {
+	font-size:0.8em;
+}
+.jumbotron .panel-body span {
+	display:block;
+	margin-bottom:1px;
+	font-weight: bold;
+	display: block;
+}
+.jumbotron .panel-body span i {
+	padding-right:5px;
+	font-size:0.75em;
+}
