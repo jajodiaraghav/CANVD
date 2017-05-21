@@ -68,3 +68,9 @@ body {
 	padding-right:5px;
 	font-size:0.75em;
 }
+.logo {
+	color: #262626;
+}
+.logo span {
+	color: #ea2f10;
+}
