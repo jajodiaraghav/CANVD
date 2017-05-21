@@ -74,3 +74,7 @@ body {
 .logo span {
 	color: #ea2f10;
 }
+.jumbotron .table tr.header {
+	color:#ea2f10;
+	font-size: 25px;
+}
