@@ -1,7 +1,4 @@
 <?php
-//Counts totals
-
-$root_path = "../";
 include_once('../common.php');
 
 $counts = array();
@@ -23,7 +20,6 @@ $query_params = array();
 $stmt = $dbh->prepare($query);
 $stmt->execute($query_params); 
 $counts[] = $stmt->fetch()[0];
-
 
 print json_encode($counts);
 ?>
