@@ -78,3 +78,14 @@ body {
 	color:#ea2f10;
 	font-size: 25px;
 }
+.margin-top {
+	margin-top: 25px;
+}
+.margin-top h3 {
+	display:block;
+	color:#ea2f10;
+}
+.margin-top i {
+	padding-right:5px;
+	font-size:0.75em;
+}
