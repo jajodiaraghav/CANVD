@@ -1,6 +1,6 @@
 <head>
 		<title>DV-IMPACT :: Main</title>
-		<link rel="shortcut icon" href="assets/images/canvd.ico">
+		<link rel="shortcut icon" href="/assets/images/canvd.ico">
 		<link href="/assets/css/bootstrap.css" rel="stylesheet">
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
