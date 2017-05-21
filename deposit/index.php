@@ -200,12 +200,12 @@
 
         <p>Table 1. The data items and their required and optional attributes according to 
         <?php include('../logo.php') ?> data standard.</p><br />
-        <img src="can-vd_data_standard.png" align="center"><br />
+        <img src="/assets/images/can-vd_data_standard.png" align="center"><br />
 
         <p class="text-justify">
           Figure 1. Relationships between data items of <?php include('../logo.php') ?> standard data model for disease variants impact assessment. The relationships between the attributes correspond to the relationships between the tables in <?php include('../logo.php') ?>.</p><br/>
-
         <p>
+
         If you want to deposit your data into <?php include('../logo.php') ?>,
         please <a href="http://canvd.baderlab.org/contact/">write to us.</a>
         </p><br/>
