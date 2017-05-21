@@ -1,0 +1,33 @@
+body {
+	padding-top: 0;
+}
+.navbar a {
+	text-decoration: none;
+}
+.navbar h2 {
+	color: #ffffff;
+}
+.navbar h2 span,
+.navbar h5 span {
+	color: #262626;
+}
+.navbar h5 {
+	color: #ffffff;
+	text-align: left;
+}
+.navbar h5 span.emp {
+	text-decoration: underline;
+	font-weight: bold;
+	color: #ffffff;
+}
+.navbar-collapse {
+	padding-top: 20px;
+}
+.footer img {
+	margin-right: 4%;
+	margin-left: 4%;
+}
+.footer p {
+	font-size: 1em;
+	margin: 0px;
+}

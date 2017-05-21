@@ -385,17 +385,12 @@
     $('#example').popover();
 });
               </script>
+            </div>
           </div>
+  		  </div>
+      </div>
+		  <?php include $root_path. 'footer.php'; ?>
     </div>
-		</div>
-	</div>
-		<?php
-      		include $root_path. 'footer.php';
-		?>
-
-	</div>
-
 	</div>
 	</body>
-
 </html>
