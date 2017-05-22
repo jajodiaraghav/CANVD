@@ -85,31 +85,33 @@
         <?php include_once('includes/announcement.php') ?>
       </div>
       <div class="row" id="data-view">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
-          </li>
-          <li role="presentation">
-            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
-          </li>
-        </ul>
+        <div class="col-md-8 col-md-offset-2">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#home" aria-controls="home" role="tab" data-toggle="tab">PSI File</a>
+            </li>
+            <li role="presentation">
+              <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">PNG/TXT/PWM</a>
+            </li>
+          </ul>
 
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="home">aaa</div>
-          <div role="tabpanel" class="tab-pane" id="profile">bb</div>
-        </div>
-
-          <div class="col-md-8 col-md-offset-2">
-            <?php include_once('includes/PSI_upload.php') ?>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+              <?php include_once('includes/PSI_upload.php') ?>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+              <?php include_once('includes/DATA_upload.php') ?>
+            </div>
           </div>
         </div>
-          <?php
-            }
-          ?>
-        </div>
-        <div class="container">
-          <?php include_once('../footer.php') ?>
-        </div>
       </div>
+      <?php
+        }
+      ?>
+    </div>
+      <div class="container">
+        <?php include_once('../footer.php') ?>
+      </div>
+    </div>
 	</body>
 </html>
