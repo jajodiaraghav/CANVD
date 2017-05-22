@@ -38,7 +38,7 @@
           $_SESSION['user']=$_POST['username'];
         } else {
           $failure = true;
-          $error = "<div class=\"alert alert-warning\" style='margin-right:450px;margin-left:50px;'><p class='lead' style='color:white;'>Error: Wrong Username or Password.</p></div>";
+          $error = '<div class="alert alert-danger">Error: Wrong Username or Password!</div>';
         }
       } else {
         $failure = true;
