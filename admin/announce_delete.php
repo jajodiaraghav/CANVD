@@ -9,6 +9,6 @@
 		$stmt->execute($query_params);
 		echo "Success";
 	} else {
-		echo "Error: unauthorized."
+		echo "Error: unauthorized.";
 	}
 ?>
