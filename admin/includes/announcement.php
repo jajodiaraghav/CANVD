@@ -3,8 +3,8 @@
     <div class="panel-heading">Add an announcement</div>
     <div class="panel-body">
       <form role="form" action="./create_announce.php" method="get">
-      <input type="text" class="form-control" name="title" placeholder="Announcement title">
-      <textarea name="body" class="form-control" placeholder="Announcement text (supports html tags)." rows="5"></textarea>
+      <input type="text" class="form-control" name="title" placeholder="Announcement title" required>
+      <textarea name="body" class="form-control" placeholder="Announcement text (supports html tags)." rows="5" required></textarea>
       <button type="submit" class="btn btn-default btn-sm pull-right">Submit</button>
       </form>
     </div>
