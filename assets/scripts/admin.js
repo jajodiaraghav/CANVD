@@ -73,4 +73,22 @@ $(function() {
 		console.log(label);
 		$(".btn-file").text(label);
 	});
+
+	$('#fileupload').fileupload();
+
+	$('.table').on('click', '.template-download .delete', function(e) {
+		e.preventDefault();
+		$this = $(this);
+		$.ajax({
+	        url: "./data_delete.php",
+	        type: "post",
+	        data: {url: $this.data('url')},
+	        success: function(results){
+				$this.closest('tr').fadeOut();
+	        },
+	        error:function(){
+	            alert("Action Failed!");
+	        }
+	    });
+	});
 });

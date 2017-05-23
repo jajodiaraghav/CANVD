@@ -4,22 +4,39 @@
   </div>
   <div class="panel-body">
     <div id="panel-content">
-      <form action="upload_psi.php" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="file">
-        <div>
-          <label>
-            <input type="radio" name="action" value="add" checked>
-            Append this data to the table
-          </label>
+
+      <form id="fileupload" action="upload_data.php" method="POST" enctype="multipart/form-data">
+        <div class="row text-center fileupload-buttonbar">
+          <span class="btn btn-success btn-sm fileinput-button">
+              <i class="glyphicon glyphicon-plus"></i>
+              <span>Add files...</span>
+              <input type="file" name="files[]" multiple>
+          </span>
+          <button type="submit" class="btn btn-primary btn-sm start">
+              <i class="glyphicon glyphicon-upload"></i>
+              <span>Start upload</span>
+          </button>
+          <button type="reset" class="btn btn-warning btn-sm cancel">
+              <i class="glyphicon glyphicon-ban-circle"></i>
+              <span>Cancel upload</span>
+          </button>
+          <span class="fileupload-process"></span>
         </div>
-        <div>
-          <label>
-            <input type="radio" name="action" value="replace">
-            Replace the ENTIRE table with this data
-          </label>
+
+        <div class="row text-center fileupload-progress fade">
+          <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+          </div>
+          <div class="progress-extended">&nbsp;</div>
         </div>
-        <button class="btn btn-sm btn-primary pull-right" type="submit">Submit</button>
+
+        <div class="row text-center">
+          <table role="presentation" class="table table-striped">
+            <tbody class="files"></tbody>
+          </table>
+        </div>
       </form>
+
     </div>
   </div>
 </div>

@@ -9,11 +9,7 @@
 		<link href="/assets/css/bootstrap.css" rel="stylesheet">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link type="text/css" href="/assets/css/styles.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/admin.css"  rel="stylesheet" type="text/css">
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="/assets/js/bootstrap.js"></script>
-    <script src="/assets/scripts/admin.js"></script>
+    <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
 	</head>
 	<body>
 	<div class="jumbotron">
@@ -112,5 +108,77 @@
         <?php include_once('../footer.php') ?>
       </div>
     </div>
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td class="text-center">
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary btn-sm start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning btn-sm cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <p class="name">
+              <span>{%=file.name%}</span>
+            </p>
+            {% if (file.error) { %}
+              <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td class="text-center">
+            {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger btn-sm delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+            {% } else { %}
+                <button class="btn btn-warning btn-sm cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>    
+    <script src="/assets/js/jquery.ui.widget.js"></script>
+    <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+    <script src="/assets/js/jquery.iframe-transport.js"></script>
+    <script src="/assets/js/jquery.fileupload.js"></script>
+    <script src="/assets/js/jquery.fileupload-process.js"></script>
+    <script src="/assets/js/jquery.fileupload-ui.js"></script>
+    <script src="/assets/scripts/admin.js"></script>
 	</body>
 </html>

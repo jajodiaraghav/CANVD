@@ -4,41 +4,16 @@ body {
 .admin-table-item:hover {
   cursor:pointer;
 }
-
 *:focus {
   outline: 0 !important;
 }
-
-.btn-file {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 999px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  outline: none;
-  background: white;
-  cursor: inherit;
-  display: block;
-}
-
 .show-btn:hover {
   cursor:pointer;
   text-decoration: underline;
 }
-
 .show-btn{
   color:#454545;
 }
-
 .delete-btn:hover{
   cursor:pointer;
 }
@@ -84,4 +59,54 @@ body {
   margin-bottom:5px;
   margin-left:10px;
   font-style:italic;
+}
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px !important;
+  direction: ltr;
+  cursor: pointer;
+}
+@media screen\9 { /* Fixes for IE < 8 */
+  .fileinput-button input {
+    filter: alpha(opacity=0);
+    font-size: 100%;
+    height: 100%;
+  }
+}
+.table {
+  word-break: break-all;
+}
+.table p {
+  font-size: 12px;
+  font-weight: 500;
+}
+.table .template-upload td,
+.table .template-download td {
+  vertical-align: middle;
+}
+.fileupload-progress .progress {
+  margin: 20px;
+  border-radius: 5px;
+}
+.fileupload-progress .progress .progress-bar {
+  border-radius: 5px;
+}
+.template-upload .progress,
+.template-upload .progress .progress-bar {
+  border-radius: 5px;
+  height: initial;
+}
+.template-upload .progress,
+.template-upload td p {
+  margin-bottom: 10px;
 }
