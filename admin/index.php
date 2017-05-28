@@ -8,7 +8,7 @@
 		<link rel="shortcut icon" href="/assets/images/canvd.ico">
 		<link href="/assets/css/bootstrap.css" rel="stylesheet">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link type="text/css" href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
 	</head>
 	<body>

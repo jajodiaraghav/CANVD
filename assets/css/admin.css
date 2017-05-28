@@ -100,6 +100,14 @@ body {
   font-size: 12px;
   font-weight: 500;
 }
+.row-files {
+  margin-bottom: 200px;
+}
+.row-files .table thead th,
+.row-files .table tbody tr td {
+  text-align: center;
+  vertical-align: middle;
+}
 .table .template-upload td,
 .table .template-download td {
   vertical-align: middle;

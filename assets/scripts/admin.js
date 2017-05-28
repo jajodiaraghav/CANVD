@@ -45,33 +45,11 @@ $(function() {
 	        url: "./announce_change.php",
 	        type: "post",
 	        data: {switchV:$(this).data("btn-type"),value:valueT,a_id:$(this).data("item-id")},
-	        success: function(results){
-	        },
+	        success: function(results){},
 	        error:function(){
-	            alert("failure");
+	            alert("Failure");
 	        }
 		});
-	});
-
-	$("#admin-list").on( "click", "a", function() {
-		$("#table-name-header").text($(this).text());
-		$("#hidden-table").val($(this).text());
-		$("#panel-content").show();
-		$("#panel-content").find("#fields").remove();
-		$("#panel-content").prepend("<div id='fields'><b>The following fields (columns) are required for this table:<p style='font-size:0.7em'>" + $(this).data("fields") + "</p></div>");
-	});
-
-	$(document).on('change', '.btn-file :file', function() {
-	  	var input = $(this),
-	    numFiles = input.get(0).files ? input.get(0).files.length : 1,
-	    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-	  	input.trigger('fileselect', [numFiles, label]);
-	});
-
-	$('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-		console.log(numFiles);
-		console.log(label);
-		$(".btn-file").text(label);
 	});
 
 	$('#fileupload').fileupload();
@@ -106,5 +84,35 @@ $(function() {
 		var dir = link.data('dir');		
 		var modal = $(this)
 		modal.find('.modal-footer .btn-danger').attr('href', '/admin/empty_data.php?dir=' + dir);
+	});
+
+	$('input[name="search"]').on("keyup paste", function() { // Also add "change" / "input" 
+		var s = $(this).val();
+		var type = $('input[name="directory"]:checked').val();		
+		if (s.length > 3) {
+			if (!type) {
+				alert('Please select a directory!');
+				return false;
+			}
+
+			$.ajax({
+		        url: "./data_search.php",
+		        type: "post",
+		        data: {
+		        	str : s,
+		        	type : type
+		        },
+		        success: function(res){
+		        	if (res === "") {
+		        		$('.list-files').html('<tr><td colspan="2">Nothing found!</td></tr>');
+		        		return;
+		        	}
+					$('.list-files').html(res);
+		        },
+		        error:function(){
+		            console.log('Error');
+		        }
+		    });
+		}
 	});
 });

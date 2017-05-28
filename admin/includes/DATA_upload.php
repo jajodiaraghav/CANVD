@@ -53,6 +53,14 @@
     </div>
   </div>
 </div>
+<div class="panel panel-info">
+  <div class="panel-heading" id="table-name-header"><strong>Search & Delete</strong></div>
+  <div class="panel-body">
+    <div id="panel-content">
+      <a href="search_data.php">Search for a specific data</a>
+    </div>
+  </div>
+</div>
 <div class="panel panel-danger">
   <div class="panel-heading" id="table-name-header"><strong>Other operations</strong></div>
   <div class="panel-body">
