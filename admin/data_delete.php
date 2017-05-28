@@ -1,8 +1,10 @@
 <?php
-if(isset($_POST["url"])) {
-	$deleteLink = '/admin/data/' . $_POST["url"];
+session_start();
 
-	if (is_file($deleteLink)) {
-	    unlink($deleteLink);
+if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
+	if(isset($_POST["url"])) {
+		$deleteLink = $_POST["url"];
+
+		if (is_file($deleteLink)) unlink($deleteLink);
 	}
 }

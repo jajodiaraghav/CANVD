@@ -91,4 +91,20 @@ $(function() {
 	        }
 	    });
 	});
+
+	$('#fileupload').bind('fileuploadsubmit', function (e, data) {
+	    var directory = $('input[name="directory"]:checked').val();
+	    data.formData = {directory: directory};
+	    if (!data.formData.directory) {
+	    	$('.fileupload-radio-error').show();
+			return false;
+	    }
+	});
+
+	$('#warningModal').on('show.bs.modal', function (event) {
+		var link = $(event.relatedTarget);
+		var dir = link.data('dir');		
+		var modal = $(this)
+		modal.find('.modal-footer .btn-danger').attr('href', '/admin/empty_data.php?dir=' + dir);
+	});
 });

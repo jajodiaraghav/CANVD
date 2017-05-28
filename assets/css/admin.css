@@ -42,6 +42,9 @@ body {
   margin-top: 50px;
   display: none;
 }
+#panel-content ul li a {
+  cursor: pointer;
+}
 #announce-view .panel-body input,
 #announce-view .panel-body textarea {
   width: 95%;
@@ -64,6 +67,13 @@ body {
   position: relative;
   overflow: hidden;
   display: inline-block;
+}
+.fileupload-radio {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.fileupload-radio-error {
+  display: none;
 }
 .fileinput-button input {
   position: absolute;

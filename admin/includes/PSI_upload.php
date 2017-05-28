@@ -1,7 +1,5 @@
-<div class="panel panel-default">
-  <div class="panel-heading" id="table-name-header">
-    Please upload a PSI MI-TAB file or <a href="update_table.php">Click here to update the tissues table.</a>
-  </div>
+<div class="panel panel-primary">
+  <div class="panel-heading" id="table-name-header">Please upload a PSI MI-TAB file</div>
   <div class="panel-body">
     <div id="panel-content">
       <div id='fields'>
@@ -26,6 +24,14 @@
         </div>
         <button class="btn btn-sm btn-primary pull-right" type="submit">Submit</button>
       </form>
+    </div>
+  </div>
+</div>
+<div class="panel panel-info">
+  <div class="panel-heading" id="table-name-header"><strong>Other operations</strong></div>
+  <div class="panel-body">
+    <div id="panel-content">
+      <a href="update_table.php">Update the "Tissues" table</a>
     </div>
   </div>
 </div>

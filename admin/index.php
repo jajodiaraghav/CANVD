@@ -72,6 +72,12 @@
         Table "<?php echo $_GET['submit']; ?>" was altered successfully.
       </div>
     <?php
+      } elseif (isset($_GET['submit'])) {
+    ?>
+      <div class="alert alert-info pull-right" id="quickalert" role="alert">
+        Operation Successful!
+      </div>
+    <?php
       }
     ?>
 
@@ -81,12 +87,12 @@
       </div>
       <div class="row" id="data-view">
         <div class="col-md-8 col-md-offset-2">
-          <ul class="nav nav-tabs" role="tablist">
+          <ul class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
-              <a href="#home" aria-controls="home" role="tab" data-toggle="tab">PSI File</a>
+              <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Upload File</a>
             </li>
             <li role="presentation">
-              <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">PNG/TXT/PWM</a>
+              <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Upload Data</a>
             </li>
           </ul>
 
