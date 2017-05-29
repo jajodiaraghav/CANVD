@@ -27,7 +27,7 @@ $stmt->execute($query_params);
 $interaction_count = $stmt->fetch()[0];
 
 //Count # of Mutations
-$query = 'SELECT COUNT(ID) FROM T_Mutations;';
+$query = 'SELECT COUNT(MUTATION_ID) FROM T_Mutations;';
 $query_params = array();
 $stmt = $dbh->prepare($query);
 $stmt->execute($query_params);
