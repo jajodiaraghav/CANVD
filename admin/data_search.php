@@ -13,8 +13,8 @@ if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
 
 					if (!is_dir($file) && strpos($file, $_POST['str']) !== false) {
 						echo "<tr>";
-						echo "<td>".$file."</td>";
-						echo "<td><button class='btn btn-xs btn-danger'>Delete</button></td>";
+						echo "<td>{$file}</td>";
+						echo "<td><input type='checkbox' data-url='{$_POST['type']}/{$file}'></td>";
 						echo "</tr>";
 					}
 				}

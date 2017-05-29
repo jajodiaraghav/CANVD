@@ -90,10 +90,7 @@ $(function() {
 		var s = $(this).val();
 		var type = $('input[name="directory"]:checked').val();		
 		if (s.length > 3) {
-			if (!type) {
-				alert('Please select a directory!');
-				return false;
-			}
+			if (!type) return;
 
 			$.ajax({
 		        url: "./data_search.php",
@@ -111,6 +108,33 @@ $(function() {
 		        },
 		        error:function(){
 		            console.log('Error');
+		        }
+		    });
+		}
+	});
+
+	$('.table').on('change', 'input[type="checkbox"]', function() {
+		$('input[type="checkbox"]:checked').length > 0 ? $('.delete-selected .btn').removeClass('disabled') : $('.delete-selected .btn').addClass('disabled');
+	});
+
+	$('.delete-selected .btn').on('click', function(e) {
+		var checked = $('input[type="checkbox"]:checked');
+		var list = new Array();
+		if (checked.length > 0) {
+			checked.each(function () {
+				list.push($(this).data('url'));
+			});
+			$.ajax({
+		        url: "./data_delete_multiple.php",
+		        type: "post",
+		        data: {list: list},
+		        success: function(results){
+					checked.each(function () {
+						$(this).closest('tr').fadeOut();
+					});
+		        },
+		        error:function(){
+		            alert("Action Failed!");
 		        }
 		    });
 		}

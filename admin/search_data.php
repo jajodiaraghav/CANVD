@@ -40,6 +40,9 @@
         <div class="col-md-4 col-md-offset-4">
           <input type="text" name="search" class="form-control">
         </div>
+        <div class="col-md-2 delete-selected">
+          <button class="btn btn-danger btn-sm disabled">Delete Selected</button>
+        </div>
       </div>      
       <br>
       <div class="row row-files">

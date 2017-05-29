@@ -128,3 +128,6 @@ body {
 .template-upload td p {
   margin-bottom: 10px;
 }
+.delete-selected .btn {
+  margin-top: 8px;
+}
