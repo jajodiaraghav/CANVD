@@ -14,13 +14,13 @@ while ($row = $stmt->fetch()) {
 
 foreach ($proteins as $protein) {
 
-	$query = "SELECT COUNT(DISTINCT Int_EnsPID) FROM canvd.T_Interaction_MT WHERE T_Interaction_MT.IID IN (SELECT T_Interaction.IID FROM canvd.T_Interaction WHERE T_Interaction.Domain_EnsPID=:protid) AND T_Interaction_MT.Eval='loss of function'";
+	$query = "SELECT COUNT(DISTINCT Int_EnsPID) FROM T_Interaction_MT WHERE T_Interaction_MT.IID IN (SELECT T_Interaction.IID FROM T_Interaction WHERE T_Interaction.Domain_EnsPID=:protid) AND T_Interaction_MT.Eval='loss of function'";
 	$query_params = array(':protid' => $protein[2]);
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($query_params);
 	$loss_num = $stmt->fetch()[0];
 
-	$query = "SELECT COUNT(DISTINCT Int_EnsPID) FROM canvd.T_Interaction_MT WHERE T_Interaction_MT.IID IN (SELECT T_Interaction.IID FROM canvd.T_Interaction WHERE T_Interaction.Domain_EnsPID=:protid) AND T_Interaction_MT.Eval='gain of function'";
+	$query = "SELECT COUNT(DISTINCT Int_EnsPID) FROM T_Interaction_MT WHERE T_Interaction_MT.IID IN (SELECT T_Interaction.IID FROM T_Interaction WHERE T_Interaction.Domain_EnsPID=:protid) AND T_Interaction_MT.Eval='gain of function'";
 	$query_params = array(':protid' => $protein[2]);
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($query_params);

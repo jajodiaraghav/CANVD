@@ -14,13 +14,13 @@ $stmt->execute($query_params);
 while ($row = $stmt->fetch())
 {
 	$tissue = $row[0];
-	$query = "SELECT COUNT(ID) FROM T_Mutations use index (ID) WHERE tumour_site=:tissue;";
+	$query = "SELECT COUNT(MUTATION_ID) FROM T_Mutations use index (MUTATION_ID) WHERE tumour_site=:tissue;";
 	$query_params = array(":tissue" => $tissue);
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($query_params);
 	$mutation_count = $stmt2->fetch()[0];
 
-	$query = "SELECT COUNT(Distinct EnsPID) FROM T_Mutations use index (ID) WHERE tumour_site=:tissue;";
+	$query = "SELECT COUNT(Distinct EnsPID) FROM T_Mutations use index (MUTATION_ID) WHERE tumour_site=:tissue;";
 	$query_params = array(":tissue" => $tissue);
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($query_params);
@@ -38,13 +38,13 @@ while ($row = $stmt->fetch())
 
 	// Count Interactions
 	$plist = '\'' . implode('\',\'', $ids) . '\'';
-	$query = "SELECT COUNT(*) FROM T_Interaction_MT WHERE Int_EnsPID IN(" . $plist . ") AND Eval='loss of function';";
+	$query = "SELECT COUNT(*) FROM T_Interaction_MT WHERE Int_EnsPID IN(" . $plist . ") AND (Eval='False' OR Eval='FALSE');";
 	$query_params = array();
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($query_params);
 	$loss_num = $stmt2->fetch()[0];
 
-	$query = "SELECT COUNT(*) FROM T_Interaction_MT WHERE Int_EnsPID IN(" . $plist . ") AND Eval='gain of function';";
+	$query = "SELECT COUNT(*) FROM T_Interaction_MT WHERE Int_EnsPID IN(" . $plist . ") AND (Eval='True' OR Eval='TRUE';";
 	$query_params = array();
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($query_params);

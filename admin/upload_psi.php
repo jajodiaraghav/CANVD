@@ -14,17 +14,12 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']) &&
 
     if ($_POST['action'] == "replace") {
 
-      $command = "USE dvimpact;";
-      $command = $command . "TRUNCATE TABLE t_domain;";
-      $command = $command . "TRUNCATE TABLE t_ensembl;";
-      $command = $command . "TRUNCATE TABLE t_interaction;";
-      $command = $command . "TRUNCATE TABLE t_interaction_eval;";
-      $command = $command . "TRUNCATE TABLE t_interaction_mt;";
-      $command = $command . "TRUNCATE TABLE t_mutations;";
-      $command = $command . "TRUNCATE TABLE t_pwm;";
-      $command = $command . "TRUNCATE TABLE t_dataset;";
-    	exec("mysql -u root -p -e '". $command ."'");
+      $tables = ['t_domain', 't_ensembl', 't_interaction', 't_interactions_eval', 't_interaction_mt', 't_mutations', 't_pwm', 'dataset'];
 
+      foreach ($tables as $table) {
+        $command = "TRUNCATE TABLE $table;";
+        $dbh->query($command);
+      }    
     }
 
     $fileLoc = __DIR__ . "/upload/" . $_FILES["file"]["name"];

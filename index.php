@@ -55,8 +55,8 @@
               ?>
                 <div style="margin-bottom:15px;">
                   <span>
-                    <a href="./announce/"><?php echo $row[2];?></a>
-                    <i><?php echo $row[1];?></i>
+                    <a href="./announce/"><?php echo $row[2];?></a><br>
+                    <small><?php echo $row[1];?></small>
                   </span>
                   <?php echo substr($row[3], 0, strpos($row[3], ".") + 1); ?>
                   <br><a href='announce/'>Read more...</a>

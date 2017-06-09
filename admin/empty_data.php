@@ -2,9 +2,9 @@
 session_start();
 
 if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
-	if (isset($_POST['dir'])) {
+	if (isset($_GET['dir'])) {
 		
-		if ($_POST['dir'] === 'png') {
+		if ($_GET['dir'] === 'png') {
 
 			$files = glob('/admin/data/IMG/*');
 			foreach($files as $file)
@@ -12,7 +12,7 @@ if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
 				if(is_file($file)) unlink($file);
 			}
 
-		} elseif ($_POST['dir'] === 'txt') {
+		} elseif ($_GET['dir'] === 'txt') {
 
 			$files = glob('/admin/data/TXT/*');
 			foreach($files as $file)
@@ -20,7 +20,7 @@ if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
 				if(is_file($file)) unlink($file);
 			}
 
-		} elseif ($_POST['dir'] === 'pwm') {
+		} elseif ($_GET['dir'] === 'pwm') {
 
 			$files = glob('/admin/data/PWM/*');
 			foreach($files as $file)

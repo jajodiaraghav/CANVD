@@ -33,7 +33,7 @@ $handler->execute($interactions_Eval);
 
 /* Ensembl */
 $query = "INSERT INTO  `t_ensembl` (`EnsTID` ,`GeneName` ,`Version`, `Description`, `Sequence`)
-		  VALUES " . questionMarks(2 * 5 * ($columnLength - $pointer), 5);
+		  VALUES " . questionMarks(2 * 5 * ($columnLength - $pointer), 5);		  
 $handler = $dbh->prepare($query);
 $handler->execute($ensembl);
 

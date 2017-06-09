@@ -66,8 +66,8 @@ include_once('../header.php');
                 var prot_name = <?php echo json_encode($_GET['prot']);?>;
                 var prot_source = <?php echo json_encode($_GET['source']);?>;
                 var processing;
-                </script>
-                <script type="text/javascript" src ="/assets/scripts/variants.js"></script>
+                <?php include_once('../assets/scripts/variants.php') ?>
+                </script>                
               </tbody>
             </table>
           </div>

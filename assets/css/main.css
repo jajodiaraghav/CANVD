@@ -20,7 +20,7 @@ body {
 	font-weight: bold;
 	color: #ffffff;
 }
-.navbar-collapse {
+.navbar-static-top .navbar-collapse {
 	padding-top: 20px;
 }
 .footer img {

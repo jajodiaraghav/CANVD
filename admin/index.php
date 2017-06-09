@@ -72,7 +72,7 @@
         Table "<?php echo $_GET['submit']; ?>" was altered successfully.
       </div>
     <?php
-      } elseif (isset($_GET['submit'])) {
+      } elseif (isset($_GET['message'])) {
     ?>
       <div class="alert alert-info pull-right" id="quickalert" role="alert">
         Operation Successful!
