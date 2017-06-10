@@ -3,7 +3,7 @@
 	Generates sitewide statistics for CANVD
 */
 
-include_once('./common.php');
+include_once('common.php');
 
 //Count # of Domains
 $query = 'SELECT COUNT(Domain) FROM T_Domain;';

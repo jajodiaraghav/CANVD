@@ -1,8 +1,7 @@
 <?php
-	$root_path = "./";
-  include_once('./common.php');
-  include_once('./stats.php');
-	include_once('./header.php');
+include_once('common.php');
+include_once('stats.php');
+include_once('header.php');
 ?>
   <div class="container">
 	  <div id="content">
@@ -387,7 +386,7 @@
         </div>
   		</div>
     </div>
-		<?php include $root_path. 'footer.php'; ?>
+		<?php include_once('footer.php'); ?>
     </div>
 	</div>
 	</body>

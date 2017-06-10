@@ -67,7 +67,7 @@
           </p>
 
           <p>Reference: <a href="http://www.nature.com/nmeth/journal/vaop/ncurrent/full/nmeth.3396.html">AlQuraishi M. <i>et al</i>, Nature Genetics, 2014. doi:10.1038/ng.3138</a></p><br>
-          <?php include '../footer.php'; ?>
+          <?php include_once('../footer.php'); ?>
         </div>
       </div>
     </div>

@@ -92,7 +92,7 @@
               </div>
             </div>
           </div>
-        <?php include '../footer.php'; ?>
+        <?php include_once('../footer.php'); ?>
       </div>
     </div>
 
@@ -103,9 +103,7 @@
         var net_limit = 50;
       <?php } ?>
 
-      <?php
-        include_once('../search.php'); //Generate network data
-      ?>
+      <?php include_once('../search.php'); ?>
       console.log(networkData);
     </script>
     <script scr="/assets/scripts/network.js" type="text/javascript"></script>

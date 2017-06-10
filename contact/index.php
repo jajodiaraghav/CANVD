@@ -17,7 +17,7 @@
           For questions and bugs reporting please contact <a href='mailto:mohamed.attiashahata@utoronto.ca'>Mohamed Helmy</a>, The <a href='http://tdccbr.med.utoronto.ca/'> Donnelly Centre </a> for Cellular + Biomolecular Research (CCBR) at <a href='http://utoronto.ca/'> The University of Toronto</a>.
         </p>
         <br><br><br><br><br>
-        <?php include '../footer.php'; ?>
+        <?php include_once('../footer.php'); ?>
       </div>
     </div>
 	</body>

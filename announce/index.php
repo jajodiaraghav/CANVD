@@ -22,7 +22,7 @@
           <p class="text-justify"><?php echo $row[3];?></p>
         </div><br/>
         <?php } ?>
-        <?php include '../footer.php'; ?>
+        <?php include_once('../footer.php'); ?>
       </div>
   	</div>
 	</body>

@@ -14,7 +14,7 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']) &&
 
     if ($_POST['action'] == "replace") {
 
-      $tables = ['t_domain', 't_ensembl', 't_interaction', 't_interactions_eval', 't_interaction_mt', 't_mutations', 't_pwm', 'dataset'];
+      $tables = ['T_Domain', 'T_Ensembl', 'T_Interaction', 'T_Interactions_Eval', 'T_Interaction_MT', 'T_Mutations', 'T_PWM', 'dataset'];
 
       foreach ($tables as $table) {
         $command = "TRUNCATE TABLE $table;";

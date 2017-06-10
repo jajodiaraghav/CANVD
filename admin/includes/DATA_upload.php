@@ -25,7 +25,7 @@
 
         <div class="row text-center fileupload-radio">
           <label class="radio-inline">
-            <input type="radio" name="directory" value="IMG"> PNG/IMAGE Folder
+            <input type="radio" name="directory" value="IMG" checked="checked"> PNG/IMAGE Folder
           </label>
           <label class="radio-inline">
             <input type="radio" name="directory" value="TXT"> TXT Folder

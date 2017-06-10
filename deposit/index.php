@@ -210,6 +210,6 @@
         please <a href="http://canvd.baderlab.org/contact/">write to us.</a>
         </p><br/>
 
-        <?php include '../footer.php'; ?>
+        <?php include_once('../footer.php'); ?>
 	</body>
 </html>

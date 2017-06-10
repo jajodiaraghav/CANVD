@@ -51,7 +51,7 @@
           <p><strong>Q8- Can I use <?php include('../logo.php') ?> data with Cytoscape?</strong></p>
           <p class="text-justify">- <?php include('../logo.php') ?> network visualization was developed using Cytoscape.JS. The interaction network is available in two different formats as JSON documents and in tab-delimited format. Both can be downloaded from the download tab in left panel of the network page.</p>
 
-        <?php include $root_path. 'footer.php'; ?>
+        <?php include_once('../footer.php'); ?>
     	</div>
   	</div>
 	</body>

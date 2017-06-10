@@ -243,8 +243,7 @@ include_once('../header.php');
     <?php } else { ?>
       Error: Protein not found.
     <?php } ?>
-    <?php include $root_path. 'footer.php'; ?>
-
+    <?php include_once('footer.php'); ?>
         </div>
     	</div>
   	</div>

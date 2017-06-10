@@ -155,7 +155,7 @@ include_once('../header.php');
                 </fieldset>
               </form>
             <?php } ?>
-            <?php include '../footer.php'; ?>
+            <?php include_once('../footer.php'); ?>
           </div>
         </div>
     	</div>
