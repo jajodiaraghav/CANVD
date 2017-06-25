@@ -3,8 +3,8 @@
 	Contains files common to all pages and php files, such as
 	database connections and global variables / functions.
 */
-ini_set('display_errors','Off');
-ini_set('error_reporting',0);
+// ini_set('display_errors','Off');
+// ini_set('error_reporting',0);
 
 $settings = array(
 					'db_host' 		=> 'localhost',
