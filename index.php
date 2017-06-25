@@ -47,9 +47,8 @@ include_once('header.php');
               <div class="panel-body">
               <?php
                 $query = 'SELECT * FROM announcements WHERE `show_homepage`=1 AND `show`=1 ORDER BY id DESC;';
-                $query_params = array();
                 $stmt = $dbh->prepare($query);
-                $stmt->execute($query_params);
+                $stmt->execute();
                 while ($row = $stmt->fetch()) {
               ?>
                 <div style="margin-bottom:15px;">
@@ -60,7 +59,7 @@ include_once('header.php');
                   <?php echo substr($row[3], 0, strpos($row[3], ".") + 1); ?>
                   <br><a href='announce/'>Read more...</a>
                 </div>
-                <?php } ?>
+              <?php } ?>
               </div>
             </div>
 		      </div>
@@ -85,10 +84,9 @@ include_once('header.php');
                         <input type='hidden' value='true' name="main_search">
                         <?php
                         //Get all Mutation Types
-                        $query = "SELECT DISTINCT mut_description FROM T_Mutations;";
-                        $query_params = array();
+                        $query = "SELECT DISTINCT Mut_Description FROM T_Mutations;";
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute($query_params);
+                        $stmt->execute();
                         while ($row = $stmt->fetch()) {
                         ?>
                         <div class="checkbox">
@@ -107,9 +105,8 @@ include_once('header.php');
                         <?php
                         //Get all database sources.
                         $query = "SELECT DISTINCT Source FROM T_Mutations;";
-                        $query_params = array();
                         $stmt = $dbh->prepare($query);
-                        $stmt->execute($query_params);
+                        $stmt->execute();
                         while ($row = $stmt->fetch()) {
                         ?>
                         <label class="checkbox-inline" for="data-source-box-0">
@@ -129,7 +126,7 @@ include_once('header.php');
         			  <li><a data-tab="cancer">Proteins</a></li>
         			  <li><a data-tab="tumor">PWMs</a></li>
         			</ul>
-              <div  id="tissue-table">
+              <div id="tissue-table">
                 <table class="table table-striped table-hover">
                   <thead>
                     <tr>
@@ -151,6 +148,9 @@ include_once('header.php');
                   <li><a id="tissue-forward">Next</a></li>
                 </ul>
               </div>
+
+              <script src="assets/scripts/home.js"></script>
+
               <div id="protein-table">
                 <table class="table table-striped table-hover">
                   <thead>
@@ -167,227 +167,49 @@ include_once('header.php');
                   <tbody id="protein-table-body">
                   </tbody>
                 </table>
+                <ul class="pager" id="protein-page" data-page=0>
+                  <li><a id="protein-back">Previous</a></li>
+                  <span class='num-viewer'> Viewing 
+                  <span id="protein-start">1</span>-
+                  <span id="protein-end">20</span> of <span id="protein-total">40</span></span>
+                  <li><a id="protein-forward">Next</a></li>
+                </ul>
+              </div>
 
-              <script>
-              $(function() {
-                $("#search_form").on("submit", function( event ){
-                  if ($("#search_input").val() == ''){event.preventDefault();}
-                  else
-                  {
-                    $("#search_btn").html("<div class='spinner3' style='margin-left:10px;margin-right:10px;'><div class='cube1 cube3'></div><div class='cube2 cube3'></div></div>");
-                  }
-                });
-                //Get total counts for the tables
-            		var tissue_total = 0;
-            		var pwm_total = 0;
-            		var protein_total = 0;
-                $.ajax({
-                    url: "./tables/get_totals.php",
-                    type: "post",
-                    dataType: 'json',
-		                async: false,
-                    success: function(results){
-                      $("#tissue-total").html(results[0]);
-		                  tissue_total = results[0];		      
-                      $("#pwm-total").html(results[1]);
-		                  pwm_total = results[1];
-                      $("#protein-total").html(results[2]);
-		                  protein_total = results[2];
-                    },
-                    error:function(){
-                    }
-                  });
+              <div class="modal fade" id="testing">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <p id="actual-image-content" class="row text-center"></p>
+                  </div>
+                </div>
+              </div>
 
-                  function update_protein_view() {
-                    $("#protein-table").fadeOut('fast');
-                    var test = $("#protein-page").data("page");
-                    $("#protein-start").html(test);
-                    if ($("#protein-page").data("page") +10 < protein_total) {
-		                  $("#protein-end").html(test+10);
-		                } else {
-                		 $("#protein-end").html(protein_total);
-                    }
-
-                  $.ajax({
-                    url: "./tables/proteins.php",
-                    type: "post",
-                    data: {start:test},
-                    success: function(results) {
-                        if (onTheClick) {
-                          $("#protein-table").fadeIn('fast');
-                        }
-                        $("#protein-table-body").html('');
-                        $("#protein-table-body").html(results);
-                    },
-                    error:function(){
-                    }
-                  });
-                }
-
-                update_protein_view();
-                var onTheClick = false;
-                $("#protein-back").on( "click", function() {
-                  onTheClick = true;
-                  if ($("#protein-page").data("page") != 0) {
-                    $("#protein-page").data("page", $("#protein-page").data("page")- 10);
-                    update_protein_view();
-                  }
-                });
-                
-                $("#protein-forward").on( "click", function() {
-                  onTheClick = true;
-		              if($("#protein-page").data("page") +10< protein_total) {
-                    $("#protein-page").data("page", $("#protein-page").data("page")+ 10);
-                    update_protein_view();
-		              }
-                });
-
-                function update_pwm_view() {
-                  var test = $("#pwm-page").data("page");
-                  $("#pwm-start").html(test);
-		              if($("#pwm-page").data("page") +10< pwm_total) {
-                    $("#pwm-end").html(test+10);
-		              } else {
-                    $("#pwm-end").html(pwm_total);
-		              }
-                  $.ajax({
-                    url: "./tables/pwm.php",
-                    type: "post",
-                    data: {start:test},
-                    success: function(results){
-                      if (results ==''){
-                      } else {
-                        $("#pwm-table-body").html('');
-                        $("#pwm-table-body").html(results);
-                      }
-                    },
-                    error:function(){
-                    }
-                  });
-                }
-
-                update_pwm_view();
-                $("#pwm-back").on("click", function() {
-                  if ($("#pwm-page").data("page") != 0) {
-                    $("#pwm-page").data("page", $("#pwm-page").data("page")- 10);
-                    update_pwm_view();
-                  }
-                });
-
-                $("#pwm-forward").on( "click", function() {
-		              if($("#pwm-page").data("page") +10< pwm_total) {
-                    $("#pwm-page").data("page", $("#pwm-page").data("page")+ 10);
-                    update_pwm_view();
-		              }
-                });
-
-                function update_tissue_view() {
-                  var test = $("#tissue-page").data("page");
-		              $("#tissue-start").html(test);
-		              if($("#tissue-page").data("page") +10 < tissue_total) {
-                    $("#tissue-end").html($("#tissue-page").data("page") +10);
-            		  } else {
-              		  $("#tissue-end").html(tissue_total);
-		              }
-
-                  $.ajax({
-                    url: "./tables/tissues.php",
-                    type: "post",
-                    data: {start:test},
-                    success: function(results){
-                      if (results ==''){
-                      } else {
-                        $("#tissue-table-body").html('');
-                        $("#tissue-table-body").html(results);
-                      }
-                    },
-                    error:function(){
-                    }
-                  });
-                }
-
-                update_tissue_view();
-                $("#tissue-back").on("click", function() {
-                  if ($("#tissue-page").data("page") != 0) {
-                    $("#tissue-page").data("page", $("#tissue-page").data("page")- 10);
-                    update_tissue_view();
-                  }
-                });
-
-                $("#tissue-forward").on("click", function() {
-		              if ($("#tissue-page").data("page")+ 10 < tissue_total) {
-                    $("#tissue-page").data("page", $("#tissue-page").data("page")+ 10);
-                    update_tissue_view();
-		              }
-                });
-
-                $("#advanced_btn").on( "click", function() {
-                  if ($("#advanced_btn").text() == 'Advanced'){
-                    $("#advanced_btn").addClass("btn-info");
-                    $("#advanced_btn").text("Basic");
-                    $("#browse-and-tabs").hide();
-                    $("#advanced-search-box").show();
-                  } else {
-                    $("#advanced_btn").removeClass("btn-info");
-                    $("#advanced_btn").text("Advanced");
-                    $("#browse-and-tabs").show();
-                    $("#advanced-search-box").hide();
-                  }
-                });
-                $("body").on( "click", ".pwm-img", function() {
-                  $("#testing").modal('show');
-                  $("#actual-image-content").css("padding-top", "15px");
-                  $("#actual-image-content").html($(this).clone().css("height", "200px"));
-                  $("#actual-image-content").append($(this).data("content"));
-                });
-
-                $('#example').popover();
-              });
-              </script>
-
-              <ul class="pager" id="protein-page" data-page=0>
-                <li><a id="protein-back">Previous</a></li>
-                <span class='num-viewer'> Viewing 
-                <span id="protein-start">1</span>-
-                <span id="protein-end">20</span> of <span id="protein-total">40</span></span>
-                <li><a id="protein-forward">Next</a></li>
-              </ul>
-            </div>
-
-          <div class="modal fade" id="testing">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <p id="actual-image-content" class="row text-center"></p>
+              <div id="pwm-table">
+                <table class="table table-striped table-hover" id="pwm-actual-table">
+                  <thead>
+                    <tr>
+                      <th>PWM</th>
+                      <th>Logo</th>
+                      <th>PWM</th>
+                      <th>Logo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pwm-table-body"></tbody>
+                </table>
+                <ul class="pager" id="pwm-page" data-page=0>
+                  <li><a id="pwm-back">Previous</a></li>
+                  <span  class='num-viewer'> Viewing 
+                    <span id="pwm-start">1</span>-
+                    <span id="pwm-end">20</span> of <span id="pwm-total">40</span>
+                  </span>
+                  <li><a id="pwm-forward">Next</a></li>
+                </ul>
               </div>
             </div>
-          </div>
-
-          <div id="pwm-table">
-            <table class="table table-striped table-hover" id="pwm-actual-table">
-              <thead>
-                <tr>
-                  <th>PWM</th>
-                  <th>Logo</th>
-                  <th>PWM</th>
-                  <th>Logo</th>
-                </tr>
-              </thead>
-              <tbody id="pwm-table-body"></tbody>
-            </table>
-            <ul class="pager" id="pwm-page" data-page=0>
-              <li><a id="pwm-back">Previous</a></li>
-              <span  class='num-viewer'> Viewing 
-                <span id="pwm-start">1</span>-
-                <span id="pwm-end">20</span> of <span id="pwm-total">40</span>
-              </span>
-              <li><a id="pwm-forward">Next</a></li>
-            </ul>
-          </div>
+  		    </div>
         </div>
-  		</div>
-    </div>
-		<?php include_once('footer.php'); ?>
-    </div>
-	</div>
+		    <?php include_once('footer.php'); ?>
+      </div>
+	  </div>
 	</body>
 </html>

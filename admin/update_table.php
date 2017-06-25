@@ -2,58 +2,68 @@
 include_once('../common.php');
 
 $query ="DELETE FROM tissue_table_browser;";
-$query_params = array();
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 
-$query = "SELECT DISTINCT tumour_site FROM T_Mutations;";
-$query_params = array();
+$query = "SELECT DISTINCT Tumour_Site FROM T_Mutations;";
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 
 while ($row = $stmt->fetch())
 {
-	$tissue = $row[0];
-	$query = "SELECT COUNT(MUTATION_ID) FROM T_Mutations use index (MUTATION_ID) WHERE tumour_site=:tissue;";
-	$query_params = array(":tissue" => $tissue);
+	$param = array(":tissue" => $row[0]);
+
+	$query = "SELECT COUNT(Mutation_ID) FROM T_Mutations use index (Mutation_ID) WHERE Tumour_Site=:tissue;";
 	$stmt2 = $dbh->prepare($query);
-	$stmt2->execute($query_params);
+	$stmt2->execute($param);
 	$mutation_count = $stmt2->fetch()[0];
 
-	$query = "SELECT COUNT(Distinct EnsPID) FROM T_Mutations use index (MUTATION_ID) WHERE tumour_site=:tissue;";
-	$query_params = array(":tissue" => $tissue);
+	$query = "SELECT COUNT(Distinct EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
+				ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+				WHERE T_Mutations.Tumour_Site=:tissue;";
 	$stmt2 = $dbh->prepare($query);
-	$stmt2->execute($query_params);
+	$stmt2->execute($param);
 	$protein_count = $stmt2->fetch()[0];
 
-	$query = "SELECT Distinct EnsPID FROM T_Mutations WHERE tumour_site=:tissue;";
-	$query_params = array(":tissue" => $tissue);
+	$query = "SELECT Distinct EnsPID FROM T_Ensembl INNER JOIN T_Mutations
+				ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+				WHERE T_Mutations.Tumour_Site=:tissue;";
 	$stmt2 = $dbh->prepare($query);
-	$stmt2->execute($query_params);
-	$ids = array();
+	$stmt2->execute($param);
+
+	$PID = array();
 	while ($row = $stmt2->fetch())
 	{
-		$ids[] = $row[0];
+		$PID[] = $row[0];
 	}
+	$P_List = "'" . implode("','", $PID) . "'";
 
-	// Count Interactions
-	$plist = '\'' . implode('\',\'', $ids) . '\'';
-	$query = "SELECT COUNT(*) FROM T_Interaction_MT WHERE Int_EnsPID IN(" . $plist . ") AND (Eval='False' OR Eval='FALSE');";
-	$query_params = array();
+	// Count Interactions	
+	$query = "SELECT COUNT(*) FROM T_Interactions_MT INNER JOIN T_Interactions
+				ON T_Interactions.IID = T_Interactions_MT.IID
+				WHERE Interaction_EnsPID IN(" . $P_List . ") AND (Eval='False' OR Eval='FALSE');";
 	$stmt2 = $dbh->prepare($query);
-	$stmt2->execute($query_params);
+	$stmt2->execute();
 	$loss_num = $stmt2->fetch()[0];
 
-	$query = "SELECT COUNT(*) FROM T_Interaction_MT WHERE Int_EnsPID IN(" . $plist . ") AND (Eval='True' OR Eval='TRUE';";
-	$query_params = array();
+	$query = "SELECT COUNT(*) FROM T_Interactions_MT INNER JOIN T_Interactions
+				ON T_Interactions.IID = T_Interactions_MT.IID
+				WHERE Interaction_EnsPID IN(" . $P_List . ") AND (Eval='True' OR Eval='TRUE';";
 	$stmt2 = $dbh->prepare($query);
-	$stmt2->execute($query_params);
+	$stmt2->execute();
 	$gain_num = $stmt2->fetch()[0];
 
-	$query = "INSERT INTO  `tissue_table_browser` (`Tissue` ,`variants` ,`proteins`, `gain`, `loss`) VALUES (:tissue,  :muts,  :prots, :gain, :loss);";
-	$query_params = array(":tissue" => $tissue, ":muts" => $mutation_count, ":prots" => $protein_count, ':gain' => $gain_num, ':loss' => $loss_num);
+	$query = "INSERT INTO  `tissue_table_browser` (`Tissue` ,`variants` ,`proteins`, `gain`, `loss`)
+				VALUES (:tissue,  :muts,  :prots, :gain, :loss);";
+	$params = array(
+						":tissue" => $tissue,
+						":muts" => $mutation_count,
+						":prots" => $protein_count,
+						':gain' => $gain_num,
+						':loss' => $loss_num
+					);
 	$stmt2 = $dbh->prepare($query);
-	$stmt2->execute($query_params);
+	$stmt2->execute($params);
 }
 
 header("Location: index.php?submit=Tissue");

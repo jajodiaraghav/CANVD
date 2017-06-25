@@ -89,3 +89,9 @@ body {
 	padding-right:5px;
 	font-size:0.75em;
 }
+.pwm_table_data_style {
+	font-size:0.6em;
+	max-width:400px;
+	word-wrap:break-word;
+	margin-left:100px;
+}

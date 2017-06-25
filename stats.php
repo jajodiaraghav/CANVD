@@ -1,50 +1,42 @@
 <?php
-/*
-	Generates sitewide statistics for CANVD
-*/
-
 include_once('common.php');
+
+/* Generates sitewide statistics for CANVD */
 
 //Count # of Domains
 $query = 'SELECT COUNT(Domain) FROM T_Domain;';
-$query_params = array();
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 $domain_count = $stmt->fetch()[0];
 
 //Count # of Proteins
 $query = 'SELECT COUNT(EnsPID) FROM T_Ensembl;';
-$query_params = array();
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 $protein_count = $stmt->fetch()[0];
 
 //Count # of Interactions
-$query = 'SELECT COUNT(IID) FROM T_Interaction;';
-$query_params = array();
+$query = 'SELECT COUNT(IID) FROM T_Interactions;';
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 $interaction_count = $stmt->fetch()[0];
 
 //Count # of Mutations
-$query = 'SELECT COUNT(MUTATION_ID) FROM T_Mutations;';
-$query_params = array();
+$query = 'SELECT COUNT(Mutation_ID) FROM T_Mutations;';
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 $mutation_count = $stmt->fetch()[0];
 
 //Count # of Rewiring Effects
-$query = 'SELECT COUNT(IID) FROM T_Interaction_MT;';
-$query_params = array();
+$query = 'SELECT COUNT(IID) FROM T_Interactions_MT;';
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 $rewire_count = $stmt->fetch()[0];
 
 //Count # of PWMs
 $query = 'SELECT COUNT(PWM) FROM T_PWM;';
-$query_params = array();
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
+$stmt->execute();
 $pwm_count = $stmt->fetch()[0];	
 
 ?>
