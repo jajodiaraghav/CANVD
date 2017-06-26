@@ -7,8 +7,10 @@ function questionMarks($matrixLength, $rowLength)
 	return $QMarks;
 }
 
+$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, TRUE);
+
 /* Domain */
-$query = "INSERT IGNORE INTO  `T_Domain` (`Domain`, `Type`, `DomainStartPos`, `DomainEndPos`, `DomainSequence`, `Domain_Interpro_ID`, `Domain_EnsPID`, `Domain_EnsTID`)
+$query = "INSERT IGNORE INTO `T_Domain` (`Domain`, `Type`, `DomainStartPos`, `DomainEndPos`, `DomainSequence`, `Domain_Interpro_ID`, `Domain_EnsPID`, `Domain_EnsTID`)
 		  VALUES " . questionMarks(8 * ($columnLength - $pointer), 8);
 $handler = $dbh->prepare($query);
 $handler->execute($domains);
@@ -44,6 +46,6 @@ $handler->execute($interactions_Eval);
 
 /* Ensembl */
 $query = "INSERT IGNORE INTO  `T_Ensembl` (`EnsPID`, `EnsTID`, `EnsGID`, `Version`, `GeneName`, `Description`, `Sequence`)
-		  VALUES " . questionMarks(2 * 7 * ($columnLength - $pointer), 7);
+		  VALUES " . questionMarks($ensembl_rows * 7 * ($columnLength - $pointer), 7);
 $handler = $dbh->prepare($query);
 $handler->execute($ensembl);

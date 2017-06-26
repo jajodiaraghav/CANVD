@@ -68,7 +68,8 @@ if(isset($_GET['tissue']))
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type
             AND Tumour_Site IN (" . $P_List . ")";
 
-  $query3 = "SELECT COUNT(Mutation_ID) FROM T_Mutations WHERE Source RLIKE :source
+  $query3 = "SELECT COUNT(Mutation_ID) FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type
             AND Tumour_Site IN (" . $P_List . ")";
 }
@@ -83,7 +84,8 @@ else
             ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type";
 
-  $query3 = "SELECT COUNT(Mutation_ID) FROM T_Mutations WHERE Source RLIKE :source
+  $query3 = "SELECT COUNT(Mutation_ID) FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type";
 }
 
@@ -189,7 +191,7 @@ while ($row = $stmt->fetch())
 // Get the effects
 $effects = array();
 $P_List = "'" . implode("','", $interaction_ids) . "'";
-$query = 'SELECT IID, Eval FROM T_Interaction_MT WHERE IID IN(' . $P_List . ');';
+$query = 'SELECT IID, Eval FROM T_Interactions_MT WHERE IID IN(' . $P_List . ');';
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 

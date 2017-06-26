@@ -5,6 +5,7 @@
 */
 // ini_set('display_errors','Off');
 // ini_set('error_reporting',0);
+ini_set('memory_limit', '-1');
 
 $settings = array(
 					'db_host' 		=> 'localhost',
