@@ -10,17 +10,18 @@ $stmt = $dbh->prepare($query);
 $stmt->execute($query_params);
 
 $interactions = array();
-while ($row = $stmt->fetch()) {
+while ($row = $stmt->fetch())
+{
 	$interactions[$row[0]] = array($row[1],$row[2]);
 }
 
 //Get all Interaction
-$plist = '\'' . implode('\',\'', array_keys($interactions)) . '\'';
-$query = 'SELECT * FROM T_Interactions_Eval WHERE IID IN(' . $plist . ');';
-$query_params = array();
+$P_List = "'" . implode("','", array_keys($interactions)) . "'";
+$query = 'SELECT * FROM T_Interactions_Eval WHERE IID IN(' . $P_List . ');';
 $stmt = $dbh->prepare($query);
-$stmt->execute($query_params);
-while ($row = $stmt->fetch()) {
+$stmt->execute();
+while ($row = $stmt->fetch())
+{
 	$interactions[$row[0]] = array_merge($interactions[$row[0]], $row);
 }
 
@@ -31,7 +32,7 @@ header("Connection: close");
 
 echo "SH3 binding protein\tInteracting proteins\tBiological process\tDisorder\tGene expression\tLocalization\tMolecular function\tPeptide conservation\tProtein expression\tSequence signature\tSurface accessibility\tAverage Interaction Score\n";
 
-foreach($interactions as $i) {
-
+foreach($interactions as $i)
+{
 	echo $i[0] . "\t" . $i[1] . "\t" . $i['Biological_process'] . "\t" . $i['Disorder'] . "\t" . $i['Gene_expression'] . "\t" . $i['Localization'] . "\t" . $i['Molecular_function'] . "\t" . $i['Peptide_conservation'] . "\t" . $i['Protein_expression'] . "\t" . $i['Sequence_signature'] . "\t" . $i['Surface_accessibility'] . "\t" . $i['Avg'] . "\n";
 }

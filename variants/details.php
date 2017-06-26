@@ -15,27 +15,31 @@ include_once('../header.php');
       if(isset($_GET['variant'])) {
         $query = 'SELECT GeneName, Description FROM T_Ensembl WHERE EnsPID=:ens;';
         $stmt = $dbh->prepare($query);
-        $query_params = array(':ens'=> $_GET['variant']);
-        $stmt->execute($query_params);
-        $name = '';
-        $description = '';
+        $param = array(':ens'=> $_GET['variant']);
+        $stmt->execute($param);
         while ($row = $stmt->fetch())
         {
           $name = $row[0];
           $description = $row[1];
         }
 
-        if(isset($_GET['tissues'])) {
+        if(isset($_GET['tissues']))
+        {
           $tissue = $_GET['tissues'];
           $tissues = explode(",",$tissue);
-          function sanitize($s) {
-            return htmlspecialchars($s);
-          }
+          function sanitize($s) { return htmlspecialchars($s); }
           $t = array_map('sanitize', $tissues);
-          $plist = '\'' . implode('\',\'', $t) . '\'';
-          $query = 'SELECT EnsPID, mut_syntax_aa, tumour_site, MUTATION_ID, mut_description FROM T_Mutations WHERE EnsPID=:ens AND tumour_site IN(' . $plist . ') ;';
-        } else {
-          $query = 'SELECT EnsPID, mut_syntax_aa, tumour_site, MUTATION_ID, mut_description FROM T_Mutations WHERE EnsPID=:ens;';
+          $P_List = "'" . implode("','", $t) . "'";
+
+          $query = 'SELECT EnsPID, Tumour_Site, Mutation_ID, Mut_Description FROM T_Ensembl
+                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+                    WHERE EnsPID=:ens AND Tumour_Site IN(' . $plist . ')';
+        }
+        else
+        {
+          $query = 'SELECT EnsPID, Tumour_Site, Mutation_ID, Mut_Description FROM T_Ensembl
+                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+                    WHERE EnsPID=:ens';
         }
 
         $stmt = $dbh->prepare($query);
@@ -53,14 +57,14 @@ include_once('../header.php');
         $interactions = array();
         foreach($variants as $var)
         {
-          $query = 'SELECT Mut_Syntax, WT, MT, Eval, IID FROM T_Interaction_MT WHERE Int_EnsPID=:ens and Mut_Syntax = :aa;';
+          $query = 'SELECT WT, MT, Eval, IID FROM T_Interaction_MT WHERE Int_EnsPID=:ens';
           $stmt = $dbh->prepare($query);
-          $query_params = array(':ens'=> $var[0], ':aa' => $var[1]);
+          $query_params = array(':ens'=> $var[0]);
           $stmt->execute($query_params);
           while ($row = $stmt->fetch())
           {
-            $effects[$row[0]][$row[4]] = $row[3];
-            $mut_syntaxes_to_ids[$row[4]] = $row[0];
+            $effects[$row[0]][$row[3]] = $row[2];
+            $mut_syntaxes_to_ids[$row[3]] = $row[0];
           }
         }
 

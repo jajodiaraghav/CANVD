@@ -89,16 +89,15 @@ include_once('../header.php');
                           <label class="col-md-3 control-label" for="variant-effect">Mutation Type</label>
                           <div class="col-md-7">
                           <?php
-                            $query = "SELECT DISTINCT mut_description FROM T_Mutations;";
-                            $query_params = array();
+                            $query = "SELECT DISTINCT Mut_Description FROM T_Mutations;";
                             $stmt = $dbh->prepare($query);
-                            $stmt->execute($query_params);
+                            $stmt->execute();
                             while ($row = $stmt->fetch()) {
                           ?>
                           <div class="checkbox">
                             <label>
-                              <input type="checkbox" checked name="mut_type[]" id="variant-effect-0" value="<?php echo $row[0] ?>">
-                              <?php echo $row[0] ?>
+                              <input type="checkbox" checked name="mut_type[]" id="variant-effect-0" value="<?=$row[0]?>">
+                              <?= $row[0] ?>
                             </label>
                           </div>
                           <?php } ?>
@@ -110,9 +109,8 @@ include_once('../header.php');
                         <div class="col-md-7">
                         <?php
                           $query = "SELECT DISTINCT Source FROM T_Mutations;";
-                          $query_params = array();
                           $stmt = $dbh->prepare($query);
-                          $stmt->execute($query_params);
+                          $stmt->execute();
                           while ($row = $stmt->fetch()) {
                         ?>
                         <label class="checkbox-inline" for="data-source-box-0">
@@ -133,14 +131,12 @@ include_once('../header.php');
                         <select id="selectmultiple" name="tissue[]" class="form-control" multiple="multiple" style="height:160px;">
                         <?php
                           $query = "SELECT * FROM tissue_table_browser;";
-                          $query_params = array();
                           $stmt = $dbh->prepare($query);
-                          $stmt->execute($query_params);
-                          $tissues = array();
+                          $stmt->execute();
                           while ($row = $stmt->fetch()) {
                         ?>
-                        <option value="<?php echo $row[1];?>">
-                          <?php echo ucwords(str_replace("_"," ", $row[1]));;?>
+                        <option value="<?=$row[1]?>">
+                          <?=ucwords(str_replace("_"," ", $row[1]))?>
                         </option>
                         <?php } ?>
                         </select>

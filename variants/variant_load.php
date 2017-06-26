@@ -56,17 +56,35 @@ if(isset($_GET['tissue']))
   function sanitize($s) { return htmlspecialchars($s); }
 
   $t = array_map('sanitize', $tissues);
-  $plist = '\'' . implode('\',\'', $t) . '\'';
+  $P_List = "'" . implode("','", $t) . "'";
 
-  $query = "SELECT DISTINCT EnsPID FROM T_Mutations WHERE Source RLIKE :source AND `gene name` RLIKE :name AND mut_description RLIKE :type AND tumour_site IN (" . $plist . ") LIMIT "  . $start . ',' . $end . ';';
-  $query2 = "SELECT COUNT(EnsPID) FROM T_Mutations WHERE Source RLIKE :source AND `gene name` RLIKE :name AND mut_description RLIKE :type AND tumour_site IN (" . $plist . ");";
-  $query3 = "SELECT COUNT(MUTATION_ID) FROM T_Mutations WHERE Source RLIKE :source AND `gene name` RLIKE :name AND mut_description RLIKE :type AND tumour_site IN (" . $plist . ");";
+  $query = "SELECT DISTINCT EnsPID FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            AND GeneName RLIKE :name AND Mut_Description RLIKE :type
+            AND Tumour_Site IN (" . $P_List . ") LIMIT " . $start . ',' . $end;
+
+  $query2 = "SELECT COUNT(EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            AND GeneName RLIKE :name AND Mut_Description RLIKE :type
+            AND Tumour_Site IN (" . $P_List . ")";
+
+  $query3 = "SELECT COUNT(Mutation_ID) FROM T_Mutations WHERE Source RLIKE :source
+            AND GeneName RLIKE :name AND Mut_Description RLIKE :type
+            AND Tumour_Site IN (" . $P_List . ")";
 }
 else
 {
-  $query = "SELECT DISTINCT EnsPID FROM T_Mutations WHERE Source RLIKE :source AND `gene name` RLIKE :name AND mut_description RLIKE :type LIMIT "  . $start . ',' . $end . ';';
-  $query2 = "SELECT COUNT(EnsPID) FROM T_Mutations WHERE Source RLIKE :source AND `gene name` RLIKE :name AND mut_description RLIKE :type;";
-  $query3 = "SELECT COUNT(MUTATION_ID) FROM T_Mutations WHERE Source RLIKE :source AND `gene name` RLIKE :name AND mut_description RLIKE :type;";
+  $query = "SELECT DISTINCT EnsPID FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            AND GeneName RLIKE :name AND Mut_Description RLIKE :type
+            LIMIT " . $start . ',' . $end;
+
+  $query2 = "SELECT COUNT(EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            AND GeneName RLIKE :name AND Mut_Description RLIKE :type";
+
+  $query3 = "SELECT COUNT(Mutation_ID) FROM T_Mutations WHERE Source RLIKE :source
+            AND GeneName RLIKE :name AND Mut_Description RLIKE :type";
 }
 
 //Get first twenty protein IDs
@@ -112,15 +130,20 @@ if (isset($_GET['is_tissue']))
 }
 
 //Get all variants of proteins which match the original Tissue, Source, and Mutation Type specifications
-$elist = '\'' . implode('\',\'', $variant_proteins) . '\'';
+$E_List = "'" . implode("','", $variant_proteins) . "'";
 $query_params = array(":source" => $source, ":type" => $type);
 if(isset($_GET['tissue']))
 {
-  $query4 = "SELECT EnsPID, tumour_site, `gene name`, mut_syntax_aa FROM T_Mutations WHERE Source RLIKE :source AND mut_description RLIKE :type AND tumour_site IN (" . $plist . ") AND EnsPID IN (" . $elist . ");";
+  $query4 = "SELECT EnsPID, Tumour_site, GeneName FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            AND Mut_Description RLIKE :type AND Tumour_Site IN (" . $P_List . ")
+            AND EnsPID IN (" . $E_List . ")";
 }
 else
 {
-  $query4 = "SELECT EnsPID, tumour_site, `gene name`, mut_syntax_aa FROM T_Mutations WHERE Source RLIKE :source AND mut_description RLIKE :type AND EnsPID IN (" . $elist . ");";
+  $query4 = "SELECT EnsPID, Tumour_Site, GeneName FROM T_Ensembl INNER JOIN T_Mutations
+            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            AND Mut_Description RLIKE :type AND EnsPID IN (" . $E_List . ")";
 }
 
 $stmt = $dbh->prepare($query4);
@@ -151,11 +174,10 @@ while ($row = $stmt->fetch())
 // Get the interactions
 $interactions = array();
 $interaction_ids = array();
-$plist = '\'' . implode('\',\'', $variant_ids) . '\'';
-$query = 'SELECT IID, Interaction_EnsPID FROM T_Interaction WHERE Interaction_EnsPID IN(' . $plist . ');';
+$P_List = "'" . implode("','", $variant_ids) . "'";
+$query = 'SELECT IID, Interaction_EnsPID FROM T_Interactions WHERE Interaction_EnsPID IN(' . $P_List . ')';
 $stmt = $dbh->prepare($query);
-$query_params = array();
-$stmt->execute($query_params);
+$stmt->execute();
 
 while ($row = $stmt->fetch())
 {
@@ -166,11 +188,10 @@ while ($row = $stmt->fetch())
 
 // Get the effects
 $effects = array();
-$plist = '\'' . implode('\',\'', $interaction_ids) . '\'';
-$query = 'SELECT IID, Eval FROM T_Interaction_MT WHERE IID IN(' . $plist . ');';
+$P_List = "'" . implode("','", $interaction_ids) . "'";
+$query = 'SELECT IID, Eval FROM T_Interaction_MT WHERE IID IN(' . $P_List . ');';
 $stmt = $dbh->prepare($query);
-$query_params = array();
-$stmt->execute($query_params);
+$stmt->execute();
 
 while ($row = $stmt->fetch())
 {
@@ -206,26 +227,26 @@ foreach ($variants as $name => $data)
     }
   }
 
-  $plist = implode($tissues);
-  if (array_key_exists($name, $effects)) $elist = implode(', ',$effects[$name]);
-  else $elist = 'None';
+  $P_List = implode($tissues);
+  if (array_key_exists($name, $effects)) $E_List = implode(', ',$effects[$name]);
+  else $E_List = 'None';
 
   if (!isset($_GET['tissue'])) $_GET['tissue'] = $tissue_data;
 
   if (isset($_GET['download']))
   {
-    echo implode('+',$tissues) . "\t" . $name . "\t" . $variant_names[$name] . "\t" . count($data) . "\t" . $int_num . "\t" . $elist . "\n";
+    echo implode('+',$tissues) . "\t" . $name . "\t" . $variant_names[$name] . "\t" . count($data) . "\t" . $int_num . "\t" . $E_List . "\n";
   }
   else
   {
 ?>
-    <tr data-protein="<?php echo $name;?>" class="normal">
-        <td><?php echo implode(', ',$tissues);?></td>
-        <td class="selectable"><?php echo $name;?></td>
-        <td class="selectable"><?php echo $variant_names[$name];?></td>
-        <td class="mut-count"><?php echo $variant_count[$name];?></td>
-        <td><?php echo $int_num;?></td>
-        <td><?php echo $elist;?></td>
+    <tr data-protein="<?=$name?>" class="normal">
+      <td><?=implode(', ',$tissues)?></td>
+      <td class="selectable"><?=$name?></td>
+      <td class="selectable"><?=$variant_names[$name]?></td>
+      <td class="mut-count"><?=$variant_count[$name]?></td>
+      <td><?=$int_num?></td>
+      <td><?=$E_List?></td>
     </tr>
 <?php
   }
