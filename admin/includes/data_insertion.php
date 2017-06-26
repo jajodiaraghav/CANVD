@@ -14,36 +14,36 @@ $handler = $dbh->prepare($query);
 $handler->execute($domains);
 
 /* PWM */
-$query = "INSERT INTO  `T_PWM` (`PWM` ,`Domain`) VALUES " . questionMarks(2 * ($columnLength - $pointer), 2);
+$query = "INSERT IGNORE INTO  `T_PWM` (`PWM` ,`Domain`) VALUES " . questionMarks(2 * ($columnLength - $pointer), 2);
 $handler = $dbh->prepare($query);
 $handler->execute($PWM);
 
 /* Interactions */
-$query = "INSERT INTO  `T_Interactions` (`IID`, `PWM`, `Domain_EnsPID`, `Interaction_EnsPID`, `Dataset_ID`)
+$query = "INSERT IGNORE INTO  `T_Interactions` (`IID`, `PWM`, `Domain_EnsPID`, `Interaction_EnsPID`, `Dataset_ID`)
 		  VALUES " . questionMarks(5 * ($columnLength - $pointer), 5);
 $handler = $dbh->prepare($query);
 $handler->execute($interactions);
 
 /* Mutation */
-$query = "INSERT INTO  `T_Mutations` (`Mutation_ID` ,`Mut_Description` ,`Tumour_Site`, `Mutation_Source_ID`, `Source`, `EnsGID`)
+$query = "INSERT IGNORE INTO  `T_Mutations` (`Mutation_ID` ,`Mut_Description` ,`Tumour_Site`, `Mutation_Source_ID`, `Source`, `EnsGID`)
 		  VALUES " . questionMarks(6 * ($columnLength - $pointer), 6);
 $handler = $dbh->prepare($query);
 $handler->execute($mutations);
 
 /* Interactions_MT */
-$query = "INSERT INTO  `T_Interactions_MT` (`IID`, `Mutation_ID`, `WT`, `MT`, `WTscore`, `MTscore`, `DeltaScore`, `LOG2`, `Eval`)
+$query = "INSERT IGNORE INTO  `T_Interactions_MT` (`IID`, `Mutation_ID`, `WT`, `MT`, `WTscore`, `MTscore`, `DeltaScore`, `LOG2`, `Eval`)
 		  VALUES " . questionMarks(9 * ($columnLength - $pointer), 9);
 $handler = $dbh->prepare($query);
 $handler->execute($interactions_MT);
 
 /* Interactions_Eval */
-$query = "INSERT INTO  `T_Interactions_Eval` (`IID`, `Gene_expression`, `Protein_expression`, `Disorder`,`Surface_accessibility`, `Peptide_conservation`, `Molecular_function`, `Biological_process`, `Localization`, `Sequence_signature`, `Avg`)
+$query = "INSERT IGNORE INTO  `T_Interactions_Eval` (`IID`, `Gene_expression`, `Protein_expression`, `Disorder`,`Surface_accessibility`, `Peptide_conservation`, `Molecular_function`, `Biological_process`, `Localization`, `Sequence_signature`, `Avg`)
 		  VALUES " . questionMarks(11 * ($columnLength - $pointer), 11);
 $handler = $dbh->prepare($query);
 $handler->execute($interactions_Eval);
 
 /* Ensembl */
-$query = "INSERT INTO  `T_Ensembl` (`EnsPID`, `EnsTID`, `EnsGID`, `Version`, `GeneName`, `Description`, `Sequence`)
+$query = "INSERT IGNORE INTO  `T_Ensembl` (`EnsPID`, `EnsTID`, `EnsGID`, `Version`, `GeneName`, `Description`, `Sequence`)
 		  VALUES " . questionMarks(2 * 7 * ($columnLength - $pointer), 7);
 $handler = $dbh->prepare($query);
 $handler->execute($ensembl);

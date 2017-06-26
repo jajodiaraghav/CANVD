@@ -37,12 +37,17 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']) &&
     $PWM = array();
     $dataset = array();
     $mutations = array();
+    $pointer = 0;
 
     foreach($arrayContent as $i => $rowString)
     {
       $row = explode("\t", $rowString);
 
-      if($i == 0 && $row[0] === "Unique identifier for interactor A") continue;      
+      if($i == 0 && $row[0] === "Unique identifier for interactor A") 
+      {
+        $pointer = 1;
+        continue;
+      }
 
       // Domain Table
       $domainData = explode(";", $row[25]);
@@ -76,7 +81,7 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']) &&
       }
       else
       {
-        $query = "INSERT INTO T_Dataset (`Author`, `Publication`) VALUES (':author', ':publication')";
+        $query = "INSERT IGNORE INTO T_Dataset (`Author`, `Publication`) VALUES (':author', ':publication')";
         $stmt = $dbh->prepare($query);
         $result = $stmt->execute($dataset);
         $Dataset_ID = $dbh->lastInsertId();
@@ -124,7 +129,7 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']) &&
       $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[7])); // Surface_accessibility
       $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[8])); // Peptide_conservation
       $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[9])); // Molecular_function
-      $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[10])); // Biological Process
+      $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[10])); // Biological_process
       $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[11])); // Localization
       $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[12])); // Sequence_signature
       $interactions_Eval[] = end(explode(":", $Int_Mt_Data_1[13])); // Avg
@@ -141,18 +146,20 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']) &&
       $ensembl[] = end(explode(":", $ensemblData[2])); // Sequence
 
       // Ensembl Table (Peptide)
-      $ensemblData = explode(";", $row[33]);
+      if($row[33] != "-" && $row[33] != "NA")
+      {
+        $ensemblData = explode(";", $row[33]);
 
-      $ensembl[] = $Interaction_EnsPID; // EnsPID
-      $ensembl[] = end(explode(":", $row[3])); // EnsTID
-      $ensembl[] = end(explode(":", $ensemblData[0])); // EnsGID
-      $ensembl[] = end(explode(":", $row[12])); // Version
-      $ensembl[] = end(explode(":", $row[5])); // GeneName
-      $ensembl[] = end(explode(":", $ensemblData[1])); // Description
-      $ensembl[] = end(explode(":", $ensemblData[2])); // Sequence
+        $ensembl[] = $Interaction_EnsPID; // EnsPID
+        $ensembl[] = end(explode(":", $row[3])); // EnsTID
+        $ensembl[] = end(explode(":", $ensemblData[0])); // EnsGID
+        $ensembl[] = end(explode(":", $row[12])); // Version
+        $ensembl[] = end(explode(":", $row[5])); // GeneName
+        $ensembl[] = end(explode(":", $ensemblData[1])); // Description
+        $ensembl[] = end(explode(":", $ensemblData[2])); // Sequence
+      }      
     }
-
-    $pointer = $row[0] === "Unique identifier for interactor A" ? 1 : 0;
+    
     include_once('includes/data_insertion.php');
   }
 
