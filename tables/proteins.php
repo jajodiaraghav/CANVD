@@ -1,12 +1,13 @@
 <?php
 include_once('../common.php');
 
-$start = $_POST['start'];
-$end = (int) $start + 10;
+$start = isset($_POST['start']) ? $_POST['start'] : 0;
 
-$query = 'SELECT GeneName, Type, Domain_EnsPID FROM T_Domain, T_Ensembl
-			WHERE T_Ensembl.EnsPID = T_Domain.Domain_EnsPID ORDER BY GeneName
-			LIMIT ' . strval($start) . ", 10;";
+$query = 'SELECT GeneName, Type, Domain_EnsPID
+			FROM T_Domain, T_Ensembl
+			WHERE T_Ensembl.EnsPID = T_Domain.Domain_EnsPID
+			ORDER BY GeneName
+			LIMIT ' . strval($start) . ", 10";
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 
@@ -20,23 +21,25 @@ foreach ($proteins as $protein)
 {
 	$param = array(':protid' => $protein[2]);
 
-	$query = "SELECT COUNT(DISTINCT Interaction_EnsPID) FROM T_Interactions
-				WHERE T_Interactions.IID = T_Interactions_MT.IID
-				AND T_Interactions.Domain_EnsPID=:protid
+	$query = "SELECT COUNT(DISTINCT Peptide_EnsPID) FROM T_Interactions
+				LEFT JOIN T_Interactions_MT
+				ON T_Interactions.IID = T_Interactions_MT.IID
+				WHERE T_Interactions.Domain_EnsPID=:protid
 				AND T_Interactions_MT.Eval='loss of function'";
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($param);
 	$loss_num = $stmt->fetch()[0];
 
-	$query = "SELECT COUNT(DISTINCT Interaction_EnsPID) FROM T_Interactions
-				WHERE T_Interactions.IID = T_Interactions_MT.IID
-				AND T_Interactions.Domain_EnsPID=:protid
+	$query = "SELECT COUNT(DISTINCT Peptide_EnsPID) FROM T_Interactions
+				LEFT JOIN T_Interactions_MT
+				ON T_Interactions.IID = T_Interactions_MT.IID
+				WHERE T_Interactions.Domain_EnsPID=:protid
 				AND T_Interactions_MT.Eval='gain of function'";
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($param);
 	$gain_num = $stmt->fetch()[0];
 
-	$query = "SELECT COUNT(DISTINCT Interaction_EnsPID) FROM T_Interactions WHERE Domain_EnsPID=:protid;";
+	$query = "SELECT COUNT(DISTINCT Peptide_EnsPID) FROM T_Interactions WHERE Domain_EnsPID=:protid";
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($param);
 	$mut_num = $stmt->fetch()[0];

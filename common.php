@@ -22,5 +22,7 @@ $dbh = new PDOext(
 					$settings['db_user'],
 					$settings['db_password']
 				);
+
 $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+
 ?>

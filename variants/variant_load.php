@@ -59,33 +59,33 @@ if(isset($_GET['tissue']))
   $P_List = "'" . implode("','", $t) . "'";
 
   $query = "SELECT DISTINCT EnsPID FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type
             AND Tumour_Site IN (" . $P_List . ") LIMIT " . $start . ',' . $end;
 
   $query2 = "SELECT COUNT(EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type
             AND Tumour_Site IN (" . $P_List . ")";
 
   $query3 = "SELECT COUNT(Mutation_ID) FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type
             AND Tumour_Site IN (" . $P_List . ")";
 }
 else
 {
   $query = "SELECT DISTINCT EnsPID FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type
             LIMIT " . $start . ',' . $end;
 
   $query2 = "SELECT COUNT(EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type";
 
   $query3 = "SELECT COUNT(Mutation_ID) FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND GeneName RLIKE :name AND Mut_Description RLIKE :type";
 }
 
@@ -137,14 +137,14 @@ $query_params = array(":source" => $source, ":type" => $type);
 if(isset($_GET['tissue']))
 {
   $query4 = "SELECT EnsPID, Tumour_site, GeneName FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND Mut_Description RLIKE :type AND Tumour_Site IN (" . $P_List . ")
             AND EnsPID IN (" . $E_List . ")";
 }
 else
 {
   $query4 = "SELECT EnsPID, Tumour_Site, GeneName FROM T_Ensembl INNER JOIN T_Mutations
-            ON T_Mutations.EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
+            ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID WHERE Source RLIKE :source
             AND Mut_Description RLIKE :type AND EnsPID IN (" . $E_List . ")";
 }
 
@@ -163,13 +163,13 @@ while ($row = $stmt->fetch())
 
   if(!array_key_exists($row[0],$variants))
   {
-    $variants[$row[0]] = array(array($row[1], $row[3]));
+    $variants[$row[0]] = array($row[1]);
     $variant_names[$row[0]] = $row[2];
     $variant_ids[] = $row[0];
   }
   else
   {
-    $variants[$row[0]][] = array($row[1], $row[3]);
+    $variants[$row[0]][] = array($row[1]);
   }
 }
 
@@ -177,7 +177,7 @@ while ($row = $stmt->fetch())
 $interactions = array();
 $interaction_ids = array();
 $P_List = "'" . implode("','", $variant_ids) . "'";
-$query = 'SELECT IID, Interaction_EnsPID FROM T_Interactions WHERE Interaction_EnsPID IN(' . $P_List . ')';
+$query = 'SELECT IID, Peptide_EnsPID FROM T_Interactions WHERE Peptide_EnsPID IN(' . $P_List . ')';
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 

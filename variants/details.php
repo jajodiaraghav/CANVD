@@ -32,13 +32,13 @@ include_once('../header.php');
           $P_List = "'" . implode("','", $t) . "'";
 
           $query = 'SELECT EnsPID, Tumour_Site, Mutation_ID, Mut_Description FROM T_Ensembl
-                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.EnsGID
-                    WHERE EnsPID=:ens AND Tumour_Site IN(' . $plist . ')';
+                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
+                    WHERE EnsPID=:ens AND Tumour_Site IN(' . $P_List . ')';
         }
         else
         {
           $query = 'SELECT EnsPID, Tumour_Site, Mutation_ID, Mut_Description FROM T_Ensembl
-                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
                     WHERE EnsPID=:ens';
         }
 
@@ -57,7 +57,10 @@ include_once('../header.php');
         $interactions = array();
         foreach($variants as $var)
         {
-          $query = 'SELECT WT, MT, Eval, IID FROM T_Interaction_MT WHERE Int_EnsPID=:ens';
+          $query = 'SELECT WT, MT, Eval, T_Interactions.IID FROM T_Interactions_MT
+                    INNER JOIN T_Interactions
+                    ON T_Interactions.IID = T_Interactions_MT.IID
+                    WHERE Peptide_EnsPID=:ens';
           $stmt = $dbh->prepare($query);
           $query_params = array(':ens'=> $var[0]);
           $stmt->execute($query_params);
@@ -69,7 +72,7 @@ include_once('../header.php');
         }
 
         // Get all sh3 interacting domains
-        $query = 'SELECT Domain_EnsPID, Interaction_EnsPID, IID FROM T_Interaction WHERE Interaction_EnsPID=:ens;';
+        $query = 'SELECT Domain_EnsPID, Peptide_EnsPID, IID FROM T_Interactions WHERE Peptide_EnsPID=:ens';
         $stmt = $dbh->prepare($query);
         $query_params = array(':ens'=> $_GET['variant']);
         $stmt->execute($query_params);
@@ -77,7 +80,7 @@ include_once('../header.php');
         $domain_ids = array();
         while ($row = $stmt->fetch())
         {
-          $query2 = 'SELECT GeneName FROM T_Domain WHERE EnsPID=:ens;';
+          $query2 = 'SELECT GeneName FROM T_Ensembl WHERE EnsPID=:ens';
           $stmt2 = $dbh->prepare($query2);
           $query_params2 = array(':ens'=> $row[0]);
           $stmt2->execute($query_params2);
@@ -146,7 +149,7 @@ include_once('../header.php');
             <thead>
               <tr>
                 <th>Mutation ID</th>
-                <th>Variant Syntax</th>
+                <th>Interaction ID</th>
                 <th>Mutation Type</th>
                 <th>Disease/Tissues</th>
                 <th>Rewiring Effects - <span class="g">Gain of Function</span>, <span class="r">Loss of Function</span>.<br></th>
@@ -158,7 +161,7 @@ include_once('../header.php');
             $filter_option = "N/A";
             if (isset($_GET['int-filter']))
             {
-              if ($_GET['int-filter'] == 'gain') {
+              if ($_GET['int-filter'] == "gain") {
                 $filter_option = "gain of function";
               }
               elseif ($_GET['int-filter'] == "loss") {
@@ -168,16 +171,16 @@ include_once('../header.php');
 
             foreach($variants as $var)
             {
-              $mut_id = $_GET['variant'] . '-' . strtoupper(explode(".",$var[1])[1]);
+              $mut_id = $_GET['variant'] . '-' . $var[2];
 
               //If an effect filter is set, check to see if it's in this row's effects to show it.
               if ((isset($_GET['int-filter']) && (isset($effects[$var[1]]) && in_array($filter_option,$effects[$var[1]]))) || (isset($_GET['int-filter']) && $_GET['int-filter'] == 'neutral' && !isset($effects[$var[1]])) || !isset($_GET['int-filter'])) {
             ?>
             <tr>
               <td><?php echo $mut_id;?></td>
-              <td><?php echo explode(".",$var[1])[1];?></td>
-              <td><?php echo $var[4];?></td>
-              <td><?php echo ucwords(str_replace("_"," ", $var[2]));?></td>
+              <td><?php echo $var[2];?></td>
+              <td><?php echo $var[3];?></td>
+              <td><?php echo $var[1];?></td>
               <td>
               <?php
               if (isset($effects[$var[1]])) {
@@ -231,9 +234,9 @@ include_once('../header.php');
           $i = 0;
           foreach($variants as $var) {
             if ($i > 0){
-              $var_list = $var_list . "," . $_GET['variant'] . '-' . strtoupper(explode(".",$var[1])[1]);
+              $var_list = $var_list . "," . $_GET['variant'] . '-' . $var[2];
             } else {
-              $var_list = $_GET['variant'] . '-' . strtoupper(explode(".",$var[1])[1]);
+              $var_list = $_GET['variant'] . '-' . $var[2];
             }
             $i += 1;
           }
@@ -247,7 +250,7 @@ include_once('../header.php');
     <?php } else { ?>
       Error: Protein not found.
     <?php } ?>
-    <?php include_once('footer.php'); ?>
+    <?php include_once('../footer.php'); ?>
         </div>
     	</div>
   	</div>

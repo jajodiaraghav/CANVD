@@ -1,8 +1,10 @@
 $( document ).ready(function() {
 
-  if (tissues_selected.length > 0){
-    for (index = 0; index < tissues_selected.length; ++index) {
-    $("#filter-tissue-list").append("<li><a href='#' class='tissue-filter' data-tissue='" + tissues_selected[index] + "'>" + tissues_selected[index].replace("_", " ").charAt(0).toUpperCase() + tissues_selected[index].replace("_", " ").slice(1) + "</a></li>");
+  if (tissues_selected.length > 0)
+  {
+    for (index = 0; index < tissues_selected.length; ++index)
+    {
+      $("#filter-tissue-list").append("<li><a href='#' class='tissue-filter' data-tissue='" + tissues_selected[index] + "'>" + tissues_selected[index].replace("_", " ").charAt(0).toUpperCase() + tissues_selected[index].replace("_", " ").slice(1) + "</a></li>");
     }
   }
 
@@ -45,6 +47,7 @@ $( document ).ready(function() {
   });
 
   $(document).scroll(function(e){
+    if(all_done) return false;
     if (processing) return false;
 
     if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.9) {
@@ -56,14 +59,14 @@ $( document ).ready(function() {
         data: { is_ajax: "yes", tissue:tissues_selected, current_count:parseInt($("#prot_current").text()), prot:prot_name, source:prot_source, mut_type:mut_types},
         success: function(results){
           $("#variants-results").append(results);
+          if ($("#variants-results .normal").length == $("#prot_current").html()) all_done = true;
           //Get current # of variants
           var variant_count = 0;
           $('#variants-results').children('tr').each(function () {
-            console.log($(this).find(".mut-count").text());
             if ($.isNumeric($(this).find(".mut-count").text())){
               variant_count += parseInt($(this).find(".mut-count").text());
             }
-          });
+          });          
           $("#current_count").html(variant_count);
           $("#prot_current").html($("#variants-results .normal").length);
           $(".spinner").remove();
@@ -77,9 +80,10 @@ $( document ).ready(function() {
   $("#total_num").html(mut_count);
   $("#prot_num").html(prot_count);
   var variant_count = 0;
+  var all_done =false;
   $('#variants-results').children('tr').each(function () {
     if ($.isNumeric($(this).find(".mut-count").text())){
-     variant_count += parseInt($(this).find(".mut-count").text());
+      variant_count += parseInt($(this).find(".mut-count").text());
     }
   });
   $("#current_count").html(variant_count);
