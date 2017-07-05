@@ -103,9 +103,8 @@
         var net_limit = 50;
       <?php } ?>
 
-      <?php include_once('../search.php'); ?>
-      console.log(networkData);
+      <?php require_once('../search.php'); ?>    
     </script>
-    <script scr="/assets/scripts/network.js" type="text/javascript"></script>
+    <script src="/assets/scripts/network.js" type="text/javascript"></script>
   </body>
 </html>

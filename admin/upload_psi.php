@@ -1,4 +1,5 @@
 <?php
+header('Content-type: text/html; charset=utf-8');
 session_start();
 set_time_limit(0);
 include_once('../common.php');
@@ -203,6 +204,7 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
       sleep(1);
     }
     echo '</div></div></body></html>';
+    ob_flush();
   }
   ob_end_flush();
   sleep(5);

@@ -174,12 +174,10 @@ $(function() {
               edge_color = "#c13e86", edge_style = "solid";
           }
           if (interactions[node] == "neutral")
-            edge_color = "#fdb863", edge_style = "solid";
-
-          var edge_width = parseFloat(networkData[active_domain].interaction_scores[node])*7;
+            edge_color = "#fdb863", edge_style = "solid";          
 
          //CHANGE TO AVERAGE AVG EDGE WIDTH EDGE WEIGHT
-         // var edge_width = parseFloat(networkData[active_domain].interaction_eval[node]['Avg']*7)
+          var edge_width = parseFloat(networkData[active_domain].interaction_eval[node]['Avg']*7)
           if (edge_width < 1) {
               edge_width = 1;
           }
@@ -568,7 +566,7 @@ $(function() {
                 var int = netdata.raw_interactions[inter];
                 if ($.inArray(int.interaction, download_proteins) != -1)
                 {
-                    data = data + int.domain + "," + int.interaction + "," + int.score + "," + int.start + "," + int.end + "\n";
+                    data = data + int.domain + "," + int.interaction + "," + int.score + "\n";
                 }
             }
         }
