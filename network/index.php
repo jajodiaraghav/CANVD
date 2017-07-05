@@ -38,6 +38,11 @@
               </p>
 
               <div class="list-group">
+                <span class="list-group-item download-list" style="background:#d6d6d6">Download PSI file:</span>
+                <a href="#" class="list-group-item vd interaction-download">Current Network</a>
+              </div>
+
+              <div class="list-group">
                 <span class="list-group-item download-list" style="background:#d6d6d6">Download - Current view (csv):</span>
                 <a href="#" class="list-group-item vd interaction-download">Download Interactions</a>
                 <a href="#" class="list-group-item vd effects-download">Download Mutation Effects</a>
@@ -103,8 +108,9 @@
         var net_limit = 50;
       <?php } ?>
 
-      <?php require_once('../search.php'); ?>    
+      <?php require_once('search.php'); ?>    
     </script>
     <script src="/assets/scripts/network.js" type="text/javascript"></script>
+    <script src="/assets/scripts/download_handler.js" type="text/javascript"></script>
   </body>
 </html>
