@@ -17,7 +17,7 @@
       <div class="container" id="network-view-container">
         <div class="row">
           <div class="col-md-2">
-            <ul class="nav nav-pills">
+            <ul class="nav nav-pills" style="display:inline-flex">
               <li id="filters_li" class="active"><a href="#" id="filters_btn">Filters</a></li>
               <li id="downloads_li"><a href="#" id="downloads_btn">Download</a></li>
             </ul>

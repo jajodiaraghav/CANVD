@@ -17,11 +17,21 @@ h1 a:hover{
 }
 
 .nav-pills li a{
-padding:10px !important;
-padding-right:10px !important;
-padding-left:10px !important;
-margin-right:5px;
-font-size:1em !important;
+	padding:10px !important;
+	font-size:1em !important;
+}
+
+li #filters_btn,
+li #downloads_btn {
+	background: navajowhite;
+	color: white;
+	font-weight: 400;
+}
+
+li.active #filters_btn,
+li.active #downloads_btn {
+	background: #f04124;
+	color: white;
 }
 
 #downloads_panel{
