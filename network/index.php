@@ -39,7 +39,7 @@
 
               <div class="list-group">
                 <span class="list-group-item download-list" style="background:#d6d6d6">Download PSI file:</span>
-                <a href="#" class="list-group-item vd interaction-download">Current Network</a>
+                <a href="#" class="list-group-item">Current Network</a>
               </div>
 
               <div class="list-group">

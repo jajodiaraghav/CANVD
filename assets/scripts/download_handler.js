@@ -13,14 +13,14 @@ $(function() {
         }
         else
         {            
-            download_proteins = Object.keys(networkData[active_domain].geneInfo); // Get list of all ids
+            download_proteins = Object.keys(networkData[active_domain].gene_info); // Get list of all ids
         }
 
         // Get information depending on type.
         var netdata = networkData[active_domain], data = "";
         if ($(this).hasClass("interaction-download"))
         {
-            data = "Domain,InteractionPartner,Score,Start,End\n";
+            data = "Domain,InteractionPartner,Score\n";
             for (inter in netdata.raw_interactions)
             {
                 var int = netdata.raw_interactions[inter];

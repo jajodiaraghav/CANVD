@@ -1,11 +1,11 @@
 <?php
 include_once('../common.php');
 
-$query ="DELETE FROM tissue_table_browser;";
+$query ="DELETE FROM tissue_table_browser";
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 
-$query = "SELECT DISTINCT Tumour_Site FROM T_Mutations;";
+$query = "SELECT DISTINCT Tumour_Site FROM T_Mutations";
 $stmt = $dbh->prepare($query);
 $stmt->execute();
 
@@ -19,14 +19,14 @@ while ($row = $stmt->fetch())
 	$mutation_count = $stmt2->fetch()[0];
 
 	$query = "SELECT COUNT(Distinct EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
-				ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+				ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
 				WHERE T_Mutations.Tumour_Site=:tissue;";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($param);
 	$protein_count = $stmt2->fetch()[0];
 
 	$query = "SELECT Distinct EnsPID FROM T_Ensembl INNER JOIN T_Mutations
-				ON T_Ensembl.EnsGID = T_Mutations.EnsGID
+				ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
 				WHERE T_Mutations.Tumour_Site=:tissue;";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($param);
@@ -41,14 +41,14 @@ while ($row = $stmt->fetch())
 	// Count Interactions	
 	$query = "SELECT COUNT(*) FROM T_Interactions_MT INNER JOIN T_Interactions
 				ON T_Interactions.IID = T_Interactions_MT.IID
-				WHERE Interaction_EnsPID IN(" . $P_List . ") AND (Eval='False' OR Eval='FALSE');";
+				WHERE Peptide_EnsPID IN(" . $P_List . ") AND Eval='loss of function'";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute();
 	$loss_num = $stmt2->fetch()[0];
 
 	$query = "SELECT COUNT(*) FROM T_Interactions_MT INNER JOIN T_Interactions
 				ON T_Interactions.IID = T_Interactions_MT.IID
-				WHERE Interaction_EnsPID IN(" . $P_List . ") AND (Eval='True' OR Eval='TRUE';";
+				WHERE Peptide_EnsPID IN(" . $P_List . ") AND Eval='gain of function'";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute();
 	$gain_num = $stmt2->fetch()[0];

@@ -5,24 +5,6 @@ set_time_limit(0);
 include_once('../common.php');
 
 ob_implicit_flush(true);
-ob_start();
-?>
-<html>
-  <head>
-    <title>DV-IMPACT :: Admin</title>
-    <link rel="shortcut icon" href="/assets/images/canvd.ico">
-    <link href="/assets/css/bootstrap.css" rel="stylesheet">    
-    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
-  </head>
-  <body>
-    <div class="container">
-      <div class="alert alert-info">
-        <h6>The uploaded file consists of <?=$columnLength?> rows. The file is being inserted as chunks of <?=$fileChunk?> files each with 10000 rows. This may take a while.</h6>
-      </div>
-      <div class="alert alert-info">
-<?php
-ob_flush();
 
 if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
 {
@@ -51,6 +33,24 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
     $fileChunk = ceil($columnLength/10000);
     $chunk = array_chunk($arrayContent, 10000);
     $row = array();
+?>
+<html>
+  <head>
+    <title>DV-IMPACT :: Admin</title>
+    <link rel="shortcut icon" href="/assets/images/canvd.ico">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">    
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
+  </head>
+  <body>
+    <div class="container">
+      <div class="alert alert-info">
+        <h6>The uploaded file consists of <?=$columnLength?> rows. The file is being inserted as chunks of <?=$fileChunk?> files each with 10000 rows. This may take a while.</h6>
+      </div>
+      <div class="alert alert-info">
+        <h5>Uploading Files...</h5>
+<?php
+flush();
 
     // Table Arrays
     $domains = array();
@@ -200,15 +200,15 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
       }
       include_once('includes/data_insertion.php');
       echo '<h5>File ' . ($n + 1) . ' successfully inserted!</h5>';
-      ob_flush();
-      sleep(1);
+      flush();
     }
-    echo '</div></div></body></html>';
-    ob_flush();
-  }
-  ob_end_flush();
-  sleep(5);
-  header('Location: index.php?submit=PSI-MI');
+    echo '<h5>All Done! You will be redirected in a moment...</h5>';
+    echo '</div></div>';
+    flush();
+  }  
+
+  echo '<script>window.location.href = "./index.php?submit=PSI-MI"</script>';
+  flush();
 }
 else
 {
