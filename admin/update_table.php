@@ -32,9 +32,9 @@ while ($row = $stmt->fetch())
 	$stmt2->execute($param);
 
 	$PID = array();
-	while ($row = $stmt2->fetch())
+	while ($tmp = $stmt2->fetch())
 	{
-		$PID[] = $row[0];
+		$PID[] = $tmp[0];
 	}
 	$P_List = "'" . implode("','", $PID) . "'";
 
@@ -53,10 +53,10 @@ while ($row = $stmt->fetch())
 	$stmt2->execute();
 	$gain_num = $stmt2->fetch()[0];
 
-	$query = "INSERT INTO  `tissue_table_browser` (`Tissue` ,`variants` ,`proteins`, `gain`, `loss`)
+	$query = "INSERT INTO  `tissue_table_browser` (`Tissue` ,`Variants` ,`Proteins`, `Gain`, `Loss`)
 				VALUES (:tissue,  :muts,  :prots, :gain, :loss);";
 	$params = array(
-						":tissue" => $tissue,
+						":tissue" => $row[0],
 						":muts" => $mutation_count,
 						":prots" => $protein_count,
 						':gain' => $gain_num,
