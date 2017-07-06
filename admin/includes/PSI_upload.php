@@ -30,8 +30,29 @@
 <div class="panel panel-info">
   <div class="panel-heading" id="table-name-header"><strong>Other operations</strong></div>
   <div class="panel-body">
-    <div id="panel-content">
-      <a href="update_table.php">Update the "Tissues" table</a>
+    <div id="panel-content">      
+      <ul>
+        <li><a href="update_table.php">Update the "Tissues" table</a></li>
+        <li><a data-toggle="modal" class="text-danger" data-target="#warningEmpty">Empty all tables</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="warningEmpty" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Warning</h4>
+      </div>
+      <div class="modal-body">
+        <p>The action is ireversible. Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="empty_table.php" type="button" class="btn btn-danger">Yes</a>
+      </div>
     </div>
   </div>
 </div>
