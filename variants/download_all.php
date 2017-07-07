@@ -1,11 +1,9 @@
 <?php
 include_once('../common.php');
 
-$start = 0;
 if(!isset($_GET['current_count'])) $start = 0;
 else $start = $_GET['current_count'];
 
-$end = '';
 if (isset($_GET['end'])) $end = $_GET['end'];
 else $end = '10';
 
@@ -120,4 +118,3 @@ header("Content-Disposition: attachment; filename=\"" . basename($File) . "\"");
 header("Content-Type: application/force-download");
 header("Connection: close");
 echo $newfile;
-?>

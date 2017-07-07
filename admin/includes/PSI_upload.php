@@ -32,6 +32,7 @@
   <div class="panel-body">
     <div id="panel-content">      
       <ul>
+        <li><a href="dataset_search.php">Search using Publication ID</a></li>
         <li><a href="update_table.php">Update the "Tissues" table</a></li>
         <li><a data-toggle="modal" class="text-danger" data-target="#warningEmpty">Empty all tables</a></li>
       </ul>

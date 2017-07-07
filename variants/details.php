@@ -161,12 +161,10 @@ include_once('../header.php');
             $filter_option = "N/A";
             if (isset($_GET['int-filter']))
             {
-              if ($_GET['int-filter'] == "gain") {
+              if ($_GET['int-filter'] == "gain")
                 $filter_option = "gain of function";
-              }
-              elseif ($_GET['int-filter'] == "loss") {
+              elseif ($_GET['int-filter'] == "loss")
                 $filter_option = "loss of function";
-              }
             }
 
             foreach($variants as $var)

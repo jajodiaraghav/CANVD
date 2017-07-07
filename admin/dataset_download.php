@@ -3,22 +3,27 @@ include_once('../common.php');
 ini_set('memory_limit', '-1');
 set_time_limit(0);
 
-$gene = $_GET['gene'];
+$dataset = $_GET['set'];
 $query = 'SELECT * FROM T_Domain, T_Ensembl, T_PWM, T_Interactions, T_Interactions_Eval,
 		T_Mutations, T_Interactions_MT, T_Dataset
-		WHERE (T_Domain.Domain=:gene OR T_Domain.Domain_EnsPID=:domain)
+		WHERE T_Dataset.Dataset_ID=:dataset
+		AND T_Interactions.Dataset_ID=T_Dataset.Dataset_ID
+		AND T_Domain.Domain_EnsPID=T_Interactions.Domain_EnsPID
 		AND T_PWM.Domain=T_Domain.Domain
-		AND T_Interactions.Domain_EnsPID=T_Domain.Domain_EnsPID
 		AND T_Interactions_Eval.IID=T_Interactions.IID
 		AND T_Interactions_MT.IID=T_Interactions.IID
-		AND T_Mutations.Peptide_EnsPID=T_Interactions.Peptide_EnsPID
-		AND T_Dataset.Dataset_ID=T_Interactions.Dataset_ID';
-$params = array(":gene" => $gene, ":domain" => $gene);
+		AND T_Mutations.Peptide_EnsPID=T_Interactions.Peptide_EnsPID';
+$params = array(":dataset" => $dataset);
 $stmt = $dbh->prepare($query);
 $stmt->execute($params);
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 {
+	$query = '';
+	$params = array(":dataset" => $dataset);
+	$stmt = $dbh->prepare($query);
+	$stmt->execute($params);
+
 	$col[0] = "Domain_EnsPID:".$row['Domain_EnsPID'];
 	$col[1] = "Interaction_EnsPID:".$row['Interaction_EnsPID'];
 	$col[2] = "EnsTID:".$row['EnsTID'];
@@ -67,7 +72,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 
 $s = implode("\n", $str);
 
-$File = 'Network.psi';
+$File = 'Publication.psi';
 header("Content-Disposition: attachment; filename='" . basename($File) . "'");
 header("Content-Type: application/force-download");
 header("Connection: close");

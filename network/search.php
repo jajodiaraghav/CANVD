@@ -1,5 +1,6 @@
 <?php
-//Select Domain EnsPID from the gene name entered
+
+// Select Domain EnsPID from the GeneName
 if(isset($_GET['genename']) && $_GET['genename'] != '') {
 	$gene_name = $_GET['genename'];
 } else {
