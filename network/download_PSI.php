@@ -4,7 +4,7 @@ ini_set('memory_limit', '-1');
 set_time_limit(0);
 
 $gene = $_GET['gene'];
-$query = 'SELECT * FROM T_Domain, T_Ensembl, T_PWM, T_Interactions, T_Interactions_Eval,
+$query = 'SELECT * FROM T_Domain, T_PWM, T_Interactions, T_Interactions_Eval,
 		T_Mutations, T_Interactions_MT, T_Dataset
 		WHERE (T_Domain.Domain=:gene OR T_Domain.Domain_EnsPID=:domain)
 		AND T_PWM.Domain=T_Domain.Domain
@@ -19,19 +19,28 @@ $stmt->execute($params);
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 {
+	$query = '(SELECT * FROM T_Ensembl WHERE EnsPID=:domain LIMIT 1)
+			UNION
+			(SELECT * FROM T_Ensembl WHERE EnsPID=:peptide LIMIT 1)';
+	$params = array(":domain" => $row['Domain_EnsPID'], ":peptide" => $row['Interaction_EnsPID']);
+	$ensembl = $dbh->prepare($query);
+	$ensembl->execute($params);
+	$domain = $ensembl->fetch(PDO::FETCH_ASSOC);
+	$peptide = $ensembl->fetch(PDO::FETCH_ASSOC);
+
 	$col[0] = "Domain_EnsPID:".$row['Domain_EnsPID'];
 	$col[1] = "Interaction_EnsPID:".$row['Interaction_EnsPID'];
-	$col[2] = "EnsTID:".$row['EnsTID'];
-	$col[3] = '-';
-	$col[4] = "GeneName:".$row['GeneName'];
-	$col[5] = '-';
+	$col[2] = "EnsTID:".$domain['EnsTID'];
+	$col[3] = "EnsTID:".$peptide['EnsTID'];
+	$col[4] = "GeneName:".$domain['GeneName'];
+	$col[5] = "GeneName:".$peptide['GeneName'];
 	$col[6] = '-';
-	$col[7] = "Author:NA";
-	$col[8] = "Publication:NA";
+	$col[7] = "Author:".$row['Author'];
+	$col[8] = "Publication:".$row['Publication'];
 	$col[9] = '-';
 	$col[10] = '-';
 	$col[11] = '-';
-	$col[12] = "Version:".$row['Version'];
+	$col[12] = "Version:".$domain['Version'];
 	$col[13] = "IID:".$row['IID'];
 	$col[14] = "Wtscore:".$row['WTscore'].";Mtscore:".$row['MTscore'].";DeltaScore:".$row['DeltaScore'].";LOG2:".$row['LOG2'].";Gene_expression:".$row['Gene_expression'].";Protein_expression:".$row['Protein_expression'].";Disorder:".$row['Disorder'].";Surface_accessibility:".$row['Surface_accessibility'].";Peptide_conservation:".$row['Peptide_conservation'].";Molecular_function:".$row['Molecular_function'].";Biological_process:".$row['Biological_process'].";Localization:".$row['Localization'].";Sequence_signature:".$row['Sequence_signature'].";Overall_score:".$row['Avg'];
 	$col[15] = '-';
@@ -51,11 +60,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 	$col[29] = '-';
 	$col[30] = '-';
 	$col[31] = '-';
-	$col[32] = "EnsGID:".$row['EnsGID'].";Description:".$row['Description'].";Sequence:".$row['Sequence'];
-	$col[33] = '-';
+	$col[32] = "EnsGID:".$domain['EnsGID'].";Description:".$domain['Description'].";Sequence:".$domain['Sequence'];
+	$col[33] = "EnsGID:".$peptide['EnsGID'].";Description:".$peptide['Description'].";Sequence:".$peptide['Sequence'];
 	$col[34] = '-';
 	$col[35] = "Eval:".$row['Eval'];
-	$col[36] = "Mutation_ID:".$row['ID'].";Mut_Description:".$row['mut_description'].";Tumour_Site:".$row['tumour_site'].";Mutation,Source_ID:".$row['Mutation_Source_ID'].";Source:".$row['Source'].";EnsGID:".$row['Mut_EnsGID'];
+	$col[36] = "Mutation_ID:".$row['ID'].";Mut_Description:".$row['mut_description'].";Tumour_Site:".$row['tumour_site'].";Mutation,Source_ID:".$row['Mutation_Source_ID'].";Source:".$row['Source'];
 	$col[37] = '-';
 	$col[38] = '-';
 	$col[39] = '-';

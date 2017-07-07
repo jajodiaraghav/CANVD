@@ -27,8 +27,8 @@ $handler = $dbh->prepare($query);
 $handler->execute($interactions);
 
 /* Mutation */
-$query = "INSERT IGNORE INTO  `T_Mutations` (`Mutation_ID` ,`Mut_Description` ,`Tumour_Site`, `Mutation_Source_ID`, `Source`, `Peptide_EnsGID`)
-		  VALUES " . questionMarks(count($mutations), 6);
+$query = "INSERT IGNORE INTO  `T_Mutations` (`Mutation_ID` ,`Mut_Description` ,`Tumour_Site`, `Mutation_Source_ID`, `Source`, `Peptide_EnsGID`, `Peptide_EnsPID`)
+		  VALUES " . questionMarks(count($mutations), 7);
 $handler = $dbh->prepare($query);
 $handler->execute($mutations);
 

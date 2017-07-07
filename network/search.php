@@ -14,9 +14,9 @@ $domains = array();
 $domain_names = array();
 $domain_info = array();
 
-$query = 'SELECT * FROM T_Domain WHERE Domain=:gene_name OR Domain_EnsPID=:gene_name2';
+$query = 'SELECT * FROM T_Domain WHERE Domain=:gene OR Domain_EnsPID=:gene_pid';
 $gene = $_GET['genename'];
-$query_params = array(':gene_name' => $gene, ':gene_name2' => $gene);
+$query_params = array(':gene' => $gene, ':gene_pid' => $gene);
 $stmt = $dbh->prepare($query);
 $stmt->execute($query_params);
 
@@ -46,7 +46,7 @@ while ($row = $stmt->fetch())
 $i = 0;
 foreach ($domains as $domain) {
 
-	$query = 'SELECT PWM FROM T_PWM WHERE Domain=:ens_pid;';
+	$query = 'SELECT PWM FROM T_PWM WHERE Domain=:ens_pid';
 	$query_params = array(':ens_pid' => $domain_names[$domain]);
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($query_params);
@@ -153,11 +153,8 @@ foreach ($domains as $domain) {
 	    $_GET['mut_type'] = '';
 	}
 
-	$query = 'SELECT * FROM T_Mutations
-			LEFT JOIN T_Ensembl
-			ON T_Mutations.Peptide_EnsGID = T_Ensembl.EnsGID
-			WHERE Source RLIKE :source
-			AND Mut_Description RLIKE :type AND EnsPID IN(' . $P_List . ')';
+	$query = 'SELECT * FROM T_Mutations WHERE Source RLIKE :source
+			AND Mut_Description RLIKE :type AND Peptide_EnsPID IN(' . $P_List . ')';
 	$query_params = array(':source' => $source, ':type' => $type);
 	$stmt = $dbh->prepare($query);
 	$stmt->execute($query_params);

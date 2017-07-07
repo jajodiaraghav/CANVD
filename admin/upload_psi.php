@@ -177,26 +177,19 @@ flush();
         $ensembl[] = end((explode(":", $ensemblData[2]))); // Sequence      
 
         // Ensembl Table (Peptide)
-        if($row[33] != "-" && $row[33] != "NA")
-        {
-          $ensemblData = explode(";", $row[33]);
-          $Peptide_EnsGID = end((explode(":", $ensemblData[0])));
+        $ensemblData = explode(";", $row[33]);
+        $Peptide_EnsGID = end((explode(":", $ensemblData[0])));
 
-          $ensembl[] = $Peptide_EnsPID; // EnsPID
-          $ensembl[] = end((explode(":", $row[3]))); // EnsTID
-          $ensembl[] = $Peptide_EnsGID; // EnsGID
-          $ensembl[] = end((explode(":", $row[12]))); // Version
-          $ensembl[] = end((explode(":", $row[5]))); // GeneName
-          $ensembl[] = end((explode(":", $ensemblData[1]))); // Description
-          $ensembl[] = end((explode(":", $ensemblData[2]))); // Sequence
+        $ensembl[] = $Peptide_EnsPID; // EnsPID
+        $ensembl[] = end((explode(":", $row[3]))); // EnsTID
+        $ensembl[] = $Peptide_EnsGID; // EnsGID
+        $ensembl[] = end((explode(":", $row[12]))); // Version
+        $ensembl[] = end((explode(":", $row[5]))); // GeneName
+        $ensembl[] = end((explode(":", $ensemblData[1]))); // Description
+        $ensembl[] = end((explode(":", $ensemblData[2]))); // Sequence
 
-          $mutations[] = $Peptide_EnsGID; // Peptide_EnsGID
-        }
-        else
-        {
-          if(isset($MutationData[5]))
-            $mutations[] = end((explode(":", $MutationData[5]))); // Peptide_EnsGID
-        }
+        $mutations[] = $Peptide_EnsGID; // Peptide_EnsGID
+        $mutations[] = $Peptide_EnsPID; // Peptide_EnsPID
       }
       include_once('includes/data_insertion.php');
       echo '<h5>File ' . ($n + 1) . ' successfully inserted!</h5>';
