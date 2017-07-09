@@ -40,9 +40,9 @@ else
     }
 }
 
-if (isset($_GET['mut_type']) && $_GET['mut_type'] != '')
+if (isset($_GET['type']) && $_GET['type'] != '')
 {
-    $type = str_replace('["', '', $_GET['mut_type']);
+    $type = str_replace('["', '', $_GET['type']);
     $type = str_replace('"]', '', $type);
     $type = str_replace('","', '|', $type);
 }
@@ -52,7 +52,7 @@ else
     else 
     {
         $type = ".*";
-        $_GET['mut_type'] = '';
+        $_GET['type'] = '';
     }
 }
 
@@ -61,22 +61,16 @@ if(isset($_GET['tissue']))
     $tissues = $_GET['tissue'];
     function sanitize($s) { return htmlspecialchars($s); }
 
-    $t = array_map('sanitize', $tissues);
-    $tissues = "'" . $tissues . "'";
     $tissue_array = explode(',', $tissues);
-    $P_List = implode("','", $tissue_array);
+    $t = array_map('sanitize', $tissue_array);
+    $P_List = "'" . implode("','", $t) . "'";
 
     if (isset($_GET['variant_search']) && $_GET['variant_search'] == '"true"')
     {
         $query = "SELECT GeneName, Sequence FROM T_Ensembl LEFT JOIN T_Mutations
-                  ON T_Ensembl.EnsGID=T_Mutations.EnsGID WHERE T_Mutations.Source RLIKE :source
+                  ON T_Ensembl.EnsPID=T_Mutations.Peptide_EnsPID WHERE T_Mutations.Source RLIKE :source
                   AND T_Ensembl.GeneName RLIKE :name AND T_Mutations.Mut_Description RLIKE :type
                   AND T_Mutations.Tumour_Site IN (" . $P_List . ")";
-
-        var_dump($source);
-        var_dump($protein_name);
-        var_dump($type);
-
         $query_params = array(":source" => $source, ":name" => $protein_name, ":type" => $type);
         $stmt = $dbh->prepare($query);
         $stmt->execute($query_params);

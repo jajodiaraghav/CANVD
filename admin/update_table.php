@@ -18,16 +18,12 @@ while ($row = $stmt->fetch())
 	$stmt2->execute($param);
 	$mutation_count = $stmt2->fetch()[0];
 
-	$query = "SELECT COUNT(Distinct EnsPID) FROM T_Ensembl INNER JOIN T_Mutations
-				ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
-				WHERE T_Mutations.Tumour_Site=:tissue;";
+	$query = "SELECT COUNT(Distinct Peptide_EnsPID) FROM T_Mutations WHERE Tumour_Site=:tissue";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($param);
 	$protein_count = $stmt2->fetch()[0];
 
-	$query = "SELECT Distinct EnsPID FROM T_Ensembl INNER JOIN T_Mutations
-				ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
-				WHERE T_Mutations.Tumour_Site=:tissue;";
+	$query = "SELECT Distinct Peptide_EnsPID FROM T_Mutations WHERE Tumour_Site=:tissue";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($param);
 

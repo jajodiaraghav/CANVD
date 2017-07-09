@@ -66,8 +66,25 @@ include_once('../header.php');
                 var prot_name = <?php echo json_encode($_GET['prot']);?>;
                 var prot_source = <?php echo json_encode($_GET['source']);?>;
                 var processing;
-                <?php include_once('../assets/scripts/variants.php') ?>
-                </script>                
+
+                $(function() {
+                  $("#download-current").on("click", function(){
+                    $('#download_modal').modal('show');
+                    var str = './download_all.php?tissue='+tissues_selected;
+                    <?php if (isset($_GET["variant_search"])) { ?>
+                      str += '&variant_search=<?=json_encode($_GET["variant_search"])?>';
+                    <?php } ?>
+                    str += '&source=<?=json_encode($_GET["source"])?>&type=<?=json_encode($_GET["mut_type"])?>';
+                    str += '&end=' + $('#prot_current').text();
+                    <?php if(isset($_GET['prot'])) { ?>
+                      str += '&prot=<?=$_GET['prot']?>';
+                    <?php } ?>
+
+                    window.location.href = str;
+                  });
+                });
+                </script>
+                <script src="/assets/scripts/variants.js"></script>
               </tbody>
             </table>
           </div>

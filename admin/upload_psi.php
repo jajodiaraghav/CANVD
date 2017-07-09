@@ -4,6 +4,14 @@ session_start();
 set_time_limit(0);
 include_once('../common.php');
 
+function questionMarks($matrixLength, $rowLength)
+{
+  $questionMarksImplode = function ($elem) { return '(' . implode( ',', $elem ) . ')'; };
+  $chunks = array_chunk(array_fill(0, $matrixLength, '?'), $rowLength);
+  $QMarks = implode( ',', array_map( $questionMarksImplode, $chunks ) );
+  return $QMarks;
+}
+
 ob_implicit_flush(true);
 
 if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
@@ -50,21 +58,21 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
       <div class="alert alert-info">
         <h5>Uploading Files...</h5>
 <?php
-flush();
-
-    // Table Arrays
-    $domains = array();
-    $interactions = array();
-    $interactions_MT = array();
-    $interactions_Eval = array();
-    $ensembl = array();
-    $PWM = array();
-    $dataset = array();
-    $mutations = array();
-    $pointer = 0;
+flush();    
 
     foreach($chunk as $n => $subArrayContent)
     {
+      // Table Arrays
+      $domains = array();
+      $interactions = array();
+      $interactions_MT = array();
+      $interactions_Eval = array();
+      $ensembl = array();
+      $PWM = array();
+      $dataset = array();
+      $mutations = array();
+      $pointer = 0;      
+
       foreach($subArrayContent as $i => $rowString)
       {
         $row = explode("\t", $rowString);
@@ -123,75 +131,85 @@ flush();
         $IID = end((explode(":", $row[13])));
         $Peptide_EnsPID = end((explode(":", $row[1])));
 
-        $interactions[] = $IID; // IID
-        $interactions[] = $PWM_Val; // PWM
-        $interactions[] = $Domain_EnsPID; // Domain_EnsPID
-        $interactions[] = $Peptide_EnsPID; // Peptide_EnsPID
-        $interactions[] = $Dataset_ID; // Dataset_ID
+        $MutationData = explode(";", $row[36]);
+        $ensemblData1 = explode(";", $row[32]);
+        $ensemblData2 = explode(";", $row[33]);
+        $Mutation_ID = end((explode(":", $MutationData[0])));
+        $Peptide_EnsGID = end((explode(":", $ensemblData2[0])));
+
+        if($IID != '')
+        {
+          $interactions[] = $IID; // IID
+          $interactions[] = $PWM_Val; // PWM
+          $interactions[] = $Domain_EnsPID; // Domain_EnsPID
+          $interactions[] = $Peptide_EnsPID; // Peptide_EnsPID
+          $interactions[] = $Dataset_ID; // Dataset_ID
+
+          // Interactions_MT Table
+          $Int_Mt_Data_1 = explode(";", $row[14]);
+          $Int_Mt_Data_2 = explode(";", $row[26]);
+
+          $interactions_MT[] = $IID; //IID
+          $interactions_MT[] = end((explode(":", $MutationData[0]))); // Muatation_ID
+          $interactions_MT[] = end((explode(":", $Int_Mt_Data_2[0]))); // WT
+          $interactions_MT[] = end((explode(":", $Int_Mt_Data_2[1]))); // MT
+          $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[0]))); // WTScore
+          $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[1]))); // MTScore
+          $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[2]))); // DeltaScore
+          $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[3]))); // LOG2
+          $interactions_MT[] = end((explode(":", $row[35]))); // Eval
+
+          // Interactions_Eval Table
+          $interactions_Eval[] = $IID; // IID
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[4]))); // Gene_expression
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[5]))); // Protein_Expression
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[6]))); // Disorder
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[7]))); // Surface_accessibility
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[8]))); // Peptide_conservation
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[9]))); // Molecular_function
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[10]))); // Biological_process
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[11]))); // Localization
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[12]))); // Sequence_signature
+          $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[13]))); // Avg
+        }
 
         // Mutations Table
-        $MutationData = explode(";", $row[36]);
-
-        $mutations[] = end((explode(":", $MutationData[0]))); // Mutation_ID
-        $mutations[] = end((explode(":", $MutationData[1]))); // Mut_Description
-        $mutations[] = end((explode(":", $MutationData[2]))); // Tumour_Site
-        $mutations[] = end((explode(":", $MutationData[3]))); // Mutation_Source_ID
-        $mutations[] = end((explode(":", $MutationData[4]))); // Source
-
-        // Interactions_MT Table
-        $Int_Mt_Data_1 = explode(";", $row[14]);
-        $Int_Mt_Data_2 = explode(";", $row[26]);
-
-        $interactions_MT[] = $IID; //IID
-        $interactions_MT[] = end((explode(":", $MutationData[0]))); // Muatation_ID
-        $interactions_MT[] = end((explode(":", $Int_Mt_Data_2[0]))); // WT
-        $interactions_MT[] = end((explode(":", $Int_Mt_Data_2[1]))); // MT
-        $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[0]))); // WTScore
-        $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[1]))); // MTScore
-        $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[2]))); // DeltaScore
-        $interactions_MT[] = end((explode(":", $Int_Mt_Data_1[3]))); // LOG2
-        $interactions_MT[] = end((explode(":", $row[35]))); // Eval
-
-        // Interactions_Eval Table
-        $interactions_Eval[] = $IID; // IID
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[4]))); // Gene_expression
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[5]))); // Protein_Expression
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[6]))); // Disorder
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[7]))); // Surface_accessibility
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[8]))); // Peptide_conservation
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[9]))); // Molecular_function
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[10]))); // Biological_process
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[11]))); // Localization
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[12]))); // Sequence_signature
-        $interactions_Eval[] = end((explode(":", $Int_Mt_Data_1[13]))); // Avg
+        if($Mutation_ID != '')
+        {
+          $mutations[] = $Mutation_ID; // Mutation_ID
+          $mutations[] = end((explode(":", $MutationData[1]))); // Mut_Description
+          $mutations[] = end((explode(":", $MutationData[2]))); // Tumour_Site
+          $mutations[] = end((explode(":", $MutationData[3]))); // Mutation_Source_ID
+          $mutations[] = end((explode(":", $MutationData[4]))); // Source
+          $mutations[] = $Peptide_EnsGID; // Peptide_EnsGID
+          $mutations[] = $Peptide_EnsPID; // Peptide_EnsPID
+        }
 
         // Ensembl Table (Domain)
-        $ensemblData = explode(";", $row[32]);
-
-        $ensembl[] = $Domain_EnsPID; // EnsPID
-        $ensembl[] = end((explode(":", $row[2]))); // EnsTID
-        $ensembl[] = end((explode(":", $ensemblData[0]))); // EnsGID
-        $ensembl[] = end((explode(":", $row[12]))); // Version
-        $ensembl[] = end((explode(":", $row[4]))); // GeneName
-        $ensembl[] = end((explode(":", $ensemblData[1]))); // Description
-        $ensembl[] = end((explode(":", $ensemblData[2]))); // Sequence      
+        if($Domain_EnsPID != '')
+        {
+          $ensembl[] = $Domain_EnsPID; // EnsPID
+          $ensembl[] = $Domain_EnsTID; // EnsTID
+          $ensembl[] = end((explode(":", $ensemblData1[0]))); // EnsGID
+          $ensembl[] = end((explode(":", $row[12]))); // Version
+          $ensembl[] = end((explode(":", $row[4]))); // GeneName
+          $ensembl[] = end((explode(":", $ensemblData1[1]))); // Description
+          $ensembl[] = end((explode(":", $ensemblData1[2]))); // Sequence
+        }
 
         // Ensembl Table (Peptide)
-        $ensemblData = explode(";", $row[33]);
-        $Peptide_EnsGID = end((explode(":", $ensemblData[0])));
-
-        $ensembl[] = $Peptide_EnsPID; // EnsPID
-        $ensembl[] = end((explode(":", $row[3]))); // EnsTID
-        $ensembl[] = $Peptide_EnsGID; // EnsGID
-        $ensembl[] = end((explode(":", $row[12]))); // Version
-        $ensembl[] = end((explode(":", $row[5]))); // GeneName
-        $ensembl[] = end((explode(":", $ensemblData[1]))); // Description
-        $ensembl[] = end((explode(":", $ensemblData[2]))); // Sequence
-
-        $mutations[] = $Peptide_EnsGID; // Peptide_EnsGID
-        $mutations[] = $Peptide_EnsPID; // Peptide_EnsPID
+        if($Peptide_EnsPID != '')
+        {
+          $ensembl[] = $Peptide_EnsPID; // EnsPID
+          $ensembl[] = end((explode(":", $row[3]))); // EnsTID
+          $ensembl[] = $Peptide_EnsGID; // EnsGID
+          $ensembl[] = end((explode(":", $row[12]))); // Version
+          $ensembl[] = end((explode(":", $row[5]))); // GeneName
+          $ensembl[] = end((explode(":", $ensemblData2[1]))); // Description
+          $ensembl[] = end((explode(":", $ensemblData2[2]))); // Sequence
+        }
       }
-      include_once('includes/data_insertion.php');
+      include('includes/data_insertion.php');
       echo '<h5>File ' . ($n + 1) . ' successfully inserted!</h5>';
       flush();
     }
