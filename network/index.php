@@ -1,6 +1,6 @@
 <?php
   include_once('../common.php');
-  include_once('../header.php'); 
+  include_once('../partials/header.php'); 
 ?>
 <div class="container">
 	<div id="content">
@@ -8,7 +8,7 @@
       <div class="container">
         <span id="title_fix"></span>   
         <p>
-        <h2 style="margin-bottom:30px;"<?php include('../logo.php') ?> PPI Search</h2></p><br/>
+        <h2 style="margin-bottom:30px;"<?php include('../partials/logo.php') ?> PPI Search</h2></p><br/>
         <p id="main-top-text">
           The impacts of missense mutations on <b id="prot-name" style="color:#ea2f10"></b> protein interactions in <b id="tumor_c2" style="color:#ea2f10"></b> disease(s)/tissue(s).
         </p>
@@ -97,7 +97,7 @@
               </div>
             </div>
           </div>
-        <?php include_once('../footer.php'); ?>
+        <?php include_once('../partials/footer.php'); ?>
       </div>
     </div>
 

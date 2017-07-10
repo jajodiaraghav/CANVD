@@ -7,8 +7,8 @@ session_start();
 		<title>DV-IMPACT :: Admin</title>
 		<link rel="shortcut icon" href="/assets/images/canvd.ico">
 		<link href="/assets/css/bootstrap.css" rel="stylesheet">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    	<link type="text/css" href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
+    	<link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
     	<link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
 	</head>
 	<body>
@@ -19,7 +19,7 @@ session_start();
 						<span>DV-IMPACT</span>: The <span>D</span>isease <span>V</span>ariant <span>Im</span>pact on Domain-based <span>P</span>rotein Inter<span>act</span>ions
 					</a>
 				</h1>
-				<a href="../logout.php" class="btn btn-md btn-primary pull-right" type="submit">Log out</a>
+				<a href="../partials/logout.php" class="btn btn-md btn-primary pull-right">Log out</a>
 				<a href="/admin" class="btn btn-md btn-default pull-right">Home</a>
 
 				<h3>DV-IMPACT Administration Panel</h3>
@@ -62,10 +62,10 @@ session_start();
 						</table>
 					</div>
 				</div>
-				<?php include_once('../footer.php') ?>
+				<?php include_once('../partials/footer.php') ?>
 			</div>
 		</div>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="/assets/js/jquery.min.js"></script>
 		<script>
 			$(function() {
 				var arr = <?=json_encode($arr)?>;				

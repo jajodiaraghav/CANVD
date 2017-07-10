@@ -7,7 +7,7 @@
 		<title>DV-IMPACT :: Admin</title>
 		<link rel="shortcut icon" href="/assets/images/canvd.ico">
 		<link href="/assets/css/bootstrap.css" rel="stylesheet">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
 	</head>
@@ -61,8 +61,8 @@
     <?php
       } else {
     ?>
-      <a href="../logout.php" class="btn btn-md btn-primary pull-right" type="submit">Log out</a>
-      <button class="btn btn-md btn-default pull-right" id="data-btn">Data </button>
+      <a href="../partials/logout.php" class="btn btn-md btn-primary pull-right">Log out</a>
+      <button class="btn btn-md btn-default pull-right" id="data-btn">Data</button>
       <button class="btn btn-md btn-success pull-right" id="ann-btn">Announcements</button>
 
     <?php
@@ -111,7 +111,7 @@
       ?>
     </div>
       <div class="container">
-        <?php include_once('../footer.php') ?>
+        <?php include_once('../partials/footer.php') ?>
       </div>
     </div>
 
@@ -177,10 +177,10 @@
 {% } %}
 </script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.js"></script>    
     <script src="/assets/js/jquery.ui.widget.js"></script>
-    <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+    <script src="/assets/js/tmpl.min.js"></script>
     <script src="/assets/js/jquery.iframe-transport.js"></script>
     <script src="/assets/js/jquery.fileupload.js"></script>
     <script src="/assets/js/jquery.fileupload-process.js"></script>

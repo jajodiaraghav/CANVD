@@ -1,11 +1,11 @@
 <?php include_once('../common.php'); ?>
 <html>
-	<?php include_once('../header.php'); ?>
+	<?php include_once('../partials/header.php'); ?>
   	<div class="jumbotron">
   	  <div class="container" style="margin-bottom:15px;">
   	    <p>
           <h2 style="margin-bottom:30px;">
-            News and Announcements of <?php include('../logo.php'); ?>
+            News and Announcements of <?php include('../partials/logo.php'); ?>
           </h2>
         </p>
         <br/>
@@ -22,7 +22,7 @@
           <p class="text-justify"><?php echo $row[3];?></p>
         </div><br/>
         <?php } ?>
-        <?php include_once('../footer.php'); ?>
+        <?php include_once('../partials/footer.php'); ?>
       </div>
   	</div>
 	</body>

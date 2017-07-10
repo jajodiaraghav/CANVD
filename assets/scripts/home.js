@@ -19,7 +19,6 @@ $(function() {
     url: "./tables/total.php",
     type: "post",
     dataType: 'json',
-    async: false,
     success: function(results) {
       $("#tissue-total").html(results[0]);
       tissue_total = results[0];		      

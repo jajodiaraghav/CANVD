@@ -1,16 +1,16 @@
 <?php include_once('../common.php'); ?>
 <html>
-<?php include_once('../header.php'); ?>
+<?php include_once('../partials/header.php'); ?>
 <div class="container">
 	<div id="content">
     <div class="jumbotron">
       <div class="container">
         <span id="title_fix"></span>  
           <p>
-          <h2 style="margin-bottom:30px;">Deposit Your Datasets in <?php include('../logo.php') ?></h2>
+          <h2 style="margin-bottom:30px;">Deposit Your Datasets in <?php include('../partials/logo.php') ?></h2>
           </p><br>
 			    <p class="text-justify">
-            The main purpose of DV-IMPACT is to serve as a central resource for large-scale disease variant impact assessment studies and to make these data available online in a uniform format that guarantees data integration and interoperability between different datasets. This page lists the requirements for datasets deposition to <?php include('../logo.php') ?>. The dataset should comply with the <?php include('../logo.php') ?> standard data  model (Table 1) and has the structure (or can be processed to be in the structure) that fits <?php include('../logo.php') ?> (Figure 1).
+            The main purpose of DV-IMPACT is to serve as a central resource for large-scale disease variant impact assessment studies and to make these data available online in a uniform format that guarantees data integration and interoperability between different datasets. This page lists the requirements for datasets deposition to <?php include('../partials/logo.php') ?>. The dataset should comply with the <?php include('../partials/logo.php') ?> standard data  model (Table 1) and has the structure (or can be processed to be in the structure) that fits <?php include('../partials/logo.php') ?> (Figure 1).
           </p><br>
 
           <table class="table table-bordered">
@@ -199,17 +199,17 @@
         </p><br />
 
         <p>Table 1. The data items and their required and optional attributes according to 
-        <?php include('../logo.php') ?> data standard.</p><br />
+        <?php include('../partials/logo.php') ?> data standard.</p><br />
         <img src="/assets/images/can-vd_data_standard.png" align="center"><br />
 
         <p class="text-justify">
-          Figure 1. Relationships between data items of <?php include('../logo.php') ?> standard data model for disease variants impact assessment. The relationships between the attributes correspond to the relationships between the tables in <?php include('../logo.php') ?>.</p><br/>
+          Figure 1. Relationships between data items of <?php include('../partials/logo.php') ?> standard data model for disease variants impact assessment. The relationships between the attributes correspond to the relationships between the tables in <?php include('../partials/logo.php') ?>.</p><br/>
         <p>
 
-        If you want to deposit your data into <?php include('../logo.php') ?>,
+        If you want to deposit your data into <?php include('../partials/logo.php') ?>,
         please <a href="http://canvd.baderlab.org/contact/">write to us.</a>
         </p><br/>
 
-        <?php include_once('../footer.php'); ?>
+        <?php include_once('../partials/footer.php'); ?>
 	</body>
 </html>

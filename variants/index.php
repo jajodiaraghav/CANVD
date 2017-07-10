@@ -1,14 +1,14 @@
 <?php
 include_once('../common.php');
-include_once('../header.php');
+include_once('../partials/header.php');
 ?>
 <div class="container">
 	<div id="content">
     <div class="jumbotron">
       <div class="container">
         <span id="title_fix"></span>
-          <p><?php include('../logo.php') ?> Variants Search</h2></p><br/>
-          <p id="main-top-text" class="text-justify">The <?php include('../logo.php') ?> variants search feature provides the information and full sequences of the disease variants and the corresponding wildtype proteins. This feature helps in building custom variants database in FASAT format that can be used in identifying disease variants using MS/MS-based proteomics, for instance.</p>
+          <p><?php include('../partials/logo.php') ?> Variants Search</h2></p><br/>
+          <p id="main-top-text" class="text-justify">The <?php include('../partials/logo.php') ?> variants search feature provides the information and full sequences of the disease variants and the corresponding wildtype proteins. This feature helps in building custom variants database in FASAT format that can be used in identifying disease variants using MS/MS-based proteomics, for instance.</p>
           <div class="row">
           <?php if(isset($_GET['search'])) { ?>
             <div class="col-md-12">
@@ -168,31 +168,31 @@ include_once('../header.php');
                 </fieldset>
               </form>
             <?php } ?>
-            <?php include_once('../footer.php'); ?>
+            <?php include_once('../partials/footer.php'); ?>
           </div>
         </div>
     	</div>
 
-<div id="download_modal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Downloading variants <i class="fa fa-cloud-download"></i></h4>
-      </div>
-      <div class="modal-body" style="padding:20px;font-style:italic;">
-        <p>
-          <i class="fa fa-database"></i>
-          Preparing custom variant dataset, please wait... (this could take up to 5 minutes)
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
-          <i> Dismiss this message </i>
-        </button>
+  <div id="download_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Downloading variants <i class="fa fa-cloud-download"></i></h4>
+        </div>
+        <div class="modal-body" style="padding:20px;font-style:italic;">
+          <p>
+            <i class="fa fa-database"></i>
+            Preparing custom variant dataset, please wait... (this could take up to 5 minutes)
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <i> Dismiss this message </i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 	</body>
 </html>

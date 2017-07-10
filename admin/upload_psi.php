@@ -14,7 +14,12 @@ function questionMarks($matrixLength, $rowLength)
 
 ob_implicit_flush(true);
 
-if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
+if (!isset($_SESSION['user']) || !isset($_FILES))
+{
+  echo "Error: No File uploaded!";
+  die;
+}
+if (is_uploaded_file($_FILES['file']['tmp_name']))
 {
   if ($_FILES["file"]["error"] > 0)
   {
@@ -22,7 +27,8 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
   }
   else
   {
-    move_uploaded_file($_FILES["file"]["tmp_name"], __DIR__ . "/upload/" . $_FILES["file"]["name"]);
+    $name = 'DATA_' . time() . '.psi';
+    move_uploaded_file($_FILES["file"]["tmp_name"], __DIR__ . "/upload/" . $name);
 
     if ($_POST['action'] == "replace")
     {
@@ -35,7 +41,7 @@ if (isset($_SESSION['user']) && is_uploaded_file($_FILES['file']['tmp_name']))
       }    
     }
 
-    $fileLoc = __DIR__ . "/upload/" . $_FILES["file"]["name"];
+    $fileLoc = __DIR__ . "/upload/" . $name;
     $arrayContent = file($fileLoc);
     $columnLength = count($arrayContent);
     $fileChunk = ceil($columnLength/10000);

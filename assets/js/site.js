@@ -36,7 +36,6 @@ $(function() {
    			$("#tissue-table").hide();
    			$("#pwm-table").show();
    		}
-
    });
 
    //Catches when user presses Enter on Search input
@@ -75,7 +74,6 @@ $(function() {
             else if ($(this).hasClass("no-int")){
                cy.elements("node[mut_type = 'neutral']").hide();
             }
-
    		}
    		else{
    			$(this).find(".badge").addClass($(this).find(".badge").data("color"));
@@ -98,5 +96,4 @@ $(function() {
             }
    		}
    });
-
 });

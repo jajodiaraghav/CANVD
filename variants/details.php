@@ -1,6 +1,6 @@
 <?php
 include_once('../common.php');
-include_once('../header.php');
+include_once('../partials/header.php');
 ?>
 <div class="container">
 	<div id="content">
@@ -248,7 +248,7 @@ include_once('../header.php');
     <?php } else { ?>
       Error: Protein not found.
     <?php } ?>
-    <?php include_once('../footer.php'); ?>
+    <?php include_once('../partials/footer.php'); ?>
         </div>
     	</div>
   	</div>
