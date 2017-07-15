@@ -8,7 +8,7 @@
           Unique identifier for interactor A, Unique identifier for interactor B, Alternative identifier for interactor A, Alternative identifier for interactor B, Aliases for A, Aliases for B, Interaction detection methods, First author, Identifier of the publication, NCBI Taxonomy identifier for interactor A, NCBI Taxonomy identifier for interactor B, Interaction types, Source databases, Interaction identifier(s), Confidence score, Complex expansion, Biological role A, Biological role B, Experimental role A, Experimental role B, Interactor type A, Interactor type B, Xref for interactor A, Xref for interactor B, Xref for the interaction, Annotations for interactor A, Annotations for interactor B, Annotations for the interaction, NCBI Taxonomy identifier for the host organism, Parameters of the interaction, Creation date, Update date, Checksum for interactor A, Checksum for interactor B, Checksum for interaction, negative,  Feature(s) for interactor A:  Feature(s) for interactor B, Stoichiometry for interactor A, Stoichiometry for interactor B, Participant identification method for interactor A, Participant identification method for interactor B
         </p>
       </div>
-      <form action="upload_psi.php" method="POST" enctype="multipart/form-data">
+      <form id="ul-form" action="upload_psi.php" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" id="file">
         <div>
           <label>
@@ -53,6 +53,19 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <a href="empty_table.php" type="button" class="btn btn-danger">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ulSubmit" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">File Uploading</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please wait while the file is uploaded. This may take several minutes depending on the file size. Check the bottom left part of the browser to get upload progress.</p>
       </div>
     </div>
   </div>

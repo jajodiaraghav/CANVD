@@ -139,4 +139,10 @@ $(function() {
 		    });
 		}
 	});
+
+	$('#ul-form').on('submit', function(e){
+		e.preventDefault();
+		$('#ulSubmit').modal('show');
+		$(this).unbind('submit').submit();
+	});
 });

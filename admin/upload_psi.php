@@ -27,6 +27,28 @@ if (is_uploaded_file($_FILES['file']['tmp_name']))
   }
   else
   {
+?>
+<html>
+  <head>
+    <title>DV-IMPACT :: Admin</title>
+    <link rel="shortcut icon" href="/assets/images/canvd.ico">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">    
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="heading">
+        <a href="/admin">
+        <span>DV-IMPACT</span>: The <span>D</span>isease <span>V</span>ariant <span>Im</span>pact on Domain-based <span>P</span>rotein Inter<span>act</span>ions
+        </a>
+      </h1>
+      <div class="alert alert-info">
+        <h5>Please wait...</h5>
+      </div>
+<?php
+flush();
+
     $name = 'DATA_' . time() . '.psi';
     move_uploaded_file($_FILES["file"]["tmp_name"], __DIR__ . "/upload/" . $name);
 
@@ -48,21 +70,11 @@ if (is_uploaded_file($_FILES['file']['tmp_name']))
     $chunk = array_chunk($arrayContent, 10000);
     $row = array();
 ?>
-<html>
-  <head>
-    <title>DV-IMPACT :: Admin</title>
-    <link rel="shortcut icon" href="/assets/images/canvd.ico">
-    <link href="/assets/css/bootstrap.css" rel="stylesheet">    
-    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/admin.css" rel="stylesheet" type="text/css">    
-  </head>
-  <body>
-    <div class="container">
-      <div class="alert alert-info">
-        <h6>The uploaded file consists of <?=$columnLength?> rows. The file is being inserted as chunks of <?=$fileChunk?> files each with 10000 rows. This may take a while.</h6>
-      </div>
-      <div class="alert alert-info">
-        <h5>Uploading Files...</h5>
+<div class="alert alert-info">
+  <h6>The uploaded file consists of <?=$columnLength?> rows. The file is being inserted as chunks of <?=$fileChunk?> files each with 10000 rows. This may take a while.</h6>
+</div>
+<div class="alert alert-info">
+  <h5>Uploading Files...</h5>
 <?php
 flush();    
 
