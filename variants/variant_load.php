@@ -1,12 +1,8 @@
 <?php
 include_once('../common.php');
 
-if(!isset($_GET['current_count'])) $start = 0;
-else $start = $_GET['current_count'];
-
-//For use by the downlad.php file
-if (isset($_GET['end'])) $end = $_GET['end'];
-else $end = '10';
+$start = isset($_GET['current_count']) ? $_GET['current_count'] : 0;
+$end = isset($_GET['end']) ? $_GET['end'] : 10;
 
 $tissues = '';
 $protein_name = '';
@@ -95,9 +91,7 @@ $stmt = $dbh->prepare($query);
 $stmt->execute($query_params);
 $variant_proteins = array();
 while ($row = $stmt->fetch())
-{
   $variant_proteins[] = $row[0];
-}
 
 //If AJAX
 if (!isset($_GET['is_ajax']) && !isset($_GET['download']))
@@ -163,7 +157,7 @@ while ($row = $stmt->fetch())
 
   if(!array_key_exists($row[0],$variants))
   {
-    $variants[$row[0]] = array($row[1]);
+    $variants[$row[0]][] = array($row[1]);
     $variant_names[$row[0]] = $row[2];
     $variant_ids[] = $row[0];
   }
@@ -206,9 +200,7 @@ while ($row = $stmt->fetch())
   else
   {
     if(!in_array($row[1],$effects[$protein]))
-    {
       $effects[$protein][] = $row[1];
-    }
   }
 }
 
@@ -221,7 +213,8 @@ foreach ($variants as $name => $data)
   $tissues = array();
   $tissue_data = array();
 
-  foreach ($data as $d) {
+  foreach ($data as $d)
+  {
     if(!in_array(ucwords(str_replace("_"," ", $d[0])),$tissues))
     {
       $tissues[] = ucwords(str_replace("_"," ", $d[0]));
@@ -229,7 +222,6 @@ foreach ($variants as $name => $data)
     }
   }
 
-  $P_List = implode($tissues);
   if (array_key_exists($name, $effects)) $E_List = implode(', ',$effects[$name]);
   else $E_List = 'None';
 
@@ -243,7 +235,7 @@ foreach ($variants as $name => $data)
   {
 ?>
     <tr data-protein="<?=$name?>" class="normal">
-      <td><?=implode(', ',$tissues)?></td>
+      <td><?=implode(', ', $tissues)?></td>
       <td class="selectable"><?=$name?></td>
       <td class="selectable"><?=$variant_names[$name]?></td>
       <td class="mut-count"><?=$variant_count[$name]?></td>

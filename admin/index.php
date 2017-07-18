@@ -68,7 +68,10 @@
     <?php
       if (isset($_GET['submit'])) {
     ?>
-      <div class="alert alert-info pull-right" id="quickalert" role="alert">
+      <div class="alert alert-info pull-right alert-dismissible" role="alert">
+        <button class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         Table "<?php echo $_GET['submit']; ?>" was altered successfully.
       </div>
     <?php
@@ -89,10 +92,10 @@
         <div class="col-md-8 col-md-offset-2">
           <ul class="nav nav-tabs nav-justified" role="tablist">
             <li role="presentation" class="active">
-              <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Upload File</a>
+              <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Upload Data</a>
             </li>
             <li role="presentation">
-              <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Upload Data</a>
+              <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Upload Files</a>
             </li>
           </ul>
 

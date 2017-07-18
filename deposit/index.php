@@ -207,7 +207,7 @@
         <p>
 
         If you want to deposit your data into <?php include('../partials/logo.php') ?>,
-        please <a href="http://canvd.baderlab.org/contact/">write to us.</a>
+        please <a href="http://canvd.baderlab.org/contact/">contact us</a>.
         </p><br/>
 
         <?php include_once('../partials/footer.php'); ?>

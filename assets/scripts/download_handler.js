@@ -11,7 +11,7 @@ $(function() {
                 download_proteins.push(value.data.id);
             });
         }
-        else
+        else if ($(this).hasClass("ad"))
         {            
             download_proteins = Object.keys(networkData[active_domain].gene_info); // Get list of all ids
         }

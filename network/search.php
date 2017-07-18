@@ -161,11 +161,11 @@ foreach ($domains as $domain) {
 	$mutation_information = array();
 	while ($row = $stmt->fetch())
 	{
-		if (array_key_exists($row['EnsPID'], $mut_impacts))
+		if (array_key_exists($row['Peptide_EnsPID'], $mut_impacts))
 		{
-			if (array_key_exists($row['Mutation_ID'], $mut_impacts[$row['EnsPID']]))
+			if (array_key_exists($row['Mutation_ID'], $mut_impacts[$row['Peptide_EnsPID']]))
 			{
-				if ($mut_impacts[$row['EnsPID']][$row['Mutation_ID']] == "loss of function") {
+				if ($mut_impacts[$row['Peptide_EnsPID']][$row['Mutation_ID']] == "loss of function") {
 					$impact = -1;
 				} else {
 					$impact = 1;
@@ -182,7 +182,7 @@ foreach ($domains as $domain) {
 								'Syntax' => $row['Mutation_ID'],
 								'Tissue' => $row['Tumour_Site'],
 								'Source' => $row['Source'],
-								'EnsPID' => $row['EnsPID'],
+								'EnsPID' => $row['Peptide_EnsPID'],
 								'Impact' => $impact
 							];
 	}

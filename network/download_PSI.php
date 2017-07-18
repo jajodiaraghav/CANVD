@@ -22,14 +22,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 	$query = '(SELECT * FROM T_Ensembl WHERE EnsPID=:domain LIMIT 1)
 			UNION
 			(SELECT * FROM T_Ensembl WHERE EnsPID=:peptide LIMIT 1)';
-	$params = array(":domain" => $row['Domain_EnsPID'], ":peptide" => $row['Interaction_EnsPID']);
+	$params = array(":domain" => $row['Domain_EnsPID'], ":peptide" => $row['Peptide_EnsPID']);
 	$ensembl = $dbh->prepare($query);
 	$ensembl->execute($params);
 	$domain = $ensembl->fetch(PDO::FETCH_ASSOC);
 	$peptide = $ensembl->fetch(PDO::FETCH_ASSOC);
 
 	$col[0] = "Domain_EnsPID:".$row['Domain_EnsPID'];
-	$col[1] = "Interaction_EnsPID:".$row['Interaction_EnsPID'];
+	$col[1] = "Interaction_EnsPID:".$row['Peptide_EnsPID'];
 	$col[2] = "EnsTID:".$domain['EnsTID'];
 	$col[3] = "EnsTID:".$peptide['EnsTID'];
 	$col[4] = "GeneName:".$domain['GeneName'];
@@ -64,7 +64,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 	$col[33] = "EnsGID:".$peptide['EnsGID'].";Description:".$peptide['Description'].";Sequence:".$peptide['Sequence'];
 	$col[34] = '-';
 	$col[35] = "Eval:".$row['Eval'];
-	$col[36] = "Mutation_ID:".$row['ID'].";Mut_Description:".$row['mut_description'].";Tumour_Site:".$row['tumour_site'].";Mutation,Source_ID:".$row['Mutation_Source_ID'].";Source:".$row['Source'];
+	$col[36] = "Mutation_ID:".$row['Mutation_ID'].";Mut_Description:".$row['Mut_Description'].";Tumour_Site:".$row['Tumour_Site'].";Mutation,Source_ID:".$row['Mutation_Source_ID'].";Source:".$row['Source'];
 	$col[37] = '-';
 	$col[38] = '-';
 	$col[39] = '-';

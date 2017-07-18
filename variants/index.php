@@ -60,11 +60,11 @@ include_once('../partials/header.php');
               <tbody id="variants-results">
                 <?php include('./variant_load.php');?>
                 <script>
-                var tissues_selected = <?php echo json_encode($_GET['tissue']);?>;
-                var tissues_original = <?php echo json_encode($_GET['tissue']);?>;
-                var mut_types = <?php echo json_encode($_GET['mut_type']);?>;
-                var prot_name = <?php echo json_encode($_GET['prot']);?>;
-                var prot_source = <?php echo json_encode($_GET['source']);?>;
+                var tissues_selected = <?=json_encode($_GET['tissue'])?>;
+                var tissues_original = <?=json_encode($_GET['tissue'])?>;
+                var mut_types = <?=json_encode($_GET['mut_type'])?>;
+                var prot_name = <?=json_encode($_GET['prot'])?>;
+                var prot_source = <?=json_encode($_GET['source'])?>;
                 var processing;
 
                 $(function() {

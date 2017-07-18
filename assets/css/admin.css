@@ -31,6 +31,7 @@ body {
   margin: 10px;
 }
 .alert-info {
+  width: 20%;
   margin-right: 10px;
   padding: 10px;
   margin-top: 7px;

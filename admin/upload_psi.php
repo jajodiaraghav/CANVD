@@ -234,8 +234,9 @@ flush();
     echo '<h5>All Done! You will be redirected in a moment...</h5>';
     echo '</div></div>';
     flush();
-  }  
+  }
 
+  if (is_file($fileLoc)) unlink($fileLoc);
   echo '<script>window.location.href = "./index.php?submit=PSI-MI"</script>';
   flush();
 }

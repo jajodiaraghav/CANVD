@@ -8,12 +8,13 @@ include_once('../partials/header.php');
       <div class="container">
         <span id="title_fix"></span>
           <p id="main-top-text">
-            Variant(s) of <span style="color:#ea2f10" id="gene-name"><?php echo $_GET['variant']?> </span> protein.
+            Variant(s) of <span style="color:#ea2f10" id="gene-name"><?=$_GET['variant']?></span> protein.
           </p>
       </div>
       <?php
-      if(isset($_GET['variant'])) {
-        $query = 'SELECT GeneName, Description FROM T_Ensembl WHERE EnsPID=:ens;';
+      if(isset($_GET['variant']))
+      {
+        $query = 'SELECT GeneName, Description FROM T_Ensembl WHERE EnsPID=:ens';
         $stmt = $dbh->prepare($query);
         $param = array(':ens'=> $_GET['variant']);
         $stmt->execute($param);
@@ -23,6 +24,8 @@ include_once('../partials/header.php');
           $description = $row[1];
         }
 
+        if(!isset($name)) die('Error: Protein not found.');
+
         if(isset($_GET['tissues']))
         {
           $tissue = $_GET['tissues'];
@@ -31,15 +34,13 @@ include_once('../partials/header.php');
           $t = array_map('sanitize', $tissues);
           $P_List = "'" . implode("','", $t) . "'";
 
-          $query = 'SELECT EnsPID, Tumour_Site, Mutation_ID, Mut_Description FROM T_Ensembl
-                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
-                    WHERE EnsPID=:ens AND Tumour_Site IN(' . $P_List . ')';
+          $query = 'SELECT Peptide_EnsPID, Tumour_Site, Mutation_ID, Mut_Description
+                    FROM T_Mutations WHERE Peptide_EnsPID=:ens AND Tumour_Site IN(' . $P_List . ')';
         }
         else
         {
-          $query = 'SELECT EnsPID, Tumour_Site, Mutation_ID, Mut_Description FROM T_Ensembl
-                    INNER JOIN T_Mutations ON T_Ensembl.EnsGID = T_Mutations.Peptide_EnsGID
-                    WHERE EnsPID=:ens';
+          $query = 'SELECT Peptide_EnsPID, Tumour_Site, Mutation_ID, Mut_Description
+                    FROM T_Mutations WHERE Peptide_EnsPID=:ens';
         }
 
         $stmt = $dbh->prepare($query);
@@ -53,52 +54,32 @@ include_once('../partials/header.php');
 
         // Get all effects
         $effects = array();
-        $mut_syntaxes_to_ids = array();
-        $interactions = array();
         foreach($variants as $var)
         {
-          $query = 'SELECT WT, MT, Eval, T_Interactions.IID FROM T_Interactions_MT
-                    INNER JOIN T_Interactions
-                    ON T_Interactions.IID = T_Interactions_MT.IID
-                    WHERE Peptide_EnsPID=:ens';
+          $query = 'SELECT Eval, Domain_EnsPID FROM T_Interactions_MT INNER JOIN T_Interactions
+                    ON T_Interactions.IID = T_Interactions_MT.IID WHERE Peptide_EnsPID=:ens';
           $stmt = $dbh->prepare($query);
           $query_params = array(':ens'=> $var[0]);
           $stmt->execute($query_params);
           while ($row = $stmt->fetch())
           {
-            $effects[$row[0]][$row[3]] = $row[2];
-            $mut_syntaxes_to_ids[$row[3]] = $row[0];
+            $effects[$row[1]] = $row[0];
           }
         }
 
-        // Get all sh3 interacting domains
+        // Get all interacting domains
         $query = 'SELECT Domain_EnsPID, Peptide_EnsPID, IID FROM T_Interactions WHERE Peptide_EnsPID=:ens';
         $stmt = $dbh->prepare($query);
         $query_params = array(':ens'=> $_GET['variant']);
         $stmt->execute($query_params);
-        $domains = array();
-        $domain_ids = array();
+        $DPID = array();
         while ($row = $stmt->fetch())
         {
-          $query2 = 'SELECT GeneName FROM T_Ensembl WHERE EnsPID=:ens';
-          $stmt2 = $dbh->prepare($query2);
-          $query_params2 = array(':ens'=> $row[0]);
-          $stmt2->execute($query_params2);
-          //Get Mut syntax of this ID
-          if (isset($mut_syntaxes_to_ids[$row[2]])){
-            $mut_syntax_d = $mut_syntaxes_to_ids[$row[2]];
-            $domain_name = $stmt2->fetch()[0];
-            if (isset($domains[$mut_syntax_d])){
-              if (!in_array($domain_name, $domains[$mut_syntax_d])){
-              $domains[$mut_syntax_d][$row[2]] = $domain_name;
-              $domain_ids[$domain_name] = $row[0];
-              }
-            }
-            else {
-              $domains[$mut_syntax_d][$row[2]] = $domain_name;
-              $domain_ids[$domain_name] = $row[0];
-            }
-          }
+          $query2 = 'SELECT GeneName FROM T_Ensembl WHERE EnsPID=:ens LIMIT 1';
+          $hdr = $dbh->prepare($query2);
+          $par = array(':ens'=> $row[0]);
+          $hdr->execute($par);
+          $DPID[$hdr->fetch()[0]] = $row[0];
         }
       ?>
     <div class="container">
@@ -106,14 +87,14 @@ include_once('../partials/header.php');
         <div class="col-md-12">
           <div class="navbar navbar-inverse">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#"><?php echo $name;?> (<?php echo $_GET['variant'] ?>)</a>
+              <a class="navbar-brand" href="#"><?=$name?> (<?=$_GET['variant']?>)</a>
               <script type="text/javascript">
-              document.getElementById("gene-name").innerHTML = "<?php echo $name;?>";
+              document.getElementById("gene-name").innerHTML = "<?=$name?>";
               </script>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><?php echo $description;?></a></li>
+                <li class="active"><a href="#"><?=$description?></a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle filter-dropdown" data-toggle="dropdown">
                     Filter Interaction <b class="caret"></b>
@@ -122,7 +103,6 @@ include_once('../partials/header.php');
                     <li><a href="#" data-func="all">Show All</a></li>
                     <li><a href="#" data-func="gain">Gain of Function</a></li>
                     <li><a href="#" data-func="loss">Loss of Function</a></li>
-                    <li><a href="#" data-func="neutral">Neutral Effect on Function</a></li>
                   </ul>
                 </li>
               </ul>
@@ -133,7 +113,7 @@ include_once('../partials/header.php');
                   </a>
                   <ul class="dropdown-menu">
                     <li>
-                      <a href="../proteins/wt/<?php echo $_GET['variant'];?>.fasta">
+                      <a href="../proteins/wt/<?=$_GET['variant']?>.fasta">
                         Download Wildtype Sequence
                       </a>
                     </li>
@@ -149,62 +129,52 @@ include_once('../partials/header.php');
             <thead>
               <tr>
                 <th>Mutation ID</th>
-                <th>Interaction ID</th>
                 <th>Mutation Type</th>
                 <th>Disease/Tissues</th>
-                <th>Rewiring Effects - <span class="g">Gain of Function</span>, <span class="r">Loss of Function</span>.<br></th>
-                <th>Download Sequence</th>
+                <th>Rewiring Effects - <span class="g">Gain of Function</span>|<span class="r">Loss of Function</span></th>
               </tr>
             </thead>
           <tbody>
           <?php
-            $filter_option = "N/A";
-            if (isset($_GET['int-filter']))
-            {
-              if ($_GET['int-filter'] == "gain")
-                $filter_option = "gain of function";
-              elseif ($_GET['int-filter'] == "loss")
-                $filter_option = "loss of function";
-            }
+            $func = isset($_GET['int-filter']) ? $_GET['int-filter'] : 'NA';
 
             foreach($variants as $var)
             {
-              $mut_id = $_GET['variant'] . '-' . $var[2];
+              $MID = $_GET['variant'] . '-' . $var[2];
 
-              //If an effect filter is set, check to see if it's in this row's effects to show it.
-              if ((isset($_GET['int-filter']) && (isset($effects[$var[1]]) && in_array($filter_option,$effects[$var[1]]))) || (isset($_GET['int-filter']) && $_GET['int-filter'] == 'neutral' && !isset($effects[$var[1]])) || !isset($_GET['int-filter'])) {
+              // If an effect filter is set, check to see if it's in this row's effects to show it.
+              if (in_array($func . ' of function' , $effects) || $func == 'NA')
+              {
             ?>
             <tr>
-              <td><?php echo $mut_id;?></td>
-              <td><?php echo $var[2];?></td>
-              <td><?php echo $var[3];?></td>
-              <td><?php echo $var[1];?></td>
+              <td><?=$MID?></td>
+              <td><?=$var[3]?></td>
+              <td><?=$var[1]?></td>
               <td>
               <?php
-              if (isset($effects[$var[1]])) {
-                $i = 0;
-                foreach($domains[$var[1]] as $k => $d) {
-                  if ($effects[$var[1]][$k] == "gain of function" && ($filter_option == 'gain of function' || $filter_option == "N/A")) {
-                      if ($i > 0) {
-                        echo ", <a href='../network/?limit=50&genename=" .  $domain_ids[$d] . "' class='g'>" . $d . "</a>";
-                      } else {
-                        echo "<a href='../network/?limit=50&genename=" .  $domain_ids[$d] . "' class='g'>" . $d . "</a>";
-                      }
-                    } elseif ($effects[$var[1]][$k] == "loss of function" && ($filter_option == 'loss of function' || $filter_option == "N/A")) {
-                      if ($i > 0) {
-                        echo ", <a href='../network/?limit=50&genename=" .  $domain_ids[$d] . "' class='r'>" . $d . "</a>";
-                      } else {
-                        echo "<a href='../network/?limit=50&genename=" .  $domain_ids[$d] . "' class='r'>" . $d . "</a>";
-                      }
-                    }
-                    $i += 1;
+              $link = '';
+              foreach($DPID as $gene => $PID)
+              {
+                if (isset($effects[$PID]))
+                {
+                  if ($effects[$PID] == "gain of function" && ($func == 'gain' || $func == 'NA'))
+                  {
+                    $link = "<a href='../network/?limit=50&genename={$PID}' class='g'>{$gene}</a>";
                   }
-                } else {
-                  echo "None";
+                  elseif ($effects[$PID] == "loss of function" && ($func == 'loss' || $func == 'NA'))
+                  {
+                    $link = "<a href='../network/?limit=50&genename={$PID}' class='r'>{$gene}</a>";
+                  }
+
+                  if($link != '')
+                  {
+                    echo $link . '  ';
+                    $link = '';
+                  }
                 }
+              }
               ?>
               </td>
-              <td><a href="../proteins/mt/<?php echo $mut_id?>.fasta">Download</a></td>
             </tr>
             <?php
               }
@@ -214,7 +184,7 @@ include_once('../partials/header.php');
         </table>
 
         <?php if(isset($_GET['tissues'])) { ?>
-          <p style="margin-top:20px;margin-bottom:60px;font-size:1.2em;text-align:center;">
+          <p class="text-center">
             <a id="showall" href="#" class="btn btn-default">
               Click here to view all variants for this protein.
             </a>
@@ -225,20 +195,15 @@ include_once('../partials/header.php');
     <script>
       $( document ).ready(function() {
         $("#showall").on("click", function(){
-          window.location.href = './details.php?variant=<?php echo $_GET['variant'];?>';
+          window.location.href = './details.php?variant=<?=$_GET['variant']?>';
         });
         <?php
           $var_list = "";
-          $i = 0;
-          foreach($variants as $var) {
-            if ($i > 0){
-              $var_list = $var_list . "," . $_GET['variant'] . '-' . $var[2];
-            } else {
-              $var_list = $_GET['variant'] . '-' . $var[2];
-            }
-            $i += 1;
+          foreach($variants as $var)
+          {
+            $var_list = $var_list . "," . $_GET['variant'] . '-' . $var[2];
           }
-          echo "var variant_list = '" . $var_list . "';";
+          echo "var variant_list = '{$var_list}';";
         ?>
         $("#download_all").on("click", function(){
           window.location.href = './download_variants.php?variant_ids=' + variant_list;
@@ -252,5 +217,6 @@ include_once('../partials/header.php');
         </div>
     	</div>
   	</div>
+    <script src="/assets/scripts/variant_details.js"></script>
 	</body>
 </html>
