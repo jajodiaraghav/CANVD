@@ -203,26 +203,28 @@ flush();
           $mutations[] = $Peptide_EnsPID; // Peptide_EnsPID
         }
 
+        $G1 = end((explode(":", $row[4])));
+        $G2 = end((explode(":", $row[5])));
         // Ensembl Table (Domain)
-        if($Domain_EnsPID != '')
+        if($Domain_EnsPID != '' && $G1 != '')
         {
           $ensembl[] = $Domain_EnsPID; // EnsPID
           $ensembl[] = $Domain_EnsTID; // EnsTID
           $ensembl[] = end((explode(":", $ensemblData1[0]))); // EnsGID
           $ensembl[] = end((explode(":", $row[12]))); // Version
-          $ensembl[] = end((explode(":", $row[4]))); // GeneName
+          $ensembl[] = $G1; // GeneName
           $ensembl[] = end((explode(":", $ensemblData1[1]))); // Description
           $ensembl[] = end((explode(":", $ensemblData1[2]))); // Sequence
         }
 
         // Ensembl Table (Peptide)
-        if($Peptide_EnsPID != '')
+        if($Peptide_EnsPID != '' && $G2 != '')
         {
           $ensembl[] = $Peptide_EnsPID; // EnsPID
           $ensembl[] = end((explode(":", $row[3]))); // EnsTID
           $ensembl[] = $Peptide_EnsGID; // EnsGID
           $ensembl[] = end((explode(":", $row[12]))); // Version
-          $ensembl[] = end((explode(":", $row[5]))); // GeneName
+          $ensembl[] = $G2; // GeneName
           $ensembl[] = end((explode(":", $ensemblData2[1]))); // Description
           $ensembl[] = end((explode(":", $ensemblData2[2]))); // Sequence
         }
