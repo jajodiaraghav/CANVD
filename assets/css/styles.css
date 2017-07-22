@@ -421,3 +421,12 @@ li .active{
 .source-item{
 	cursor:default !important;
 }
+#actual-image-content > img {
+	padding-top: 30px;
+	height: 200px;
+}
+#actual-image-content > h4 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold;
+}

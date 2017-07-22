@@ -179,6 +179,10 @@ include_once('partials/header.php');
               <div class="modal fade" id="testing">
                 <div class="modal-dialog">
                   <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">PWM Logo</h4>
+                    </div>
                     <p id="actual-image-content" class="row text-center"></p>
                   </div>
                 </div>

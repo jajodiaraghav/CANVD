@@ -166,11 +166,7 @@ $(function() {
 
   $("body").on( "click", ".pwm-img", function() {
     $("#testing").modal('show');
-    $("#actual-image-content").css("padding-top", "15px");
-    $("#actual-image-content").html($(this).clone().css("height", "200px"));
+    $("#actual-image-content").html($(this).clone());
     $("#actual-image-content").append($(this).data("content"));
   });
-
-  $('#example').popover();
-
 });
