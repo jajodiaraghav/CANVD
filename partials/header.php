@@ -1,15 +1,15 @@
 <head>
-		<title>DV-IMPACT :: Main</title>
-		<link rel="shortcut icon" href="/assets/images/canvd.ico">
-		<link href="/assets/css/bootstrap.css" rel="stylesheet">
-		<link href="/assets/css/font-awesome.min.css" rel="stylesheet">    
+    <title>DV-IMPACT :: Main</title>
+    <link rel="shortcut icon" href="/assets/images/canvd.ico">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="/assets/css/slider.css" rel="stylesheet">
     <link href="/assets/css/jquery.qtip.css" type="text/css" rel="stylesheet">
     <link href="/assets/css/styles.css" type="text/css" rel="stylesheet">
     <link href="/assets/css/main.css" type="text/css" rel="stylesheet">
 
-		<script src="/assets/js/jquery.min.js"></script>
-		<script src="/assets/js/site.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/site.js"></script>
     <script src="/assets/js/bootstrap.js"></script>
     <script src="/assets/js/bootstrap-slider.js"></script>
     <script src="/assets/js/jquery.qtip.js"></script>

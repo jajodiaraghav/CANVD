@@ -93,7 +93,8 @@ foreach ($domains as $domain) {
 	// Get all Interaction_MT for all Interactions
 	$P_List = "'" . implode("','", $interactions) . "'";
 
-	$query = 'SELECT * FROM T_Interactions_MT WHERE IID IN(' . $P_List . ')';
+	$query = 'SELECT * FROM T_Interactions_MT, T_Interactions
+				WHERE T_Interactions_MT.IID=T_Interactions.IID AND T_Interactions_MT.IID IN(' . $P_List . ')';
 	$stmt = $dbh->prepare($query);
 	$stmt->execute();
 
@@ -101,16 +102,16 @@ foreach ($domains as $domain) {
 	$mut_impacts = array();
 	while ($row = $stmt->fetch())
 	{
-		$mut_interactions[$row['IID']][] = [
-													$row['WT'],
-													$row['MT'],
-													$row['WTscore'],
-													$row['MTscore'],
-													$row['LOG2'],
-													$row['Eval'],
-													$row['DeltaScore']
-												];
-		$mut_interaction_types[$row['IID']][] = $row['Eval'];
+		$mut_interactions[$iid_to_enspid[$row['IID']]][] = [
+																$row['WT'],
+																$row['MT'],
+																$row['WTscore'],
+																$row['MTscore'],
+																$row['LOG2'],
+																$row['Eval'],
+																$row['DeltaScore']
+															];
+		$mut_interaction_types[$row['Peptide_EnsPID']][] = $row['Eval'];
 	}
 
 	// Assign each interaction as "loss, "gain", "neutral", or "both"

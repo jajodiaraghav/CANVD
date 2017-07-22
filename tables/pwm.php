@@ -34,7 +34,7 @@ while ($row = $stmt->fetch())
 			<a download="<?=$row[0]?>.mimp" href="./pwms/mimp/<?=$row[0]?>.mimp">MIMP</a>,
 			<?php } ?>
 			<?php if(is_file(__DIR__ ."/../pwms/enologo/{$row[0]}.enologo")) { ?>
-			<a download="<?=$row[0]?>.enologo" href="./pwms/enologo/<?=$row[0]?>.enologo">Enologo</a>,
+			<a download="<?=$row[0]?>.enologo" href="./pwms/enologo/<?=$row[0]?>.enoLogo">Enologo</a>,
 			<?php } ?>
 			<?php if(is_file(__DIR__ ."/../pwms/musi/{$row[0]}.musi")) { ?>
 			<a download="<?=$row[0]?>.musi" href="./pwms/musi/<?=$row[0]?>.musi">Musi</a>

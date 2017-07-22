@@ -1,5 +1,5 @@
 $(function() {
-	function update() {      
+	function update() {
 		var i = 0, limit = start + 100, gene_info = {}, mut_ints = {}, muts = {};
 		for (gene in networkData[active_domain].gene_info)
 		{
@@ -220,7 +220,7 @@ $(function() {
 									for (mut_effect in networkData[active_domain].mut_effects[enspid])
 									{
 										var effects = networkData[active_domain].mut_effects[enspid][mut_effect];
-										if (effects[6] == "gain of function")
+										if (effects[5] == "gain of function")
 											var color = "#2C7BB6";
 										else
 											var color = "#D7191C";
@@ -241,14 +241,20 @@ $(function() {
 											}
 										}
 
-										html = html + "<p><div style='padding-bottom:4px;margin-bottom:0;'><b>Mutation Effect</b></div><div style='padding-bottom:2px;'><i>Mut Syntax: " + effects[4] + "</i> <b style='color:" + color + "'> (" + effects[6] + ") </b> </div><span style=font-size:1.4em;'>WT Sequence: "+  wt_seq + "</span><br><span style=font-size:1.4em;'>MT Sequence: " + mt_seq + "<img src='../pwms/logos/"+networkData[active_domain].pwm+".png' height='75px' style='margin-top:10px;display:block;margin-left:auto;margin-right:auto;' class='pwm-img'>" + "</span><br>WT Score: " + effects[2].toString() + ", MT Score: " + effects[3].toString() + "<br>DeltaScore: "+ effects[7].toString() + ", LOG2 Score: "+ effects[5].toString() + "</p>";
+										html = html
+												+ '<h4 style="padding-left:10px">Mutation Effect</h4>'
+												+ '<h6>Effect: <strong style="color:'+color+'">'+effects[5]+'</strong></h6>'
+												+ '<h6>WT Sequence: '+wt_seq+'<br>MT Sequence: '+mt_seq+'</h6>'
+												+ '<img src="../pwms/logos/'+networkData[active_domain].pwm+'.png" height="100px" class="pwm-img">'
+												+ '<h6>WT Score: '+effects[2]+', MT Score: '+effects[3]+'</h6>'
+												+ '<h6>DeltaScore: '+effects[6]+', LOG2 Score: '+effects[4]+'</h6>';
 									}
 									break;
 								}
 							}
 
 							// Show mutation list
-							var muts_string ="<h6 style='margin-top:0;'>Mutations in this protein:</h6><table class='table table-striped muts-table'><thead><tr><th>Source</th><th>AA Syntax</th><th>Tumor</th></tr></thead><tbody>";
+							var muts_string ="<h6 style='font-weight:bold'>Mutations in this protein:</h6><table class='table table-striped muts-table'><thead><tr><th>Source</th><th>Tumor</th></tr></thead><tbody>";
 							extra_rows = "";
 							for (mut in networkData[active_domain].muts)
 							{
@@ -257,17 +263,17 @@ $(function() {
 									var this_mut = networkData[active_domain].muts[mut];
 									if (this_mut.Impact == -1)
 									{
-										var row_string = "<tr class='highlighted_mut_l'><td>" + this_mut.Source + "</td><td>" + this_mut.Syntax + "</td><td>" + this_mut.Tissue + "</td></tr>";
+										var row_string = "<tr class='highlighted_mut_l'><td>" + this_mut.Source + "</td><td>" + this_mut.Tissue + "</td></tr>";
 										muts_string += row_string;
 									}
 									else if (this_mut.Impact == 1)
 									{
-										var row_string = "<tr  class='highlighted_mut_g'><td>" + this_mut.Source + "</td><td>" + this_mut.Syntax + "</td><td>" + this_mut.Tissue + "</td></tr>";
+										var row_string = "<tr class='highlighted_mut_g'><td>" + this_mut.Source + "</td><td>" + this_mut.Tissue + "</td></tr>";
 										muts_string += row_string;
 									}
 									else
 									{
-										var row_string = "<tr><td>" + this_mut.Source + "</td><td>" + this_mut.Syntax + "</td><td>" + this_mut.Tissue + "</td></tr>";
+										var row_string = "<tr><td>" + this_mut.Source + "</td><td>" + this_mut.Tissue + "</td></tr>";
 										extra_rows += row_string;
 									}
 								}
@@ -394,17 +400,17 @@ $(function() {
 		update();
 	});
 
-		//Tissue load more
-		$("#tissue_list").on("click", ".tissue_load_more", function(){
-			$(".tissue_load_more").hide();
-			var i = 0;
-			for (tissue in tissues_sorted)
-			{
-				if (i >= 4)
-					$("#tissue_list").append('<a class="list-group-item tissue-a show-item"><span class="badge tissue-item tissue_active">'  + tissue_to_protein[tissues_sorted[tissue]].length.toString() + '</span><span class="tissue_name">'+ tissues_sorted[tissue] + '</span> </a>');
-				i += 1;
-			}
-		});
+	//Tissue load more
+	$("#tissue_list").on("click", ".tissue_load_more", function(){
+		$(".tissue_load_more").hide();
+		var i = 0;
+		for (tissue in tissues_sorted)
+		{
+			if (i >= 4)
+				$("#tissue_list").append('<a class="list-group-item tissue-a show-item"><span class="badge tissue-item tissue_active">'  + tissue_to_protein[tissues_sorted[tissue]].length.toString() + '</span><span class="tissue_name">'+ tissues_sorted[tissue] + '</span> </a>');
+			i += 1;
+		}
+	});
 
 	 //Tissue filtering
 	 $("#tissue_list").on("click", ".tissue-a", function() {
