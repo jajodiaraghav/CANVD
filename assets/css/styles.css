@@ -19,7 +19,7 @@ h1 a:hover{
 }
 li #filters_btn,
 li #downloads_btn {
-	background: navajowhite;
+	background: darkgray;
 	color: white;
 	font-weight: 400;
 }

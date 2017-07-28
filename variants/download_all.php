@@ -78,11 +78,9 @@ if(isset($_GET['tissue']))
     else
     {
         $query = "SELECT GeneName, Sequence FROM T_Ensembl LEFT JOIN T_Mutations
-                  ON T_Ensembl.EnsGID=T_Mutations.EnsGID WHERE T_Mutations.Tumour_Site IN (" . $P_List . ")";
-
-        $query_params = array();
+                  ON T_Ensembl.EnsPID=T_Mutations.Peptide_EnsPID WHERE T_Mutations.Tumour_Site IN (" . $P_List . ")";
         $stmt = $dbh->prepare($query);
-        $stmt->execute($query_params);
+        $stmt->execute();
     }
 }
 else
@@ -90,7 +88,7 @@ else
     if (isset($_GET['variant_search']))
     {
         $query = "SELECT GeneName, Sequence FROM T_Ensembl LEFT JOIN T_Mutations
-              ON T_Ensembl.EnsGID=T_Mutations.EnsGID WHERE T_Mutations.Source RLIKE :source
+              ON T_Ensembl.EnsPID=T_Mutations.Peptide_EnsPID WHERE T_Mutations.Source RLIKE :source
               AND T_Ensembl.GeneName RLIKE :name AND T_Mutations.Mut_Description RLIKE :type";
 
         $query_params = array(":source" => $source, ":name" => $protein_name, ":type" => $type);
