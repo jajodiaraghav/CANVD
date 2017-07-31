@@ -111,6 +111,5 @@
       <?php require_once('search.php'); ?>    
     </script>
     <script src="/assets/scripts/network.js" type="text/javascript"></script>
-    <script src="/assets/scripts/download_handler.js" type="text/javascript"></script>
   </body>
 </html>

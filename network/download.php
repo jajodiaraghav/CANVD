@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$file = 'network-data.txt';
+$file = 'interactions.txt';
 header("Content-Disposition: attachment; filename='" . basename($file) . "'");
 header("Content-Type: application/force-download");
 header("Connection: close");
