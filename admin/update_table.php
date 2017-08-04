@@ -13,7 +13,7 @@ while ($row = $stmt->fetch())
 {
 	$param = array(":tissue" => $row[0]);
 
-	$query = "SELECT COUNT(Mutation_ID) FROM T_Mutations use index (Mutation_ID) WHERE Tumour_Site=:tissue;";
+	$query = "SELECT COUNT(Mutation_ID) FROM T_Mutations use index (Mutation_ID) WHERE Tumour_Site=:tissue";
 	$stmt2 = $dbh->prepare($query);
 	$stmt2->execute($param);
 	$mutation_count = $stmt2->fetch()[0];

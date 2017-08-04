@@ -122,7 +122,7 @@ include_once('partials/header.php');
               </div>
             <div id="browse-and-tabs">
         			<ul class="nav nav-tabs" id="browse-tabs">
-        			  <li class="active" ><a data-tab="protein">Tissues/Cancer Types</a></li>
+        			  <li class="active"><a data-tab="protein">Tissues/Cancer Types</a></li>
         			  <li><a data-tab="cancer">Proteins</a></li>
         			  <li><a data-tab="tumor">PWMs</a></li>
         			</ul>
