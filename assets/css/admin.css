@@ -31,7 +31,7 @@ body {
   margin: 10px;
 }
 .alert-info {
-  width: 20%;
+  width: 22%;
   margin-right: 10px;
   padding: 10px;
   margin-top: 7px;
@@ -94,9 +94,6 @@ body {
     height: 100%;
   }
 }
-.table {
-  word-break: break-all;
-}
 .table p {
   font-size: 12px;
   font-weight: 500;
@@ -136,4 +133,7 @@ body {
 .table td {
   text-align: center;
   vertical-align: middle !important;
+}
+.actions{
+  width: 150px;
 }
