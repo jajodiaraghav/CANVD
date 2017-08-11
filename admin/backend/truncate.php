@@ -1,8 +1,9 @@
 <?php
 session_start();
-include_once('../common.php');
+include_once('../../common.php');
 
-if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
+if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin')
+{
 
 	$tables = ['T_Domain', 'T_Ensembl', 'T_Interactions', 'T_Interactions_Eval', 'T_Interactions_MT', 'T_Mutations', 'T_PWM', 'T_Dataset', 'tissue_table_browser'];
 
@@ -12,8 +13,10 @@ if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
 		$dbh->query($command);
 	}
 
-	header("Location: index.php?message=success");
+	header("Location: ../index.php?message=success");
 
-} else {
+}
+else
+{
 	echo "Error: unauthorized!";
 }

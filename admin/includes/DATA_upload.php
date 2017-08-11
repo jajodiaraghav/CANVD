@@ -5,7 +5,7 @@
   <div class="panel-body">
     <div id="panel-content">
 
-      <form id="fileupload" action="upload_data.php" method="POST" enctype="multipart/form-data">
+      <form id="fileupload" action="backend/data/upload.php" method="POST" enctype="multipart/form-data">
         <div class="row text-center fileupload-buttonbar">
           <span class="btn btn-success btn-sm fileinput-button">
               <i class="glyphicon glyphicon-plus"></i>
@@ -57,19 +57,23 @@
   <div class="panel-heading" id="table-name-header"><strong>Search & Delete</strong></div>
   <div class="panel-body">
     <div id="panel-content">
-      <a href="search_data.php">Search for a specific data</a>
+      <a href="search-data.php">Search for a specific data</a>
     </div>
   </div>
 </div>
 <div class="panel panel-danger">
   <div class="panel-heading" id="table-name-header"><strong>Other operations</strong></div>
   <div class="panel-body">
-    <div id="panel-content">
-      <ul>
-        <li><a data-dir="png" class="text-danger" data-toggle="modal" data-target="#warningModal">Empty the PNG data directory</a></li>
-        <li><a data-dir="txt" class="text-danger" data-toggle="modal" data-target="#warningModal">Empty the TXT data directory</a></li>
-        <li><a data-dir="pwm" class="text-danger" data-toggle="modal" data-target="#warningModal">Empty the PWM data directory</a></li>
-      </ul>
+    <div class="panel-content text-center">
+      <a data-dir="png" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#warningModal">
+        Empty the PNG data directory
+      </a>
+      <a data-dir="txt" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#warningModal">
+        Empty the TXT data directory
+      </a>
+      <a data-dir="pwm" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#warningModal">
+        Empty the PWM data directory
+      </a>
     </div>
   </div>
 </div>

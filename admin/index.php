@@ -162,20 +162,7 @@
         </td>
         <td>
             <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td class="text-center">
-            {% if (file.deleteUrl) { %}
-                <button class="btn btn-danger btn-sm delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
-                </button>
-            {% } else { %}
-                <button class="btn btn-warning btn-sm cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
+        </td>        
     </tr>
 {% } %}
 </script>

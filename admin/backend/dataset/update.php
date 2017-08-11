@@ -1,8 +1,9 @@
 <?php
 	session_start();
-	include_once('../common.php');
+	include_once('../../../common.php');
 
-	if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin') {
+	if (isset($_SESSION['user']) && $_SESSION['user'] == 'admin')
+	{
 		$id = $_POST['id'];
 		$author = $_POST['author'];
 		$publication = $_POST['pub'];
@@ -13,8 +14,9 @@
 		$params = array($author, $publication, $description, $title, $id);
 		$stmt = $dbh->prepare($query);
 		$stmt->execute($params);
-		header("Location: index.php?submit=Dataset");
-	} else {
+		header("Location: /admin/index.php?submit=Dataset");
+	}
+	else
+	{
 		echo "Error: unauthorized.";
 	}
-?>

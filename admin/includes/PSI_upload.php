@@ -8,7 +8,7 @@
           Unique identifier for interactor A, Unique identifier for interactor B, Alternative identifier for interactor A, Alternative identifier for interactor B, Aliases for A, Aliases for B, Interaction detection methods, First author, Identifier of the publication, NCBI Taxonomy identifier for interactor A, NCBI Taxonomy identifier for interactor B, Interaction types, Source databases, Interaction identifier(s), Confidence score, Complex expansion, Biological role A, Biological role B, Experimental role A, Experimental role B, Interactor type A, Interactor type B, Xref for interactor A, Xref for interactor B, Xref for the interaction, Annotations for interactor A, Annotations for interactor B, Annotations for the interaction, NCBI Taxonomy identifier for the host organism, Parameters of the interaction, Creation date, Update date, Checksum for interactor A, Checksum for interactor B, Checksum for interaction, negative,  Feature(s) for interactor A:  Feature(s) for interactor B, Stoichiometry for interactor A, Stoichiometry for interactor B, Participant identification method for interactor A, Participant identification method for interactor B
         </p>
       </div>
-      <form id="ul-form" action="upload_psi.php" method="POST" enctype="multipart/form-data">
+      <form id="ul-form" action="PSI.php" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" id="file">
         <div>
           <label>
@@ -30,12 +30,10 @@
 <div class="panel panel-info">
   <div class="panel-heading" id="table-name-header"><strong>Other operations</strong></div>
   <div class="panel-body">
-    <div id="panel-content">      
-      <ul>
-        <li><a href="dataset_search.php">Search using Publication ID</a></li>
-        <li><a href="update_table.php">Update the "Tissues" table</a></li>
-        <li><a data-toggle="modal" class="text-danger" data-target="#warningEmpty">Empty all tables</a></li>
-      </ul>
+    <div class="panel-content text-center">
+      <a href="search-dataset.php" class="btn btn-sm btn-primary">Search using Publication ID</a>
+      <a href="./backend/tissue.php" class="btn btn-sm btn-primary">Update the "Tissues" table</a>
+      <a data-toggle="modal" class="btn btn-sm btn-danger" data-target="#warningEmpty">Empty all tables</a>
     </div>
   </div>
 </div>
@@ -52,7 +50,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="empty_table.php" type="button" class="btn btn-danger">Yes</a>
+        <a href="./backend/truncate.php" type="button" class="btn btn-danger">Yes</a>
       </div>
     </div>
   </div>

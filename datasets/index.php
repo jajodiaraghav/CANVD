@@ -29,7 +29,7 @@
             <p class="text-justify"><?=$row['Description']?></p>
             <p>Publication: <?=$row['Author']?></p>
             <p><span class="target"><?=$row['Publication']?></span></p>
-            <a href="../admin/dataset_download.php?set=<?=$row['Dataset_ID']?>" class="btn btn-success pull-right" style="margin-top:-60px">Download</a>
+            <a href="../admin/download.php?set=<?=$row['Dataset_ID']?>" class="btn btn-success pull-right" style="margin-top:-60px">Download</a>
           </div>
         <?php } ?>
         </div>

@@ -1,5 +1,5 @@
 <?php
-include_once('../common.php');
+include_once('../../common.php');
 
 $query ="DELETE FROM tissue_table_browser";
 $stmt = $dbh->prepare($query);
@@ -62,4 +62,4 @@ while ($row = $stmt->fetch())
 	$stmt2->execute($params);
 }
 
-header("Location: index.php?submit=Tissue");
+header("Location: ../index.php?submit=Tissue");

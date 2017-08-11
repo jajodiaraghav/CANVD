@@ -18,7 +18,7 @@ $(function() {
 	$(".delete-btn").on( "click", function() {
 		var this_btn = $(this).parent();
 	  	$.ajax({
-	        url: "./announce_delete.php",
+	        url: "./backend/announce/delete.php",
 	        type: "post",
 	        data: {a_id:$(this).data("item-id")},
 	        success: function(results){
@@ -42,7 +42,7 @@ $(function() {
 		}
 
 		$.ajax({
-	        url: "./announce_change.php",
+	        url: "./backend/announce/update.php",
 	        type: "post",
 	        data: {switchV:$(this).data("btn-type"),value:valueT,a_id:$(this).data("item-id")},
 	        success: function(results){},
@@ -53,22 +53,6 @@ $(function() {
 	});
 
 	$('#fileupload').fileupload();
-
-	$('.table').on('click', '.template-download .delete', function(e) {
-		e.preventDefault();
-		$this = $(this);
-		$.ajax({
-	        url: "./data_delete.php",
-	        type: "post",
-	        data: {url: $this.data('url')},
-	        success: function(results){
-				$this.closest('tr').fadeOut();
-	        },
-	        error:function(){
-	            alert("Action Failed!");
-	        }
-	    });
-	});
 
 	$('#fileupload').bind('fileuploadsubmit', function (e, data) {
 	    var directory = $('input[name="directory"]:checked').val();
@@ -83,17 +67,18 @@ $(function() {
 		var link = $(event.relatedTarget);
 		var dir = link.data('dir');		
 		var modal = $(this)
-		modal.find('.modal-footer .btn-danger').attr('href', '/admin/empty_data.php?dir=' + dir);
+		var uri = '/admin/backend/data/clear.php?dir=' + dir;
+		modal.find('.modal-footer .btn-danger').attr('href', uri);
 	});
 
-	$('input[name="search"]').on("keyup paste", function() { // Also add "change" / "input" 
+	$('input[name="search"]').on("keyup paste", function() {
 		var s = $(this).val();
 		var type = $('input[name="directory"]:checked').val();		
 		if (s.length > 3) {
 			if (!type) return;
 
 			$.ajax({
-		        url: "./data_search.php",
+		        url: "./backend/data/search.php",
 		        type: "post",
 		        data: {
 		        	str : s,
@@ -125,7 +110,7 @@ $(function() {
 				list.push($(this).data('url'));
 			});
 			$.ajax({
-		        url: "./data_delete_multiple.php",
+		        url: "./backend/data/delete.php",
 		        type: "post",
 		        data: {list: list},
 		        success: function(results){

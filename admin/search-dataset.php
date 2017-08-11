@@ -58,7 +58,7 @@ session_start();
 									<td><?=$row[4]?></td>
 									<td><?=$row[3]?></td>
 									<td class="actions">
-										<a href="dataset_download.php?set=<?=$row[0]?>" class="btn btn-xs btn-success">Download</a>
+										<a href="download.php?set=<?=$row[0]?>" class="btn btn-xs btn-success">Download</a>
 										<a href="#" data-id="<?=$row[0]?>" class="btn btn-xs btn-warning">Edit</a>
 									</td>
 								</tr>
@@ -92,7 +92,7 @@ session_start();
 						search_html += '<td>' + search_array[i][4] + '</td>';
 						search_html += '<td>' + search_array[i][3] + '</td>';
 						search_html += '<td class="actions">'
-										+'<a href="dataset_download.php?set='+search_array[i][0]+'"'
+										+'<a href="download.php?set='+search_array[i][0]+'"'
 										+' class="btn btn-xs btn-success">Download</a>\n'
 										+'<a href="#" data-id='+search_array[i][0]
 										+' class="btn btn-xs btn-warning">Edit</a>'
@@ -132,7 +132,7 @@ session_start();
 				    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				    	<h4 class="modal-title">Editing Dataset</h4>
 				  	</div>
-				  	<form action="update_dataset.php" method="POST">
+				  	<form action="backend/dataset/update.php" method="POST">
 					  	<div class="modal-body">				    	
 					    		<input type="hidden" name="id">
 					    		<input type="text" class="form-control" placeholder="Publication" name="pub">
